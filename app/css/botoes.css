@@ -1,0 +1,317 @@
+#novaPesquisa {
+	background-image:url(../images/novaPesquisa.png);
+	display:block;
+	background-repeat:no-repeat;
+	width:197px;
+	margin:0 auto;
+	height:42px;
+	background-color:transparent;
+	background-position:0 0;
+	border:0;
+	margin:0 auto !important;
+}
+
+#novaPesquisa:hover {
+	background-position:0 -42px;
+	cursor:pointer;
+}
+
+#novaPesquisa2 {
+	background-image:url(../images/novaPesquisa.png);
+	background-repeat:no-repeat;
+	float:left;
+	width:197px;
+	height:42px;
+	background-color:transparent;
+	background-position:0 0;
+	border:0;
+	margin-top:20px;
+}
+
+#novaPesquisa2:hover {
+	background-position:0 -42px;
+	cursor:pointer;
+}
+
+
+/*ATUALIZAR*/
+.atualizar {
+	background-image:url(../images/atualizar.png);
+	background-repeat:no-repeat;
+	width:142px;
+	display:block;
+	margin:50px auto 0 auto;
+	height:42px;
+	background-color:transparent;
+	border:0;
+}
+
+.atualizar:hover {
+	background-position:0 -42px;
+	cursor:pointer;
+}
+
+
+
+/*NOVA PESQUISA*/
+#novaPesquisa {
+	background-image:url(../images/novaPesquisa.png);
+	display:block;
+	background-repeat:no-repeat;
+	width:197px;
+	margin:0 auto;
+	height:42px;
+	background-color:transparent;
+	background-position:0 0;
+	border:0;
+	margin:0 auto !important;
+}
+
+#novaPesquisa:hover {
+	background-position:0 -42px;
+	cursor:pointer;
+}
+
+
+/*BOTÃO FINALIZAR PESQUISA*/
+.btnFinalizar {
+	display:block;
+	float:right;
+	margin-top:50px;
+	background-image:url(../images/finalizar.png);
+	background-repeat:no-repeat;
+	width:108px;
+	height:42px;
+	background-position:0 0;
+}
+
+.btnFinalizar:hover {
+	background-position:0 -42px;
+	cursor:pointer;
+}
+
+
+/*BOTÃO VOLTAR*/
+.btnVoltar, .btnVoltarNovo {
+	display:block;
+	float:left;
+	margin-top:50px;
+	background-image:url(../images/anterior.png);
+	background-repeat:no-repeat;
+	width:108px;
+	height:42px;
+	background-position:0 0;
+}
+
+.btnVoltar:hover, .btnVoltarNovo:hover {
+	background-position:0 -42px;
+	cursor:pointer;
+}
+
+/*BOTÃO PRÓXIMO*/
+.btnProximo {
+	display:block;
+	float:right;
+	margin-top:50px;
+	background-image:url(../images/proximo.png);
+	background-repeat:no-repeat;
+	width:108px;
+	height:42px;
+	background-position:0 0;
+}
+
+.btnProximo:hover {
+	background-position:0 -42px;
+	cursor:pointer;
+}
+
+
+
+/*BOTÃO AGENDADOS*/
+#agendados {
+	background-image:url(../images/agendados.png);
+	display:block;
+	background-repeat:no-repeat;
+	width:108px;
+	float:left;
+	height:42px;
+	background-color:transparent;
+	background-position:0 0;
+	border:0;
+}
+
+#agendados:hover {
+	background-position:0 -42px;
+	cursor:pointer;
+}
+
+
+/*BOTÃO BUSCAR*/
+#buscar {
+	background-image:url(../images/buscar.png);
+	display:block;
+	background-repeat:no-repeat;
+	width:108px;
+	height:42px;
+	float:right;
+	background-color:transparent;
+	background-position:0 0;
+	border:0;
+}
+
+#buscar:hover {
+	background-position:0 -42px;
+	cursor:pointer;
+}
+
+
+/*BOTÃO NÃO EFETIVAR*/
+#naoEfetivar {
+	background-image:url(../images/naoEfetivar.png);
+	display:block;
+	background-repeat:no-repeat;
+	width:142px;
+	height:42px;
+	background-color:transparent;
+	background-position:0 0;
+	border:0;
+	float:left;
+}
+
+#naoEfetivar:hover{
+	background-position:0 -42px;
+	cursor:pointer;
+}
+
+/*BOTÃO FORA DE PERFIL*/
+#foraPerfil {
+	background-image:url(../images/foraPerfil.png);
+	display:block;
+	background-repeat:no-repeat;
+	width:142px;
+	height:42px;
+	background-color:transparent;
+	background-position:0 0;
+	border:0;
+	float:left;
+}
+
+#foraPerfil:hover{
+	background-position:0 -42px;
+	cursor:pointer;
+}
+
+
+/*BOTÃO AGENDAR*/
+#agendar {
+	background-image:url(../images/agendar.png);
+	display:block;
+	background-repeat:no-repeat;
+	width:142px;
+	height:42px;
+	background-color:transparent;
+	background-position:0 0;
+	border:0;
+	float:left;
+}
+
+#agendar:hover{
+	background-position:0 -42px;
+	cursor:pointer;
+}
+
+
+/*BOTÃO CONTATO NÃO SE ENCONTRA*/
+#contatoNaoSeEncontra {
+	background-image:url(../images/naoEsta.png);
+	display:block;
+	background-repeat:no-repeat;
+	width:142px;
+	height:42px;
+	background-color:transparent;
+	background-position:0 0;
+	border:0;
+	float:left;
+}
+
+#contatoNaoSeEncontra:hover {
+	background-position:0 -42px;
+	cursor:pointer;
+}
+
+
+/*BOTÃO OCUPADO*/
+#ocupado {
+	background-image:url(../images/naoAtende.png);
+	display:block;
+	background-repeat:no-repeat;
+	width:142px;
+	height:42px;
+	background-color:transparent;
+	background-position:0 0;
+	border:0;
+	float:left;
+}
+
+#ocupado:hover{
+	background-position:0 -42px;
+	cursor:pointer;
+}
+
+/*BOTÃO SEGUIR*/
+#seguir {
+	background-image:url(../images/seguir.png);
+	display:block;
+	background-repeat:no-repeat;
+	width:142px;
+	height:42px;
+	background-color:transparent;
+	background-position:0 0;
+	border:0;
+	float:left;
+}
+
+#seguir:hover{
+	background-position:0 -42px;
+	cursor:pointer;
+}
+
+
+/*AGENDAMENTO*/
+#agendamento {
+	background-image:url(../images/agendar.png);
+	display:block;
+	background-repeat:no-repeat;
+	width:142px;
+	height:42px;
+	background-color:transparent;
+	background-position:0 0;
+	border:0;
+	float:left;
+	margin-top:20px;
+}
+
+#agendamento:hover {
+	background-position:0 -42px;
+	cursor:pointer;
+}
+
+
+/*VOLTAR AO MAILLING*/
+#voltarMailling {
+	background-image:url(../images/voltarMailling.png);
+	display:block;
+	background-repeat:no-repeat;
+	width:197px;
+	height:42px;
+	background-color:transparent;
+	background-position:0 0;
+	border:0;
+	float:right;
+	margin-top:20px;
+}
+
+#voltarMailling:hover {
+	background-position:0 -42px;
+	cursor:pointer;
+}

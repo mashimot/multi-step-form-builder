@@ -1,0 +1,13 @@
+/*#bloco1{
+    display: none;
+}
+#bloco6{
+    display: block;
+}*/
+
+#escondePergunta241,
+#escondePergunta271,
+#escondePergunta281
+{
+    display:none;
+}

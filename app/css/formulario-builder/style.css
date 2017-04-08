@@ -1,0 +1,104 @@
+input.info-num-perg{
+    font-weight: bold;
+    font-size: 20px;
+}
+.txtAreaStyle, #geraSemJust{
+    width: 100%;
+    height: 300px;
+}
+.botoes{
+    width: 200px;
+    height: 40px;
+}
+.table.table-bordered{
+//color: black;
+    background-color: transparent;
+}
+#btn-deletar-toda-tabela{
+    display: none;
+}
+#btn-adicionar{
+    color: white;
+
+}
+
+/*.btn-criar {
+    color: white;
+    background-color: black;
+}*/
+
+#opcao{
+    margin: 20px 20px 20px 20px;
+}
+
+.conteudo{
+
+    display: none;
+}
+.container .conteudo{
+    margin-top: 100px;
+}
+/*input[type="radio"]{
+    width:100%;
+    height:100%;
+}*/
+td,th{
+    text-align: center;
+}
+.geraConteudo{
+
+    display: none;
+}
+.info-notapergunta{
+
+}
+
+
+body{
+    //background-color: #2a3642;
+    //color: white;
+}
+
+input{
+    color: #3c7dcf;
+}
+
+
+input#seqNumeros{
+    color: red;
+}
+
+thead tr th{
+//color: darkblue;
+}
+#text-area-geraAuto{
+    display: none;
+}
+
+.navbar-nav > li{
+    padding-left:10px;
+    padding-right:10px;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+.nav ul{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#tbody-content li:hover {
+    cursor: pointer;
+}
+
+#tbody-content li.ui-sortable-helper{
+    cursor: move;
+}
+.bloco-valor{background-color:#951f2c !important; border:none !important; color: white; !important;}
+.bloco-valor::-moz-placeholder {
+    color: white;
+}
+.bloco-valor:-ms-input-placeholder {
+    color: white;
+}
+.bloco-valor::-webkit-input-placeholder {
+    color: white;
+}

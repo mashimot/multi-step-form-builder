@@ -1,0 +1,111 @@
+<div class="new-block alert" ng-class="{'alert-danger': p.hasNewSection, '': !p.hasNewSection }">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="text-center">
+                <label>
+                    <div class="checkbox">
+                        <input type="checkbox" ng-model="p.hasNewSection" ng-click="createNewBlock(keyC, keyP)" style="display: none;">
+                        <div ng-switch on="p.hasNewSection">
+                            <span ng-switch-when="true"><i class="fa fa-check-square-o"></i> Bloco Criado</span>
+                            <span ng-switch-when="false"><i class="fa fa-square-o"></i> Criar Novo Bloco</span>
+                            <span ng-switch-default>Error</span>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+        <div class="col-md-4 pull-right">
+            <div class="pull-right">
+                    <span class="btn-group" ng-click="clone(keyC, keyP)">
+                        <button class="btn btn-primary btn-sm form-control"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
+                    </span>
+                    <span class="btn-group" ng-click="remove(keyC, keyP)">
+                        <button class="btn btn-danger btn-sm form-control"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </button>
+                    </span>
+            </div>
+        </div>
+    </div>
+</div>
+<add-titles></add-titles>
+<div class="well well-sm" >
+    <div class="panel-body">
+        <section class="informations">
+            <div class="row">
+                <div class="col-md-1"><div class="form-group"><input type="text" class="form-control" ng-model="p.number" /></div></div>
+                <div class="col-md-5"><div class="form-group"><input type="text" class="form-control" ng-model="p.description"  placeholder="Digite a Questão"/></div></div>
+                <div class="col-md-5">
+                    <div class="form-group"><select class="form-control" ng-options="type.value as type.text for type in types" ng-model="p.input.type" ng-change="updateType(p)"></select></div>
+                </div>
+                <div class="col-md-1 text-center">
+                    <div class="form-group"><button type="button" ng-click="config()" class="btn btn-default btn-sm"><i class="fa fa-cog" aria-hidden="true"></i></button></div>
+                </div>
+            </div>
+        </section>
+        <section class="options">
+            <ul class="nav">
+                <li class="col-md-2">
+                    <div class="text-center">
+                        <div class="form-group">
+                            <label>
+                                <div class="checkbox">
+                                    <input type="checkbox" ng-model="p.option.isRequired" style="display: none;" checked>
+                                    Questão obrigatória?
+                                    <div ng-switch on="p.option.isRequired">
+                                        <span ng-switch-when="true"><i class="fa fa-check-square-o"></i> Sim</span>
+                                        <span ng-switch-when="false"><i class="fa fa-square-o"></i> Não</span>
+                                        <span ng-switch-default>Error</span>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="form-group">
+                            <label>
+                                <div class="checkbox">
+                                    <input type="checkbox" ng-model="p.option.isHide" style="display: none;">
+                                    Mostra Questão?
+                                    <div ng-switch on="p.option.isHide">
+                                        <span ng-switch-when="true"><i class="fa fa-eye-slash"></i> Não</span>
+                                        <span ng-switch-when="false"><i class="fa fa-eye"></i> Sim</span>
+                                        <span ng-switch-default>Error</span>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <!--div class="text-center"> Under Construction
+                        <button class="text-center alert alert-warning" data-toggle="modal" data-target="#myModal">
+                            <i class="fa fa-check-square-o fa-2x"></i> Condicional
+                        </button>
+                    </div-->
+                </li>
+                <li class="col-md-10 well well-sm">
+                    <label><input type="checkbox"> Ordenar</label>
+                    <div class="form-group">
+                        <button ng-click="addContent(p)" class="btn btn-default btn-sm"> add new content</button>
+                        <br/>
+                        <br/>
+                        <div as-sortable="sortableContents" ng-model="p.input.contents">
+                            <div ng-repeat="(id_content, content) in p.input.contents" as-sortable-item>
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <input type="text" ng-model="content.text" class="form-control"/>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <input type="text" ng-model="content.value" class="form-control"/>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button ng-click="removeContent(p, id_content)" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                        <button class="btn btn-default" as-sortable-item-handle><i class="fa fa-arrows" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </div>
+</div>
+
