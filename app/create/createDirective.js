@@ -44,12 +44,12 @@ create.directive('addTitles', ['blockEdit', function(blockEdit){
         '<section class="well well-sm">' +
         '<button ng-click="addTitle(p)" class="btn btn-default btn-sm"> add title</button>' +
         '   <div as-sortable="sortableTitles" ng-model="p.titles"><br/>'+
-        '       <div ng-repeat="(id_title, title) in p.titles" as-sortable-item>' +
+        '       <div ng-repeat="(id_title, title) in p.titles">' +
         '           <div class="row">' +
         '               <div class="col-md-10"><input type="text" class="form-control" value="{{ title.text }}" ng-model="title.text"/></div>' +
         '               <div class="col-md-2">' +
         '                   <button ng-click="removeTitle(p, id_title)" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i></button>' +
-        '                   <button class="btn btn-default" as-sortable-item-handle><i class="fa fa-arrows" aria-hidden="true"></i></button>' +
+        '                   <button class="btn btn-default "><i class="fa fa-arrows" aria-hidden="true"></i></button>' +
         '               </div>' +
         '           </div>' +
         '       </div>' +

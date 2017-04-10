@@ -72,7 +72,21 @@ create.factory('blockEdit', function(){
         keyP = key;
     };
     var init = function(scope){
+        scope.newQuestions = [];
+        scope.newQuestions.push(getQuestion());
         scope.columns = getMainObject();
+        scope.sortableSection = {
+            connectWith: ".connected-apps-container",
+            stop: function (e, ui) {
+                // if the element is removed from the first container
+                if ($(e.target).hasClass('first') &&
+                    ui.item.sortable.droptarget &&
+                    e.target != ui.item.sortable.droptarget[0]) {
+                    // clone the original model to restore the removed item
+                    scope.newQuestions.push(getQuestion());
+                }
+            }
+        };
         _form = scope.columns.form;
     };
     var add = function(numbers){
@@ -83,7 +97,7 @@ create.factory('blockEdit', function(){
             var nums = numbers.split('\n');
             if (nums.length > 0) {
                 if (fLength <= 0) {
-                    _form.push(getBlock());
+                    _form.push(generateNewSection());
                 }
                 angular.forEach(nums, function (value) {
                     fLength = _form.length - 1;
@@ -105,7 +119,7 @@ create.factory('blockEdit', function(){
                                 if (value.indexOf('|') != -1) {
                                     splitValues = value.split("|");
                                     angular.forEach(splitValues, function(v, i){
-                                            v = v.trim();
+                                        v = v.trim();
                                         switch(i){
                                             case 0:
                                                 number = v;
@@ -155,6 +169,7 @@ create.factory('blockEdit', function(){
         } else {
             return 'empty';
         }
+        //_form.push(generateNewSection());
     };
     var createNewBlock = function(){
         var question = _form[keyC].section;
@@ -162,12 +177,12 @@ create.factory('blockEdit', function(){
         if(currentQuestion.hasNewSection) {
             if (keyC === 0) {
                 if (keyP !== 0) {
-                    _form.insert(keyC + 1, getBlock());
+                    _form.insert(keyC + 1, generateNewSection());
                     pushTo('next');
                     question.splice(keyP, question.length);
                 }
             } else {
-                _form.insert(keyC + 1, getBlock());
+                _form.insert(keyC + 1, generateNewSection());
                 pushTo('next');
                 question.splice(keyP, question.length);
             }
@@ -176,17 +191,21 @@ create.factory('blockEdit', function(){
             _form.splice(keyC, 1);
         }
     };
-    var remove = function(){
+    var remove = function(type){
         var question = _form[keyC].section;
         var currentQuestion = question[keyP];
-        if(question.length > 1){
-            question.splice(keyP, 1);
-            if(currentQuestion.hasNewSection){
-                pushTo('previous');
+        if(type === 'section'){
+            _form.splice(keyC, 1);
+        } else {
+            if(question.length > 1){
+                question.splice(keyP, 1);
+                if(currentQuestion.hasNewSection){
+                    pushTo('previous');
+                    _form.splice(keyC, 1);
+                }
+            } else {
                 _form.splice(keyC, 1);
             }
-        } else {
-            _form.splice(keyC, 1);
         }
     };
     var removeAll = function(){
@@ -205,7 +224,7 @@ create.factory('blockEdit', function(){
             "form": []
         };
     };
-    var getBlock = function(){
+    var generateNewSection = function(){
         return {
             "blockPos": Math.random(),
             "section": []
@@ -213,7 +232,7 @@ create.factory('blockEdit', function(){
     };
     var getQuestion = function(){
         return {
-            "hasNewSection": false,
+            //"hasNewSection": false,
             "titles": [], // string
             "number": null, // int
             "description": 'Description: ' + Math.random(), // string
@@ -258,4 +277,3 @@ create.factory('blockEdit', function(){
         clone: clone
     }
 });
-    

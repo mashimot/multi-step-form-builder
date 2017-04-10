@@ -2,12 +2,11 @@ var create = angular.module('app');
 create.controller('createCtrl', [ '$scope', 'blockEdit', function($scope, blockEdit){
     blockEdit.init($scope);
     $scope.types = type();
-
     $scope.add = function(){
         var msg = blockEdit.add($scope.numbers);
-        if(msg !== 'success'){
+        /*if(msg !== 'success'){
             alert(msg);
-        }
+        }*/
     };
     $scope.developer = function(){
         alert('Under construction');
@@ -18,7 +17,7 @@ create.controller('createCtrl', [ '$scope', 'blockEdit', function($scope, blockE
     $scope.removeAll = function(){
         blockEdit.removeAll();
     };
-    $scope.createNewBlock = function(keyC, keyP){
+    $scope.createNewBlock = function(type, keyC, keyP){
         blockEdit.key.setKeyC(keyC);
         blockEdit.key.setKeyP(keyP);
         blockEdit.createNewBlock();
@@ -34,10 +33,10 @@ create.controller('createCtrl', [ '$scope', 'blockEdit', function($scope, blockE
     $scope.addContent = function(p, $index){
         p.input.contents.push({text: '', value: ''});
     };
-    $scope.remove = function(keyC, keyP){
+    $scope.remove = function(type, keyC, keyP){
         blockEdit.key.setKeyC(keyC);
         blockEdit.key.setKeyP(keyP);
-        blockEdit.remove();
+        blockEdit.remove(type);
     };
     $scope.orderBy = function(){
 
@@ -57,6 +56,10 @@ create.controller('createCtrl', [ '$scope', 'blockEdit', function($scope, blockE
                 return false;
             }
         });
+    };
+
+    $scope.sortableContents = {
+        items: '.sortable-item-contents'
     };
 }]);
 var type = function(){

@@ -62,64 +62,88 @@
                                 <section>
                                     <div class="row">
                                         <div class="col-sm-12 col-xs-12">
-                                            <div class="sortable-row" >
-                                                <div ng-repeat="(keyC, column) in columns.form" ng-model="columns.form"  >
-                                                    <div ng-repeat="(keyP, p) in column.section" ng-model="column.section"  >
-                                                        <div ng-include="'create/survey-content.html'" ></div>
+                                            <div class="menu">
+                                                <div ui-sortable="sortableSection" ng-model="newQuestions" class="first">
+                                                    <div ng-repeat="(i, n) in newQuestions">
+                                                        <div style="min-height: 40px; background-color: red;">Radio</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="builder">
+                                                <div ng-repeat="(keyC, column) in columns.form">
+                                                    <div class="new-block alert alert-info">
+                                                        <div class="row">
+                                                            <div class="well well-sm">
+                                                                <div class="text-center">
+                                                                    BLOCO {{ keyC + 1 }}
+                                                                </div>
+                                                                <div class="text-right">
+                                                                    <span class="btn-group" ng-click="remove('section', keyC, keyP)">
+                                                                        <button class="btn btn-danger btn-sm form-control"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </button>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div ui-sortable="sortableSection" ng-model="column.section" class="connected-apps-container" style="min-height: 40px;">
+                                                            <div ng-repeat="(keyP, p) in column.section">
+                                                                <div ng-include="'create/survey-content.html'" ></div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6 col-xs-6 well-sm">
-                                        <pre>{{ columns | json }}</pre>
-                                    </div>
-                                </section>
                             </div>
+                            <div class="col-sm-6 col-xs-6 well-sm">
+                                <pre>{{ columns | json }}</pre>
+                            </div>
+                            </section>
                         </div>
                     </div>
-                    <div id="secaoDesenvolvedor" class="tab-pane fade">
-                        <h1 class="alert alert-success alert-white rounded">
-                            Desenvolvedor
-                        </h1>
-                        <div class="well well-sm">
-                            <h2 class="alert alert-success alert-white rounded">
-                                <i class="fa fa-html5"></i> HTML
-                            </h2>
-                            <div class="form-group">
-                                <textarea name="" cols="30" rows="40" class="form-control"></textarea>
-                            </div>
-                        </div>
-                        <div class="well well-sm">
-                            <h2 class="alert alert-success alert-white rounded">
-                                <i class="fa fa-rebel"></i> Javascript
-                            </h2>
-                            <div class="form-group">
-                                <textarea name="" cols="30" rows="40" class="form-control"></textarea>
-                            </div>
-                        </div>
-                        <div class="well well-sm">
-                            <h2 class="alert alert-info alert-white rounded">
-                                <i class="fa fa-rebel"></i> Custom Javascript
-                            </h2>
-                            <div class="form-group">
-                                <textarea name="" cols="30" rows="40" class="form-control"></textarea>
-                            </div>
-                        </div>
-                        <div class="well well-sm">
-                            <h2 class="alert alert-danger alert-white rounded">
-                                <i class="fa fa-rebel"></i> Show or Hide Javascript
-                            </h2>
-                            <div class="form-group">
-                                <textarea name="" cols="30" rows="40" class="form-control"></textarea>
-                            </div>
+                </div>
+                <div id="secaoDesenvolvedor" class="tab-pane fade">
+                    <h1 class="alert alert-success alert-white rounded">
+                        Desenvolvedor
+                    </h1>
+                    <div class="well well-sm">
+                        <h2 class="alert alert-success alert-white rounded">
+                            <i class="fa fa-html5"></i> HTML
+                        </h2>
+                        <div class="form-group">
+                            <textarea name="" cols="30" rows="40" class="form-control"></textarea>
                         </div>
                     </div>
-                    <div id="secaoPrevia" class="tab-pane fade">
-                        <h1>PRÉVIA</h1>
+                    <div class="well well-sm">
+                        <h2 class="alert alert-success alert-white rounded">
+                            <i class="fa fa-rebel"></i> Javascript
+                        </h2>
+                        <div class="form-group">
+                            <textarea name="" cols="30" rows="40" class="form-control"></textarea>
+                        </div>
                     </div>
+                    <div class="well well-sm">
+                        <h2 class="alert alert-info alert-white rounded">
+                            <i class="fa fa-rebel"></i> Custom Javascript
+                        </h2>
+                        <div class="form-group">
+                            <textarea name="" cols="30" rows="40" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="well well-sm">
+                        <h2 class="alert alert-danger alert-white rounded">
+                            <i class="fa fa-rebel"></i> Show or Hide Javascript
+                        </h2>
+                        <div class="form-group">
+                            <textarea name="" cols="30" rows="40" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div id="secaoPrevia" class="tab-pane fade">
+                    <h1>PRÉVIA</h1>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
