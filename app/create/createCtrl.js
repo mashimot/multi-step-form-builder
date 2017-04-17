@@ -1,12 +1,12 @@
 var create = angular.module('app');
-create.controller('createCtrl', [ '$scope', 'blockEdit', function($scope, blockEdit){
-    blockEdit.init($scope);
+create.controller('createCtrl', [ '$scope', 'SurveyBuilder', function($scope, SurveyBuilder){
+    var Survey = new SurveyBuilder($scope);
     $scope.types = type();
     $scope.add = function(){
-        var msg = blockEdit.add($scope.numbers);
-        /*if(msg !== 'success'){
+        var msg = Survey.add($scope.numbers);
+        if(msg !== 'success'){
             alert(msg);
-        }*/
+        }
     };
     $scope.developer = function(){
         alert('Under construction');
@@ -15,17 +15,17 @@ create.controller('createCtrl', [ '$scope', 'blockEdit', function($scope, blockE
         alert('Under construction');
     };
     $scope.removeAll = function(){
-        blockEdit.removeAll();
+        Survey.removeAll();
     };
     $scope.createNewBlock = function(type, keyC, keyP){
-        blockEdit.key.setKeyC(keyC);
-        blockEdit.key.setKeyP(keyP);
-        blockEdit.createNewBlock();
+        Survey.setKeyC(keyC);
+        Survey.setKeyP(keyP);
+        Survey.createNewBlock();
     };
     $scope.clone = function(keyC, keyP){
-        blockEdit.key.setKeyC(keyC);
-        blockEdit.key.setKeyP(keyP);
-        blockEdit.clone();
+        Survey.setKeyC(keyC);
+        Survey.setKeyP(keyP);
+        Survey.clone();
     };
     $scope.removeContent = function(p, $index){
         p.input.contents.splice($index, 1);
@@ -33,10 +33,10 @@ create.controller('createCtrl', [ '$scope', 'blockEdit', function($scope, blockE
     $scope.addContent = function(p, $index){
         p.input.contents.push({text: '', value: ''});
     };
-    $scope.remove = function(type, keyC, keyP){
-        blockEdit.key.setKeyC(keyC);
-        blockEdit.key.setKeyP(keyP);
-        blockEdit.remove(type);
+    $scope.remove = function(keyC, keyP){
+        Survey.setKeyC(keyC);
+        Survey.setKeyP(keyP);
+        Survey.remove();
     };
     $scope.orderBy = function(){
 
@@ -57,7 +57,46 @@ create.controller('createCtrl', [ '$scope', 'blockEdit', function($scope, blockE
             }
         });
     };
+    /*$scope.$watch(function() {
+        var check = "";
+        for (var i = 0; i < $scope.columns.form.length; i++) {
+            var item = $scope.columns.form[i];
+            for (var j = 0; j < item.sections.length; j++) {
+                var section = item.sections[j];
+                if(section.description === ''){
+                    console.log('joeysworldtour');
+                }
+            }
+        }
+        return check;
+    });*/
 
+    var isUnChanged = false;
+    var shouldRemoveWhen = {
+        'description' : '',
+        'number' : '',
+        'isRequired' : false,
+        'isHide' : false,
+        'isHideWhen' : ''
+    };
+    $scope.$watch(function(){
+        if (!isUnChanged) {
+            for(var i = 0; i < $scope.columns.form.length; i++) {
+                var d = $scope.columns.form[i];
+                for(var j = 0; j < d.sections.length; j++) {
+                    var s = d.sections[j];
+                    for (var key in s) {
+                        if (s.hasOwnProperty(key)) {
+                            if(s[key] === shouldRemoveWhen[key]){
+                                delete s[key];
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    });
     $scope.sortableContents = {
         items: '.sortable-item-contents'
     };

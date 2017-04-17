@@ -1,17 +1,17 @@
-<add-titles></add-titles>
-<div class="well well-sm" >
+<!--add-titles></add-titles-->
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="text-right">
+            <span class="btn-group" ng-click="clone(keyC, keyP)">
+                <button class="btn btn-primary btn-sm form-control"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
+            </span>
+            <span class="btn-group" ng-click="remove(keyC, keyP)">
+                <button class="btn btn-danger btn-sm form-control"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </button>
+            </span>
+        </div>
+    </div>
     <div class="panel-body">
         <section class="informations">
-            <div class="row">
-                <div class="col-md-12 text-right well well-sm">
-                    <span class="btn-group" ng-click="clone(keyC, keyP)">
-                        <button class="btn btn-primary btn-sm form-control"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
-                    </span>
-                    <span class="btn-group" ng-click="remove('hadouken', keyC, keyP)">
-                        <button class="btn btn-danger btn-sm form-control"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </button>
-                    </span>
-                </div>
-            </div>
             <div class="row">
                 <div class="col-md-1"><div class="form-group"><input type="text" class="form-control" ng-model="p.number" /></div></div>
                 <div class="col-md-5"><div class="form-group"><input type="text" class="form-control" ng-model="p.description"  placeholder="Digite a Questão"/></div></div>
@@ -30,12 +30,12 @@
                         <div class="form-group">
                             <label>
                                 <div class="checkbox">
-                                    <input type="checkbox" ng-model="p.option.isRequired" style="display: none;" checked>
+                                    <input type="checkbox" ng-model="p.isRequired" style="display: none;" checked>
                                     Questão obrigatória?
-                                    <div ng-switch on="p.option.isRequired">
+                                    <div ng-switch on="p.isRequired">
                                         <span ng-switch-when="true"><i class="fa fa-check-square-o"></i> Sim</span>
                                         <span ng-switch-when="false"><i class="fa fa-square-o"></i> Não</span>
-                                        <span ng-switch-default>Error</span>
+                                        <span ng-switch-default><i class="fa fa-square-o"></i> Não</span>
                                     </div>
                                 </div>
                             </label>
@@ -45,12 +45,12 @@
                         <div class="form-group">
                             <label>
                                 <div class="checkbox">
-                                    <input type="checkbox" ng-model="p.option.isHide" style="display: none;">
+                                    <input type="checkbox" ng-model="p.isHide" style="display: none;">
                                     Mostra Questão?
-                                    <div ng-switch on="p.option.isHide">
+                                    <div ng-switch on="p.isHide">
                                         <span ng-switch-when="true"><i class="fa fa-eye-slash"></i> Não</span>
                                         <span ng-switch-when="false"><i class="fa fa-eye"></i> Sim</span>
-                                        <span ng-switch-default>Error</span>
+                                        <span ng-switch-default><i class="fa fa-eye"></i> Sim</span>
                                     </div>
                                 </div>
                             </label>

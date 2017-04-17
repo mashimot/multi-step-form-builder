@@ -1,0 +1,21 @@
+<div class="col-lg-7 col-md-7 col-sm-8 col-xs-11">
+    <uib-tabset>
+        <uib-tab ng-repeat="(keyC, column) in columns.form" index="keyC" heading="Page {{ keyC + 1 }}">
+            <div ng-if="column.sections.length <= 0">
+                <div class="alert alert-warning">
+                    Place your elements here
+                </div>
+            </div>
+            <div ui-sortable="sortableSection" ng-model="column.sections" class="connected-apps-container" style="min-height: 40px;">
+                <div ng-repeat="(keyP, p) in column.sections">
+                    <div ng-include="'create/survey-content.html'" ></div>
+                </div>
+            </div>
+        </uib-tab>
+        <li>
+            <button type="button" ng-click="add()" class="btn btn-primary btn-block">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar
+            </button>
+        </li>
+    </uib-tabset>
+</div>

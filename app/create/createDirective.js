@@ -1,45 +1,5 @@
-create.directive('generateForm', ['$compile','$injector', '$http', '$templateCache', '$sce', 'EditForm', function( $compile, $http, $injector, $templateCache, $sce, EditForm) {
-    /*
-     var getTemplate = function(contentType) {
-     var templateMap = {
-     discordo: 'getDiscordo'
-     };
-     return templateMap[contentType];
-     }*/
-    return {
-        scope: {
-            data: '='
-        },
-        controller: function(){
-
-        },
-        link: function(scope, element, attr){
-            var h = '';
-            element.click(function(){
-                angular.forEach(scope.data, function(column, keyC){
-                    var hideBlock = (keyC > 0)? 'style="display: block;"' : '' ;
-                    h += '<div id="bloco' + (keyC  + 1) +'" class="bloco primeiro-bloco bloco-atual well well-sm" ' + hideBlock + ' >' + ' BLOCO ' + keyC;
-                    angular.forEach(column.perguntas, function(p){
-                        EditForm.init(p);
-                        if(p.titles.length > 0){
-                            angular.forEach(p.titles, function(title){
-                                h += '<h1 class="alert alert-info">' + title.text.trim() + '</h1>'
-                            });
-                        }
-                        h += EditForm.generate();
-                    });
-                    h += '</div>';
-                });
-                $(".wooo").html(h);
-            });
-
-        }
-    };
-}]);
 create.directive('addTitles', ['blockEdit', function(blockEdit){
     return {
-        controller: function($scope){
-        },
         template: '' +
         '<section class="well well-sm">' +
         '<button ng-click="addTitle(p)" class="btn btn-default btn-sm"> add title</button>' +
@@ -65,3 +25,9 @@ create.directive('addTitles', ['blockEdit', function(blockEdit){
         }
     };
 }]);
+
+create.directive('surveyBuilder',  function(){
+    return {
+        templateUrl: '../templates/survey-builder.html'
+    }
+});

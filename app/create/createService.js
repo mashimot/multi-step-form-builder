@@ -59,37 +59,24 @@ create.service('EditFormCollection', function(){
     };
 });
 
-create.factory('blockEdit', function(){
-    var _form = [];
-    var keyC = 0;
-    var keyP = 0;
-    var key = {};
+create.factory('SurveyBuilder', function(){
+    var _form = null;
+    var _keyC = 0;
+    var _keyP = 0;
 
-    key.setKeyC = function(key){
-        keyC = key;
+    var SurveyBuilder = function($scope){
+        $scope.columns = getMainObject();
+        _form = $scope.columns.form;
     };
-    key.setKeyP = function(key){
-        keyP = key;
+
+    SurveyBuilder.prototype.setKeyC = function(keyC){
+        _keyC = keyC;
     };
-    var init = function(scope){
-        scope.newQuestions = [];
-        scope.newQuestions.push(getQuestion());
-        scope.columns = getMainObject();
-        scope.sortableSection = {
-            connectWith: ".connected-apps-container",
-            stop: function (e, ui) {
-                // if the element is removed from the first container
-                if ($(e.target).hasClass('first') &&
-                    ui.item.sortable.droptarget &&
-                    e.target != ui.item.sortable.droptarget[0]) {
-                    // clone the original model to restore the removed item
-                    scope.newQuestions.push(getQuestion());
-                }
-            }
-        };
-        _form = scope.columns.form;
+    SurveyBuilder.prototype.setKeyP = function(keyP){
+        _keyP = keyP;
     };
-    var add = function(numbers){
+
+    SurveyBuilder.prototype.add = function(numbers){
         var title = [];
         if(numbers !== undefined){
             var fLength = _form.length;
@@ -101,7 +88,7 @@ create.factory('blockEdit', function(){
                 }
                 angular.forEach(nums, function (value) {
                     fLength = _form.length - 1;
-                    var questions = _form[fLength].section;
+                    var questions = _form[fLength].sections;
                     if (fLength >= 0) {
                         var qL = questions.length;
                         if(qL >= 0){
@@ -144,17 +131,15 @@ create.factory('blockEdit', function(){
                                 }
 
                                 //set values
-                                questions[qL].hasNewSection = hasNewSection;
                                 questions[qL].titles = title;
                                 questions[qL].number = number;
                                 questions[qL].description = description;
                                 questions[qL].input.type = type;
-                                //questions[qL].input.contents = contents;
 
                                 if(hasNewSection){
-                                    keyC = fLength;
-                                    keyP = qL;
-                                    createNewBlock();
+                                    _keyC = fLength;
+                                    _keyP = qL;
+                                    createNewBlock(hasNewSection);
                                 }
                                 title = [];
                                 hasNewSection = false;
@@ -169,51 +154,18 @@ create.factory('blockEdit', function(){
         } else {
             return 'empty';
         }
-        //_form.push(generateNewSection());
     };
-    var createNewBlock = function(){
-        var question = _form[keyC].section;
-        var currentQuestion = question[keyP];
-        if(currentQuestion.hasNewSection) {
-            if (keyC === 0) {
-                if (keyP !== 0) {
-                    _form.insert(keyC + 1, generateNewSection());
-                    pushTo('next');
-                    question.splice(keyP, question.length);
-                }
-            } else {
-                _form.insert(keyC + 1, generateNewSection());
-                pushTo('next');
-                question.splice(keyP, question.length);
-            }
-        } else {
-            pushTo('previous');
-            _form.splice(keyC, 1);
-        }
+
+    /*var add = function(){
+     _form.push(generateNewSection());
+     };*/
+
+    SurveyBuilder.prototype.remove = function(){
+        getSection().splice(_keyP, 1);
     };
-    var remove = function(type){
-        var question = _form[keyC].section;
-        var currentQuestion = question[keyP];
-        if(type === 'section'){
-            _form.splice(keyC, 1);
-        } else {
-            if(question.length > 1){
-                question.splice(keyP, 1);
-                if(currentQuestion.hasNewSection){
-                    pushTo('previous');
-                    _form.splice(keyC, 1);
-                }
-            } else {
-                _form.splice(keyC, 1);
-            }
-        }
-    };
-    var removeAll = function(){
-        _form = init();
-    };
-    var clone = function(){
-        var nextIndex = keyP + 1;
-        _form[keyC].section.insert(nextIndex, getQuestion());
+    SurveyBuilder.prototype.clone = function(){
+        var nextIndex = _keyP + 1;
+        getSection().insert(nextIndex, getQuestion());
     };
     var getMainObject = function(){
         return {
@@ -226,21 +178,17 @@ create.factory('blockEdit', function(){
     };
     var generateNewSection = function(){
         return {
-            "blockPos": Math.random(),
-            "section": []
+            "sections": []
         };
     };
     var getQuestion = function(){
         return {
-            //"hasNewSection": false,
             "titles": [], // string
             "number": null, // int
             "description": 'Description: ' + Math.random(), // string
-            "option": {
-                "isHide": false, // boolean
-                "hasJustifica": true, // boolean
-                "isRequired": true // boolean
-            },
+            "isHide": false, // boolean
+            "isHideWhen": '', // boolean
+            "isRequired": true, // boolean
             "input": {
                 type: 'radio',
                 contents: [{
@@ -254,26 +202,42 @@ create.factory('blockEdit', function(){
                     value: '3'
                 }]
             },
-            "conditional-statements": []
+            "conditional-statements": '' //String
         };
     };
+    var getSection = function(){
+        return _form[_keyC].sections;
+    };
+    var createNewBlock = function(hasNewSection){
+        var question = getSection();
+        if(hasNewSection) {
+            if (_keyC === 0) {
+                if (_keyP !== 0) {
+                    _form.insert(_keyC + 1, generateNewSection());
+                    pushTo('next');
+                    question.splice(_keyP, question.length);
+                }
+            } else {
+                _form.insert(_keyC + 1, generateNewSection());
+                pushTo('next');
+                question.splice(_keyP, question.length);
+            }
+        } else {
+            pushTo('previous');
+            _form.splice(_keyC, 1);
+        }
+    };
     var pushTo = function(copyTo){
-        var p = _form[keyC].section, qlength = p.length;
-        var k = (copyTo === 'next')? (keyC + 1) : (keyC - 1);
-        for(var i = keyP; i < qlength; i++ ){
-            _form[k].section.push(p[i]);
+        var p = _form[_keyC].sections, qlength = p.length;
+        var k = (copyTo === 'next')? (_keyC + 1) : (_keyC - 1);
+        for(var i = _keyP; i < qlength; i++ ){
+            _form[k].sections.push(p[i]);
         }
     };
     Array.prototype.insert = function (index, item) {
         this.splice(index, 0, item);
     };
-    return {
-        init: init,
-        key: key,
-        createNewBlock: createNewBlock,
-        add: add,
-        remove: remove,
-        removeAll: removeAll,
-        clone: clone
-    }
+
+    return SurveyBuilder;
+
 });
