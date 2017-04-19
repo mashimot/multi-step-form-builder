@@ -67,6 +67,8 @@ create.factory('SurveyBuilder', function(){
     var SurveyBuilder = function($scope){
         $scope.columns = getMainObject();
         _form = $scope.columns.form;
+        _form.push(generateNewSection());
+
     };
 
     SurveyBuilder.prototype.setKeyC = function(keyC){
@@ -75,12 +77,47 @@ create.factory('SurveyBuilder', function(){
     SurveyBuilder.prototype.setKeyP = function(keyP){
         _keyP = keyP;
     };
-
+    SurveyBuilder.prototype.config = function($uibModal){
+        var type = getSection()[_keyP].input.type;
+        var templateToLoad = getTemplateToLoad();
+        var modalInstance = $uibModal.open({
+            templateUrl: templateToLoad[type].templateUrl,
+            controller: templateToLoad[type].controller,
+            resolve: templateToLoad[type].resolve
+        });
+    }
     SurveyBuilder.prototype.add = function(numbers){
         var title = [];
         if(numbers !== undefined){
             var fLength = _form.length;
             var hasNewSection = false;
+            /*var pageRegex = /<page>([\s\S]*?)<\/page>/g;
+            var radioRegex = /<radio>([\s\S]*?)<\/radio>/g;
+            var newPage, newRadio;
+
+            while (newPage = pageRegex.exec(numbers)) {
+                if (fLength <= 0) {
+                    _form.push(generateNewSection());
+                }
+                //hasNewSection = true;
+                fLength = _form.length - 1;
+                if (fLength >= 0) {
+                    var questions = _form[fLength].sections;
+                    while (newRadio = radioRegex.exec(newPage[1])) {
+                        var qL = questions.length;
+                        var r = newRadio[1].replace(/^\s+|\s+$/g, '').split('\n');
+                        if (r.length > 0) {
+                            questions.push({input: {'type': 'radio', contents: []}}) ;
+                            for (var i = 0; i < r.length; i++) {
+                                questions[qL].input.contents.push({
+                                    text: r[i].trim(),
+                                    value: r[i].trim()
+                                })
+                            }
+                        }
+                    }
+                }
+            }*/
             var nums = numbers.split('\n');
             if (nums.length > 0) {
                 if (fLength <= 0) {
@@ -109,6 +146,7 @@ create.factory('SurveyBuilder', function(){
                                         v = v.trim();
                                         switch(i){
                                             case 0:
+
                                                 number = v;
                                                 break;
                                             case 1:
@@ -156,10 +194,12 @@ create.factory('SurveyBuilder', function(){
         }
     };
 
-    /*var add = function(){
-     _form.push(generateNewSection());
-     };*/
-
+    SurveyBuilder.prototype.add = function(){
+        _form.push(generateNewSection());
+    };
+    SurveyBuilder.prototype.configPages = function(){
+        var fL = _form.length;
+    };
     SurveyBuilder.prototype.remove = function(){
         getSection().splice(_keyP, 1);
     };
@@ -201,8 +241,7 @@ create.factory('SurveyBuilder', function(){
                     text: 'radio 3',
                     value: '3'
                 }]
-            },
-            "conditional-statements": '' //String
+            }
         };
     };
     var getSection = function(){
@@ -236,6 +275,53 @@ create.factory('SurveyBuilder', function(){
     };
     Array.prototype.insert = function (index, item) {
         this.splice(index, 0, item);
+    };
+    var getTemplateToLoad = function(){
+        return {
+            'radio': {
+                templateUrl: 'radioTemplate.html',
+                controller: RadioModalController,
+                resolve: { //passa variavel para o modal, no caso a variavel p.
+                    p: function () {
+                        return getSection()[_keyP];
+                    }
+                }
+            },
+            'checkbox': {
+                templateUrl: 'radioTemplate.html',
+                controller: RadioModalController,
+                resolve: { //passa variavel para o modal, no caso a variavel p.
+                    p: function () {
+                        return getSection()[_keyP];
+                    }
+                }
+            }
+        };
+    };
+    var RadioModalController = function ($scope, $uibModalInstance, p) {
+        $scope.p = p;
+        var contents = $scope.p.input.contents;
+        $scope.removeContent = function($index){
+            contents.splice($index, 1);
+        };
+        $scope.addToInput = function(string){
+            $scope.p.input.contents = [];
+            for(var i = 0; i < string.length; i++){
+                $scope.p.input.contents.push({
+                    text: string[i],
+                    value: string[i]
+                });
+            };
+        };
+        $scope.addContent = function(){
+            contents.push({text: '', value: ''});
+        };
+        $scope.ok = function () {
+            $uibModalInstance.close();
+        };
+        $scope.cancel = function () {
+            $uibModalInstance.dismiss('Cancelar');
+        };
     };
 
     return SurveyBuilder;

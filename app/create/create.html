@@ -38,21 +38,22 @@
         <div ng-controller="createCtrl">
             <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
                 <li>
-                    <a href="" data-target="#secaoEditor" data-toggle="tab" ><i class="fa fa-pencil-square-o pull-left"></i> Editor</a>
+                    <a href="" data-target="#editor" data-toggle="tab" ><i class="fa fa-pencil-square-o pull-left"></i> Editor</a>
                 <li>
                 <li>
-                    <a href="" ng-click="developer()"  data-target="#secaoDesenvolvedor" class="btn-desenvolvedor-tab" data-toggle="tab">
+                    <a href="" ng-click="developer()"  data-target="#developer" data-toggle="tab">
                         <i class="fa fa-code pull-left"></i> Desenvolvedor
                     </a>
                 </li>
             </ul>
             <div class="tab-content">
-                <div id="secaoEditor" class="tab-pane fade in active">
+                <div id="editor" class="tab-pane fade in active">
                     <input-menu></input-menu>
                     <survey-builder></survey-builder>
                     <pre>{{ columns | json }}</pre>
                 </div>
-                <div id="secaoDesenvolvedor" class="tab-pane fade">
+
+                <div id="developer" class="tab-pane fade in ">
                     <h1 class="alert alert-success alert-white rounded">
                         Desenvolvedor
                     </h1>
@@ -61,7 +62,7 @@
                             <i class="fa fa-html5"></i> HTML
                         </h2>
                         <div class="form-group">
-                            <textarea name="" cols="30" rows="40" class="form-control"></textarea>
+                            <textarea id="htmlResult" name="" cols="30" rows="40" class="form-control"></textarea>
                         </div>
                     </div>
                     <div class="well well-sm">
@@ -93,6 +94,7 @@
                     <h1>PRÉVIA</h1>
                 </div>
             </div>
+
         </div>
     </div>
 </div>

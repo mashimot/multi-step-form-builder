@@ -1,46 +1,59 @@
 var create = angular.module('app');
-create.controller('createCtrl', [ '$scope', 'SurveyBuilder', function($scope, SurveyBuilder){
+create.controller('createCtrl', [ '$scope', '$uibModal', 'SurveyBuilder', function($scope, $uibModal, SurveyBuilder){
     var Survey = new SurveyBuilder($scope);
     $scope.types = type();
+    $scope.string = '';
     $scope.add = function(){
         var msg = Survey.add($scope.numbers);
-        if(msg !== 'success'){
+        /*if(msg !== 'success'){
             alert(msg);
-        }
+        }*/
     };
     $scope.developer = function(){
-        alert('Under construction');
+        $.ajax({
+            //url: 'geraFormulario2.php',
+            url: 'http://localhost/daniel/Projetos/2016/only-human/main.php',
+            type: 'POST',
+            data:  {
+                data : JSON.stringify($scope.columns)
+            },
+            success: function (data) {
+                console.log(data);
+                var resultado = JSON.parse(data);
+                //$('.resultado').html(data);
+                alert(resultado);
+                $('#htmlResult').html(resultado.arquivoHTML);
+                $('#javascriptResult').html(resultado.arquivoJavascript);
+                $('#customScriptResult').html(resultado.customScript);
+                $('#showOrhideScriptResult').html(resultado.showOrhideScript);
+            }
+        });
     };
-    $scope.config = function(){
-        alert('Under construction');
+    $scope.config = function(keyC, keyP){
+        Survey.setKeyC(keyC);
+        Survey.setKeyP(keyP);
+        Survey.config($uibModal);
+    };
+    $scope.configPages = function(keyC, keyP){
+        Survey.setKeyC(keyC);
+        Survey.setKeyP(keyP);
+        Survey.configPages();
     };
     $scope.removeAll = function(){
         Survey.removeAll();
-    };
-    $scope.createNewBlock = function(type, keyC, keyP){
-        Survey.setKeyC(keyC);
-        Survey.setKeyP(keyP);
-        Survey.createNewBlock();
     };
     $scope.clone = function(keyC, keyP){
         Survey.setKeyC(keyC);
         Survey.setKeyP(keyP);
         Survey.clone();
     };
-    $scope.removeContent = function(p, $index){
-        p.input.contents.splice($index, 1);
-    };
-    $scope.addContent = function(p, $index){
-        p.input.contents.push({text: '', value: ''});
-    };
+
     $scope.remove = function(keyC, keyP){
         Survey.setKeyC(keyC);
         Survey.setKeyP(keyP);
         Survey.remove();
     };
-    $scope.orderBy = function(){
 
-    };
     $scope.updateType = function(p){
         var types = type();
         var value = p.input.type;
@@ -57,19 +70,6 @@ create.controller('createCtrl', [ '$scope', 'SurveyBuilder', function($scope, Su
             }
         });
     };
-    /*$scope.$watch(function() {
-        var check = "";
-        for (var i = 0; i < $scope.columns.form.length; i++) {
-            var item = $scope.columns.form[i];
-            for (var j = 0; j < item.sections.length; j++) {
-                var section = item.sections[j];
-                if(section.description === ''){
-                    console.log('joeysworldtour');
-                }
-            }
-        }
-        return check;
-    });*/
 
     var isUnChanged = false;
     var shouldRemoveWhen = {
@@ -101,21 +101,108 @@ create.controller('createCtrl', [ '$scope', 'SurveyBuilder', function($scope, Su
         items: '.sortable-item-contents'
     };
 }]);
+
 var type = function(){
     return [
         {
+            "value": "discordo",
+            "text": "Discordo",
+            "content": "Concordo Totalmente\nConcordo\nNão concordo nem discordo\nDiscordo\nDiscordo Totalmente\nNA (Não Aplicável)",
+        },
+        {
+            "value": "satisfeito",
+            "text": "Satisfeito",
+            "content": "Muito insatisfeito\nInsatisfeito\nNem satisfeito e Nem insatisfeito\nSatisfeito\nMuito Satisfeito\nNA (Não Aplicável)"
+        },
+        {
+            "value": "escala0a10_comNA",
+            "text": "NPS (de 0 a 10) com NA",
+            "content": ""
+        },
+
+        {
+            "value": "conhecoYNUseiYN_VariasPergunta",
+            "text": "Conheco(SIM/NAO) | Usei (SIM/NAO) Várias",
+            "content": ""
+        },
+        {
+            "value": "conhecoYNUseiYN_1Pergunta",
+            "text": "Conheco(SIM/NAO) | Usei (SIM/NAO)",
+            "content": ""
+        },
+        {
+            "value": "justifica",
+            "text": "Somente Justifica",
+            "content": ""
+        },
+        {
+            "value": "SIM-NAO",
+            "text": "SIM-NAO",
+            "content": "SIM\nNÃO"
+        },
+        {
+            "value": "SIM-NAO-NA",
+            "text": "SIM-NAO-NA",
+            "content": "SIM\nNÃO\nNA (Não Aplicável)"
+        },
+        {
+            "value": "NPS",
+            "text": "NPS Contaminado?",
+            "content": "SIM\nNÃO"
+        },
+        {
+            "value": "Identificacao",
+            "text": "Pergunta Identificação",
+            "content": "SIM\nNÃO"
+        },
+        {
+            "value": "listaMelhores",
+            "text": "Lista Melhores",
+            "content": ""
+        },
+        {
             "value": "radio",
-            "text": "radio",
-            "content": "radio 1\nradio 2\nradio 3\nradio 4"
+            "text": "Radio",
+            "content": ""
         },
         {
             "value": "checkbox",
-            "text": "checkbox",
-            "content": "checkbox 1\ncheckbox 2\ncheckbox 3\ncheckbox 4"
+            "text": "Checkbox",
+            "content": ""
         },
         {
-            "value": "text",
-            "text": "text",
+            "value": "select",
+            "text": "select-option",
+            "content": ""
+        },
+        {
+            "value": "FRBEN_mesmaLinha",
+            "text": "FRBEN_mesmaLinha",
+            "content": ""
+        },
+        {
+            "value": "radio_comJustifica",
+            "text": "RADIO COM JUSTIFICA",
+            "content": ""
+        },
+        {
+            "value": "chkBox_mesmaLinha",
+            "text": "chkBox_mesmaLinha",
+            "content": ""
+        },
+        {
+            "value": "text-inputs",
+            "text": "text-inputs",
+            "content": ""
+        },
+        {
+            "value": "percent",
+            "text": "percent",
+            "content": ""
+        },
+        {
+            "value": "nao-participou",
+            "text": "nao-participou",
             "content": ""
         }
     ];

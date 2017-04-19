@@ -1,4 +1,4 @@
-create.directive('addTitles', ['blockEdit', function(blockEdit){
+create.directive('addTitles', [ function(   ){
     return {
         template: '' +
         '<section class="well well-sm">' +

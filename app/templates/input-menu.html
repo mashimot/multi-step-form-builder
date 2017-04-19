@@ -1,7 +1,7 @@
 <div class="col-lg-2 col-md-2 col-sm-1 col-xs-1 panel panel-default svd_toolbox" ng-controller="inputMenuCtrl">
     <div ui-sortable="sortableSection" ng-model="mainInputs" class="first">
-        <div ng-repeat="(i, input) in mainInputs | orderBy: input.type">
-            <div class="alert alert-success rounded gradient" >{{ input.text }}</div>
+        <div ng-repeat="(i, input) in mainInputs | orderBy: input.name">
+            <div class="alert alert-success rounded gradient" >{{ input.name }}</div>
         </div>
     </div>
 </div>

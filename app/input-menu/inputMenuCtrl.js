@@ -5,9 +5,8 @@ create.controller('inputMenuCtrl', [ '$scope', function($scope){
     var mainInputs = function(){
         return [
         {
-            type: 'radio',
-            text: 'Radio group',
-            "content_to_drop": {
+            name: 'Radio group',
+            input: {
                 type: 'radio',
                 contents: [{
                     text: 'radio 1',
@@ -22,9 +21,8 @@ create.controller('inputMenuCtrl', [ '$scope', function($scope){
             }
         },
         {
-            type: 'checkbox',
-            text: 'Checkbox',
-            "content_to_drop": {
+            name: 'checkbox',
+            input: {
                 type: 'checkbox',
                 contents: [{
                     text: 'checkbox 1',
