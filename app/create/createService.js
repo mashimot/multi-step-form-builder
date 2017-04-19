@@ -300,27 +300,33 @@ create.factory('SurveyBuilder', function(){
     };
     var RadioModalController = function ($scope, $uibModalInstance, p) {
         $scope.p = p;
-        var contents = $scope.p.input.contents;
+
         $scope.removeContent = function($index){
-            contents.splice($index, 1);
+            getContent().splice($index, 1);
         };
         $scope.addToInput = function(string){
-            $scope.p.input.contents = [];
+            setContentToEmpty();
             for(var i = 0; i < string.length; i++){
-                $scope.p.input.contents.push({
+                getContent().push({
                     text: string[i],
                     value: string[i]
                 });
             };
         };
         $scope.addContent = function(){
-            contents.push({text: '', value: ''});
+            getContent().push({text: '', value: ''});
         };
         $scope.ok = function () {
             $uibModalInstance.close();
         };
         $scope.cancel = function () {
             $uibModalInstance.dismiss('Cancelar');
+        };
+        var setContentToEmpty = function(){
+            p.input.contents = [];
+        };
+        var getContent = function(){
+            return p.input.contents;
         };
     };
 
