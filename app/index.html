@@ -11,7 +11,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/lumen/bootstrap.min.css"/>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+    <style>
+        .disable-all-contents{
+            pointer-events:none;
+        }
+    </style>
 </head>
 <body>
 
@@ -19,6 +24,7 @@
 <!--[if lt IE 7]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
+
 <div ng-view></div>
 
 
@@ -30,7 +36,15 @@
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-sortable/0.17.0/sortable.min.js"></script>
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+
+<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
 
 
 <script src="app.js"></script>
@@ -57,9 +71,9 @@
                 <div class="form-group">
                     <label>
                         <div class="checkbox-inline">
-                            <input type="checkbox" ng-model="p.isRequired" style="display: none;" checked>
+                            <input type="checkbox" ng-model="p.isRequired"  ng-true-value="true" ng-false-value="''"  style="display: none;" checked>
                             Questão obrigatória?
-                            <div ng-switch on="p.isRequired">
+                            <div ng-switch on="p.isRequired" >
                                 <span ng-switch-when="true"><i class="fa fa-check-square-o"></i> Sim</span>
                                 <span ng-switch-when="false"><i class="fa fa-square-o"></i> Não</span>
                                 <span ng-switch-default><i class="fa fa-square-o"></i> Não</span>
@@ -68,7 +82,7 @@
                     </label>
                     <label>
                         <div class="checkbox-inline">
-                            <input type="checkbox" ng-model="p.isHide" style="display: none;">
+                            <input type="checkbox" ng-model="p.isHide" ng-true-value="true" ng-false-value="''"   style="display: none;">
                             Mostra Questão?
                             <div ng-switch on="p.isHide">
                                 <span ng-switch-when="true"><i class="fa fa-eye-slash"></i> Não</span>
@@ -126,5 +140,16 @@
         <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
     </div>
 </script>
+<!--script type="text/ng-template" id="input-radio-template.html">
+    <div class="row disable-all-contents">
+        <div class="col-md-12">
+            <div ng-repeat="i in input.contents">
+                <div class="radio"><label><input type="radio"/> {{ i.text }}</label></div>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="input-checkbox-template.html">
+</script-->
 </body>
 </html>

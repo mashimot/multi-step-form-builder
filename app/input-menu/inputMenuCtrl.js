@@ -35,6 +35,12 @@ create.controller('inputMenuCtrl', [ '$scope', function($scope){
                     value: '3'
                 }]
             }
+        },
+        {
+            name: 'comments',
+            input: {
+                type: 'comments'
+            }
         }
         ];
     };

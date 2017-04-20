@@ -224,11 +224,11 @@ create.factory('SurveyBuilder', function(){
     var getQuestion = function(){
         return {
             "titles": [], // string
-            "number": null, // int
-            "description": 'Description: ' + Math.random(), // string
-            "isHide": false, // boolean
-            "isHideWhen": '', // boolean
-            "isRequired": true, // boolean
+            //"number": '', // int
+            //"description": 'Description: ' + Math.random(), // string
+            //"isHide": false, // boolean
+            //"isHideWhen": '', // boolean
+            //"isRequired": true, // boolean
             "input": {
                 type: 'radio',
                 contents: [{
@@ -305,13 +305,28 @@ create.factory('SurveyBuilder', function(){
             getContent().splice($index, 1);
         };
         $scope.addToInput = function(string){
-            setContentToEmpty();
-            for(var i = 0; i < string.length; i++){
-                getContent().push({
-                    text: string[i],
-                    value: string[i]
-                });
-            };
+            var error = {};
+            if(typeof string !== 'undefined'){
+                var strlen = string.length;
+                if(strlen > 0){
+                    setContentToEmpty();
+                    for(var i = 0; i < strlen; i++){
+                        getContent().push({
+                            text: string[i],
+                            value: string[i]
+                        });
+                    }
+                } else {
+                    error.hasError = true;
+                    error.message = "Adicione um Valor";
+                }
+            } else {
+                error.hasError = true;
+                error.message = "Adicione um Valor";
+            }
+            if(error.hasError){
+               alert(error.message);
+            }
         };
         $scope.addContent = function(){
             getContent().push({text: '', value: ''});

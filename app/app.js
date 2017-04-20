@@ -4,7 +4,8 @@
 angular.module('app', [
     'ngRoute',
     'ui.sortable',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'ngMaterial'
 ]).config(function($routeProvider){
     $routeProvider.when('/', {
         templateUrl: 'create/create.html'

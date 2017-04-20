@@ -72,13 +72,6 @@ create.controller('createCtrl', [ '$scope', '$uibModal', 'SurveyBuilder', functi
     };
 
     var isUnChanged = false;
-    var shouldRemoveWhen = {
-        'description' : '',
-        'number' : '',
-        'isRequired' : false,
-        'isHide' : false,
-        'isHideWhen' : ''
-    };
     $scope.$watch(function(){
         if (!isUnChanged) {
             for(var i = 0; i < $scope.columns.form.length; i++) {
@@ -87,9 +80,10 @@ create.controller('createCtrl', [ '$scope', '$uibModal', 'SurveyBuilder', functi
                     var s = d.sections[j];
                     for (var key in s) {
                         if (s.hasOwnProperty(key)) {
-                            if(s[key] === shouldRemoveWhen[key]){
+                            if (s[key].length < 1) {
+                                console.log('joeys');
                                 delete s[key];
-                                break;
+                                return false;
                             }
                         }
                     }
@@ -100,6 +94,29 @@ create.controller('createCtrl', [ '$scope', '$uibModal', 'SurveyBuilder', functi
     $scope.sortableContents = {
         items: '.sortable-item-contents'
     };
+    $scope.sortableSection = {
+        start: function(event, ui){
+
+        }
+    };
+    $scope.items = ['Item #1', 'Item #2', 'Item #3', 'Item #4', 'Item #5']
+    $scope.sort = function() {
+        var tabs = $("#sortable").sortable({
+            "items": "md-tab-item",
+            "axis": "x",
+            "start": function(event, ui) {
+                console.log(ui.item.startPos);
+                ui.item.startPos = ui.item.index();
+            },
+            "stop": function(event, ui) {
+                var oldIndex = ui.item.startPos;
+                var newIndex = ui.item.index();
+                var backward = oldIndex > newIndex;
+                $scope.columns.form.splice(newIndex + (backward ? 0 : 1), 0, $scope.columns.form[oldIndex]);
+                $scope.columns.form.splice(oldIndex + (backward ? 1 : 0), 1);
+            }
+        });
+    }
 }]);
 
 var type = function(){
