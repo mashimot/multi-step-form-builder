@@ -49,11 +49,12 @@
 
 <script src="app.js"></script>
 <script src="create/createCtrl.js"></script>
+<script src="services/SurveyService.js"></script>
+<script src="services/ModalService.js"></script>
+<script src="services/SurveyCollectionService.js"></script>
 <script src="input-menu/inputMenuCtrl.js"></script>
 <script src="input-menu/inputMenuDirective.js"></script>
 <script src="create/createDirective.js"></script>
-<script src="create/createService.js"></script>
-
 
 <script src="components/version/version.js"></script>
 <script src="components/version/version-directive.js"></script>
@@ -91,6 +92,9 @@
                             </div>
                         </div>
                     </label>
+                </div>
+                <div class="form-group">
+                    <input type="text" ng-model="p.joeysworldtour" class="form-control"/>
                 </div>
             </uib-tab>
             <uib-tab index="1" heading="Escolhas">
@@ -136,20 +140,23 @@
         </uib-tabset>
     </div>
     <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="apply()">Aplicar</button>
         <button class="btn btn-primary" ng-click="ok()">OK</button>
         <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
     </div>
 </script>
-<!--script type="text/ng-template" id="input-radio-template.html">
-    <div class="row disable-all-contents">
-        <div class="col-md-12">
-            <div ng-repeat="i in input.contents">
-                <div class="radio"><label><input type="radio"/> {{ i.text }}</label></div>
-            </div>
-        </div>
+<script type="text/ng-template" id="input-radio-template.html">
+    <div ng-repeat="i in input.contents">
+        <div class="radio"><label><input type="radio"/> {{ i.text }}</label></div>
     </div>
 </script>
 <script type="text/ng-template" id="input-checkbox-template.html">
-</script-->
+    <div ng-repeat="i in input.contents">
+        <div class="radio"><label><input type="checkbox"/> {{ i.text }}</label></div>
+    </div>
+</script>
+<script type="text/ng-template" id="input-comments-template.html">
+    <textarea class="form-control" rows="4"></textarea>
+</script>
 </body>
 </html>

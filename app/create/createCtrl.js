@@ -1,13 +1,12 @@
 var create = angular.module('app');
-create.controller('createCtrl', [ '$scope', '$uibModal', 'SurveyBuilder', function($scope, $uibModal, SurveyBuilder){
-    var Survey = new SurveyBuilder($scope);
-    $scope.types = type();
-    $scope.string = '';
+create.controller('createCtrl', [ '$scope', '$uibModal', 'SurveyService', 'ModalService',  function($scope, $uibModal, SurveyService, ModalService){
+    $scope.columns = generateNew('main');
+    //$scope.columns.form.push(generateNew('section'));
+
     $scope.add = function(){
-        var msg = Survey.add($scope.numbers);
-        /*if(msg !== 'success'){
-            alert(msg);
-        }*/
+        /*var Survey = init(0, 0, $scope.columns.form);
+        Survey.add($scope.numbers);*/
+        $scope.columns.form.push(generateNew('section'));
     };
     $scope.developer = function(){
         $.ajax({
@@ -29,46 +28,33 @@ create.controller('createCtrl', [ '$scope', '$uibModal', 'SurveyBuilder', functi
             }
         });
     };
-    $scope.config = function(keyC, keyP){
-        Survey.setKeyC(keyC);
-        Survey.setKeyP(keyP);
-        Survey.config($uibModal);
+    $scope.edit = function(keyC, keyP){
+        var Survey = init(keyC, keyP, $scope.columns.form);
+        var type = Survey.getSection().input.type;
+        var section = Survey.getSection();
+        var templateToLoad = ModalService.getTemplateToLoad(type, section);
+        if(templateToLoad !== 'error'){
+            var modalInstance = $uibModal.open({
+                templateUrl: templateToLoad.templateUrl,
+                controller: templateToLoad.controller, //return a string and then converts to a function
+                resolve: templateToLoad.resolve
+            });
+        } else {
+            alert('Template not Founded!');
+        }
     };
-    $scope.configPages = function(keyC, keyP){
-        Survey.setKeyC(keyC);
-        Survey.setKeyP(keyP);
-        Survey.configPages();
-    };
+
     $scope.removeAll = function(){
         Survey.removeAll();
     };
     $scope.clone = function(keyC, keyP){
-        Survey.setKeyC(keyC);
-        Survey.setKeyP(keyP);
-        Survey.clone();
+        var Survey = init(keyC, keyP, $scope.columns.form);
+        Survey.clone(generateNew('question'));
     };
 
     $scope.remove = function(keyC, keyP){
-        Survey.setKeyC(keyC);
-        Survey.setKeyP(keyP);
+        var Survey = init(keyC, keyP, $scope.columns.form);
         Survey.remove();
-    };
-
-    $scope.updateType = function(p){
-        var types = type();
-        var value = p.input.type;
-        p.input.contents = [];
-        angular.forEach(types, function(d){
-            if(d.value === value){
-                angular.forEach(d.content.split('\n'), function(c){
-                    p.input.contents.push({
-                        text: c,
-                        value: c
-                    });
-                });
-                return false;
-            }
-        });
     };
 
     var isUnChanged = false;
@@ -94,11 +80,7 @@ create.controller('createCtrl', [ '$scope', '$uibModal', 'SurveyBuilder', functi
     $scope.sortableContents = {
         items: '.sortable-item-contents'
     };
-    $scope.sortableSection = {
-        start: function(event, ui){
 
-        }
-    };
     $scope.items = ['Item #1', 'Item #2', 'Item #3', 'Item #4', 'Item #5']
     $scope.sort = function() {
         var tabs = $("#sortable").sortable({
@@ -117,111 +99,45 @@ create.controller('createCtrl', [ '$scope', '$uibModal', 'SurveyBuilder', functi
             }
         });
     }
+    var init = function(keyC, keyP){
+        return new SurveyService(keyC, keyP, $scope.columns.form);
+    }
 }]);
-
-var type = function(){
-    return [
-        {
-            "value": "discordo",
-            "text": "Discordo",
-            "content": "Concordo Totalmente\nConcordo\nNão concordo nem discordo\nDiscordo\nDiscordo Totalmente\nNA (Não Aplicável)",
-        },
-        {
-            "value": "satisfeito",
-            "text": "Satisfeito",
-            "content": "Muito insatisfeito\nInsatisfeito\nNem satisfeito e Nem insatisfeito\nSatisfeito\nMuito Satisfeito\nNA (Não Aplicável)"
-        },
-        {
-            "value": "escala0a10_comNA",
-            "text": "NPS (de 0 a 10) com NA",
-            "content": ""
-        },
-
-        {
-            "value": "conhecoYNUseiYN_VariasPergunta",
-            "text": "Conheco(SIM/NAO) | Usei (SIM/NAO) Várias",
-            "content": ""
-        },
-        {
-            "value": "conhecoYNUseiYN_1Pergunta",
-            "text": "Conheco(SIM/NAO) | Usei (SIM/NAO)",
-            "content": ""
-        },
-        {
-            "value": "justifica",
-            "text": "Somente Justifica",
-            "content": ""
-        },
-        {
-            "value": "SIM-NAO",
-            "text": "SIM-NAO",
-            "content": "SIM\nNÃO"
-        },
-        {
-            "value": "SIM-NAO-NA",
-            "text": "SIM-NAO-NA",
-            "content": "SIM\nNÃO\nNA (Não Aplicável)"
-        },
-        {
-            "value": "NPS",
-            "text": "NPS Contaminado?",
-            "content": "SIM\nNÃO"
-        },
-        {
-            "value": "Identificacao",
-            "text": "Pergunta Identificação",
-            "content": "SIM\nNÃO"
-        },
-        {
-            "value": "listaMelhores",
-            "text": "Lista Melhores",
-            "content": ""
-        },
-        {
-            "value": "radio",
-            "text": "Radio",
-            "content": ""
-        },
-        {
-            "value": "checkbox",
-            "text": "Checkbox",
-            "content": ""
-        },
-        {
-            "value": "select",
-            "text": "select-option",
-            "content": ""
-        },
-        {
-            "value": "FRBEN_mesmaLinha",
-            "text": "FRBEN_mesmaLinha",
-            "content": ""
-        },
-        {
-            "value": "radio_comJustifica",
-            "text": "RADIO COM JUSTIFICA",
-            "content": ""
-        },
-        {
-            "value": "chkBox_mesmaLinha",
-            "text": "chkBox_mesmaLinha",
-            "content": ""
-        },
-        {
-            "value": "text-inputs",
-            "text": "text-inputs",
-            "content": ""
-        },
-        {
-            "value": "percent",
-            "text": "percent",
-            "content": ""
-        },
-        {
-            "value": "nao-participou",
-            "text": "nao-participou",
-            "content": ""
-        }
-    ];
-}
+var generateNew = function(type){
+    if(type === 'main'){
+        return {
+            "id": null,
+            "formType": 1, //default (formulário telefonico)
+            "surveyName": null,
+            "projectName": null,
+            "form": []
+        };
+    } else if(type === 'section'){
+        return {
+            "sections": []
+        };
+    } else if(type === 'question'){
+        return {
+            "titles": [], // string
+            //"number": '', // int
+            //"description": 'Description: ' + Math.random(), // string
+            //"isHide": false, // boolean
+            //"isHideWhen": '', // boolean
+            //"isRequired": true, // boolean
+            "input": {
+                type: 'radio',
+                contents: [{
+                    text: 'radio 1',
+                    value: '1'
+                },{
+                    text: 'radio 2',
+                    value: '2'
+                },{
+                    text: 'radio 3',
+                    value: '3'
+                }]
+            }
+        };
+    }
+};
 

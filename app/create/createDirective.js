@@ -37,8 +37,11 @@ create.directive('addTitles', [ function(){
     };
 }]);
 create.directive('renderInputs',  function(){
+    var allowedTemplates = function(){
+
+    }
     return {
-        template: '<ng-include src="getInputTemplate()"/>',
+        template: '<div class="disable-all-contents"><div class="form-group"><ng-include src="getInputTemplate()"/></div></div>',
         scope: {
             input: '=input'
         },
@@ -46,8 +49,8 @@ create.directive('renderInputs',  function(){
         controller: function($scope) {
             //function used on the ng-include to resolve the template
             $scope.getInputTemplate = function() {
-                return '../templates/inputs/' + $scope.input.type + '.html' || '../templates/inputs/default.html';
-                //return 'input-' + $scope.input.type + '-template.html';
+                //return '../templates/inputs/' + $scope.input.type + '.html' || '../templates/inputs/default.html';
+                return 'input-' + $scope.input.type + '-template.html';
             }
         }
     };
