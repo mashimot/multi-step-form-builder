@@ -1,0 +1,47 @@
+<div class="col-lg-7 col-md-7 col-sm-8 col-xs-11">
+
+    <uib-tabset  active="activeTabIndex">
+        <uib-tab ng-repeat="(keyC, page) in columns.pages"  index="keyC" heading="Page {{ keyC + 1 }}">
+            <div class="well well-sm">
+                <button class="btn btn-danger btn-small btn-block" ng-click="deletePage(page._id)">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove Page {{ keyC + 1 }}
+                </button>
+            </div>
+            <div ng-if="page.contents.length <= 0">
+                <div class="alert alert-warning">
+                    Place your elements here
+                </div>
+            </div>
+            <div ui-sortable="sortableSection" ng-model="page.contents" class="connected-apps-container" style="min-height: 40px;">
+                <div ng-repeat="(keyP, p) in page.contents">
+                    <survey-content></survey-content>
+                </div>
+            </div>
+        </uib-tab>
+        <li>
+            <button type="button" class="btn btn-default btn-small" ng-click="addPage()" aria-label="toggle fullscreen">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </button>
+        </li>
+    </uib-tabset>
+    <!--md-content>
+        <md-tabs md-dynamic-height md-border-bottom ng-init="sort()" id="sortable">
+            <md-tab label="Page: {{ keyC + 1  }}"  ng-repeat="(keyC, page) in columns.pages">
+                {{ page._id }}
+                <md-content class="md-padding">
+                    <button class="btn btn-primary" ng-click="deletePage(page._id)"></button>
+                    <div ng-if="page.contents.length <= 0">
+                        <div class="alert alert-warning">
+                            Place your elements here
+                        </div>
+                    </div>
+                    <div ui-sortable="sortableSection" ng-model="page.contents" class="connected-apps-container" style="min-height: 40px;">
+                        <div ng-repeat="(keyP, p) in page.contents">
+                            <div ng-include="'create/survey-content.html'" ></div>
+                        </div>
+                    </div>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-content-->
+</div>

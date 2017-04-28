@@ -6,8 +6,14 @@ angular.module('app', [
     'ui.sortable',
     'ui.bootstrap',
     'ngMaterial'
-]).config(function($routeProvider){
+]).config(function($routeProvider, $locationProvider){
     $routeProvider.when('/', {
-        templateUrl: 'create/create.html'
-    })
+        templateUrl: 'views/survey/new.html',
+        controller: 'createCtrl'
+    }).when('/survey/:surveyId', {
+        templateUrl: 'views/survey/create.html',
+        controller: 'surveyCtrl'
+    });
+    //$locationProvider.html5Mode(true);
+
 })

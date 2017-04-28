@@ -1,0 +1,42 @@
+<div class="panel panel-default" style="color: black;">
+
+    <div class="panel-heading">
+        <!--
+        <section class="well well-sm">
+            <button ng-click="addTitle(p)" class="btn btn-default btn-sm"> add title</button>
+            <div as-sortable="sortableTitles" ng-model="p.titles"><br/>
+                <div ng-repeat="(id_title, title) in p.titles">
+                    <div class="row">
+                        <div class="col-md-10"><input type="text" class="form-control" value="{{ title.text }}" ng-model="title.text"/></div>
+                        <div class="col-md-2">
+                            <button ng-click="removeTitle(p, id_title)" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+            -->
+
+        <div class="text-right">
+           <span class="btn-group" ng-click="clone(keyC, keyP)">
+               <button class="btn btn-primary btn-sm form-control"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
+           </span>
+           <span class="btn-group" ng-click="deleteContent(123, p._id)">
+               <button class="btn btn-danger btn-sm form-control"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </button>
+           </span>
+        </div>
+    </div>
+    <div class="panel-body">
+        <section class="informations">
+            <div class="row">
+                <div class="col-md-1"><div class="form-group"><input type="text" class="form-control" ng-model="p.number" /></div></div>
+                <div class="col-md-10"><div class="form-group"><input type="text" class="form-control" ng-model="p.description"  placeholder="Digite a Questão"/></div></div>
+                <div class="col-md-1 text-center">
+                    <div class="form-group"><button type="button" ng-click="edit(p)" class="btn btn-default btn-sm"><i class="fa fa-cog" aria-hidden="true"></i> edit</button></div>
+                </div>
+            </div>
+            <render-inputs input="p.input"></render-inputs>
+        </section>
+    </div>
+</div>
+

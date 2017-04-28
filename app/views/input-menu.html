@@ -1,0 +1,7 @@
+<div class="col-lg-2 col-md-2 col-sm-1 col-xs-1" ng-controller="inputMenuCtrl">
+    <div ui-sortable="sortableSection" ng-model="mainInputs" class="btn-block" >
+        <div ng-repeat="(i, input) in mainInputs | orderBy: input.name">
+            <div class="btn btn-default btn-lg btn-block">{{ input.name }}</div>
+        </div>
+    </div>
+</div>

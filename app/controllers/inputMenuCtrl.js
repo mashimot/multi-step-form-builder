@@ -7,8 +7,8 @@ create.controller('inputMenuCtrl', [ '$scope', function($scope){
         {
             name: 'Radio group',
             input: {
-                type: 'radio',
-                contents: [{
+                _type: 'radio',
+                elements: [{
                     text: 'radio 1',
                     value: '1'
                 },{
@@ -23,8 +23,8 @@ create.controller('inputMenuCtrl', [ '$scope', function($scope){
         {
             name: 'checkbox',
             input: {
-                type: 'checkbox',
-                contents: [{
+                _type: 'checkbox',
+                elements: [{
                     text: 'checkbox 1',
                     value: '1'
                 },{
@@ -39,7 +39,7 @@ create.controller('inputMenuCtrl', [ '$scope', function($scope){
         {
             name: 'comments',
             input: {
-                type: 'comments'
+                _type: 'comments'
             }
         }
         ];

@@ -1,0 +1,21 @@
+<div class="container-fluid">
+    <form action="survey/new" method="post">
+        <button type="submit">Submit</button>
+    </form>
+    <div ng-controller="createCtrl">
+        <table class="table table-stripped">
+            <thead>
+            <tr>
+                <td>Name</td>
+                <td>Link</td>
+            </tr>
+            </thead>
+            <tbody ng-repeat="survey in surveyList">
+                <tr>
+                    <td>{{ survey.name }}</td>
+                    <td><a href="#/survey/{{ survey._id }}" class="btn btn-primary">{{ $index }}</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

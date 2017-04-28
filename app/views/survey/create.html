@@ -1,6 +1,7 @@
 <div class="container-fluid">
+    
     <add-menu></add-menu>
-    <div id="page-content-wrapper">
+    <!--div id="page-content-wrapper">
         <div class="row equal-height-panels">
             <div class="col-md-6">
                 <div class="panel panel-dark panel-primary">
@@ -34,8 +35,8 @@
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Dummy Valores
                 </button>
             </div>
-        </div>
-        <div ng-controller="createCtrl">
+        </div-->
+        <div ng-controller="surveyCtrl">
             <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
                 <li>
                     <a href="" data-target="#editor" data-toggle="tab" ><i class="fa fa-pencil-square-o pull-left"></i> Editor</a>
@@ -48,9 +49,13 @@
             </ul>
             <div class="tab-content">
                 <div id="editor" class="tab-pane fade in active">
-                    <input-menu></input-menu>
-                    <survey-builder></survey-builder>
-                    <pre>{{ columns | json }}</pre>
+                    <div class="row">
+                        <input-menu></input-menu>
+                        <survey-builder></survey-builder>
+                        <div class="col-md-3">
+                            <pre>{{ columns | json }}</pre>
+                        </div>
+                    </div>
                 </div>
                 <div id="developer" class="tab-pane fade in">
                     <h1 class="alert alert-success alert-white rounded">
