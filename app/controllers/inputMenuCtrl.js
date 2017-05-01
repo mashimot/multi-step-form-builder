@@ -47,16 +47,13 @@ create.controller('inputMenuCtrl', [ '$scope', function($scope){
     $scope.mainInputs = mainInputs();
     $scope.sortableSection = {
         connectWith: ".connected-apps-container",
-        update: function(e, ui){
-
-        },
         stop: function (e, ui){
-            if ($(e.target).hasClass('first') &&
+            $scope.mainInputs = mainInputs();
+
+            /*if ($(e.target).hasClass('first') &&
                 ui.item.sortable.droptarget &&
                 e.target != ui.item.sortable.droptarget[0]) {
-                // clone the original model to restore the removed item
-                $scope.mainInputs = mainInputs();
-            }
+            }*/
         }
     };
 }]);

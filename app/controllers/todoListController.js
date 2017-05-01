@@ -155,7 +155,6 @@ function swap(input, index_A, index_B) {
     input[index_B] = temp;
 
    return input;
-
 }
 Array.prototype.insert = function ( index, item ) {
     this.splice( index, 0, item );
