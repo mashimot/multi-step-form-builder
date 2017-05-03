@@ -1,6 +1,6 @@
 <div class="col-lg-7 col-md-7 col-sm-8 col-xs-11">
 
-    <uib-tabset  active="activeTabIndex">
+    <uib-tabset  active="activeTabIndex"  ng-init="sort()" id="sortable">
         <uib-tab ng-repeat="(keyC, page) in columns.pages"  index="keyC" heading="Page {{ keyC + 1 }}">
             <div class="well well-sm">
                 <button class="btn btn-danger btn-small btn-block" ng-click="deletePage(page._id)">
@@ -12,14 +12,14 @@
                     Place your elements here
                 </div>
             </div>
-            <div ui-sortable="sortableSection" ng-model="page.contents" class="connected-apps-container" style="min-height: 40px;">
-                <div ng-repeat="(keyP, p) in page.contents">
+            <div ui-sortable="sortableContent" ng-model="page.contents" class="connected-apps-container" style="min-height: 40px;">
+                <div ng-repeat="(keyP, p) in page.contents" ng-init="number = countInit();">
                     <survey-content></survey-content>
                 </div>
             </div>
         </uib-tab>
-        <li>
-            <button type="button" class="btn btn-default btn-small" ng-click="addPage()" aria-label="toggle fullscreen">
+        <li class="uib-tab nav-item unsortable">
+            <button type="button" class="btn btn-default btn-small unsortable" ng-click="newPage()" aria-label="toggle fullscreen">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             </button>
         </li>

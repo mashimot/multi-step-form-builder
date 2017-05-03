@@ -1,5 +1,4 @@
 <div class="panel panel-default" style="color: black;">
-
     <div class="panel-heading">
         <!--
         <section class="well well-sm">
@@ -16,7 +15,6 @@
             </div>
         </section>
             -->
-
         <div class="text-right">
            <span class="btn-group" ng-click="clone(keyC, keyP)">
                <button class="btn btn-primary btn-sm form-control"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
@@ -29,7 +27,7 @@
     <div class="panel-body">
         <section class="informations">
             <div class="row">
-                <div class="col-md-1"><div class="form-group"><input type="text" class="form-control" ng-model="p.number" /></div></div>
+                <div class="col-md-1"><div class="form-group"><input type="text" class="form-control" ng-init="p.number  = number + 1" ng-model="p.number"/></div></div>
                 <div class="col-md-10"><div class="form-group"><input type="text" class="form-control" ng-model="p.description"  placeholder="Digite a Questão"/></div></div>
                 <div class="col-md-1 text-center">
                     <div class="form-group"><button type="button" ng-click="edit(p)" class="btn btn-default btn-sm"><i class="fa fa-cog" aria-hidden="true"></i> edit</button></div>

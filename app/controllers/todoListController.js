@@ -14,8 +14,10 @@ exports.list_all_surveys = function(req, res) {
 exports.create_a_survey = function(req, res) {
     var new_survey = new Survey(req.body);
     new_survey.save(function(err, survey) {
-        if (err){ res.send(err); }
-        return res.redirect('/#/survey/' + survey._id);
+        if (err){ res.send(err); } else {
+            //return res.redirect('/#/survey/' + survey._id);
+            res.json(survey);
+        }
     });
 };
 
@@ -64,8 +66,7 @@ exports.read_a_page = function(req, res){
 //create a new page
 exports.new_page = function(req, res) {
     var s = {
-        id: req.params.surveyId,
-        data_to_insert: req.body.data_to_insert
+        id: req.params.surveyId
     };
     /* Single Survey Schema
     Survey.findByIdAndUpdate(
@@ -80,18 +81,16 @@ exports.new_page = function(req, res) {
     Survey.findById({ _id: s.id }, function(err, survey) {
         if (err)
             res.send(err);
+        var number = survey.length + 1;
         //survey is finded
         var new_page = new Page({
-            name: 'joeyswoldtour'
+            name: 'joeysworldtour'
         });
         survey.pages.push({ _id: new_page._id });
-
         new_page.save();
         survey.save();
         res.json(survey);
     });
-
-
 };
 
 //remove entire page
@@ -108,7 +107,27 @@ exports.delete_a_page = function(req, res) {
         });
     });
 };
+exports.sort_page = function(req, res) {
+    var survey = {};
+    survey.survey_id = req.params.surveyId;
+    var new_position = req.body.new_position;
+    var old_position = req.body.old_position;
+    Survey.findById(
+        { _id: survey.survey_id },
+        function(err, s){
+            if(err){
+                res.send(err);
+            } else {
+                var newpage = arraymove(s.pages, old_position, new_position);
+                s.pages = [];
+                s.pages = newpage;
+                s.save();
+                res.json(s);
+            }
+        }
+    )
 
+}
 
 exports.save_per_page = function(req, res) {
     var survey = {};
@@ -122,8 +141,9 @@ exports.save_per_page = function(req, res) {
     Page.findById(
         { _id: survey.page_id },
         function(err, pg){
-            if(err)
+            if(err){
                 res.send(err);
+            } else {
                 var content = survey.content;
                 var new_position = survey.new_position;
                 var old_position = survey.old_position;
@@ -136,12 +156,13 @@ exports.save_per_page = function(req, res) {
                     pg.contents.insert(new_position, {_id: inpt._id});
                     inpt.save();
                 } else {
-                    var new_contents_swap    = swap(pg.contents, new_position, old_position);
+                    var new_contents_swap = swap(pg.contents, new_position, old_position);
                     pg.contents = [];
                     pg.contents = new_contents_swap;
                 }
-            pg.save();
-            res.json(pg);
+                pg.save();
+                res.json(pg);
+            }
         }
     );
 };
@@ -159,6 +180,13 @@ function swap(input, index_A, index_B) {
 Array.prototype.insert = function ( index, item ) {
     this.splice( index, 0, item );
 };
+
+function arraymove(arr, fromIndex, toIndex) {
+    var element = arr[fromIndex];
+    arr.splice(fromIndex, 1);
+    arr.splice(toIndex, 0, element);
+    return arr;
+}
 //Contents
 exports.delete_a_content = function(req, res) {
     var p = {};

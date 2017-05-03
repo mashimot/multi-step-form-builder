@@ -1,21 +1,24 @@
 <div class="container-fluid">
-    <form action="survey/new" method="post">
-        <button type="submit">Submit</button>
-    </form>
-    <div ng-controller="createCtrl">
-        <table class="table table-stripped">
-            <thead>
-            <tr>
-                <td>Name</td>
-                <td>Link</td>
-            </tr>
-            </thead>
-            <tbody ng-repeat="survey in surveyList">
+    <div class="col-md-8 col-md-offset-2">
+        <div ng-controller="createCtrl">
+            <form ng-submit="newSurvey()" method="post">
+                <input type="text" ng-model="survey.name" required/>
+                <button type="submit">Submit</button>
+            </form>
+            <table class="table table-stripped">
+                <thead>
+                <tr>
+                    <td>Name</td>
+                    <td>Link</td>
+                </tr>
+                </thead>
+                <tbody  ng-model="surveyList" ng-repeat="survey in surveyList  track by $index">
                 <tr>
                     <td>{{ survey.name }}</td>
                     <td><a href="#/survey/{{ survey._id }}" class="btn btn-primary">{{ $index }}</a></td>
                 </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

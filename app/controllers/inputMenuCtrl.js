@@ -37,6 +37,31 @@ create.controller('inputMenuCtrl', [ '$scope', function($scope){
             }
         },
         {
+            name: 'disagreement',
+            input: {
+                _type: 'radio',
+                elements: [{
+                    text: 'Discordo plenamente',
+                    value: '1'
+                },{
+                    text: 'Discordo parcialmente',
+                    value: '2'
+                },{
+                    text: 'Não concordo nem discordo',
+                    value: '3'
+                },{
+                    text: 'Concordo parcialmente',
+                    value: '4'
+                },{
+                    text: 'Concordo plenamente',
+                    value: '5'
+                },{
+                    text: 'NA (Não Aplicável)',
+                    value: '0'
+                }]
+            }
+        },
+        {
             name: 'comments',
             input: {
                 _type: 'comments'
@@ -45,7 +70,7 @@ create.controller('inputMenuCtrl', [ '$scope', function($scope){
         ];
     };
     $scope.mainInputs = mainInputs();
-    $scope.sortableSection = {
+    $scope.sortableContent = {
         connectWith: ".connected-apps-container",
         stop: function (e, ui){
             $scope.mainInputs = mainInputs();
