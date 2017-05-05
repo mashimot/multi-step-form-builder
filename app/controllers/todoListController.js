@@ -3,7 +3,6 @@ var mongoose = require('mongoose');
 var Survey = mongoose.model('Survey');
 var Page = mongoose.model('Page');
 var Input = mongoose.model('Input');
-var ObjectID = require('mongodb').ObjectID;
 
 exports.list_all_surveys = function(req, res) {
     Survey.find({}, function(err, surveys) {
@@ -25,7 +24,6 @@ exports.create_a_survey = function(req, res) {
 exports.read_a_survey = function(req, res) {
     var s = {};
     s.survey_id = req.params.surveyId;
-
     Survey.findOne(
         { _id: s.survey_id }
     ).populate({
@@ -166,27 +164,7 @@ exports.save_per_page = function(req, res) {
         }
     );
 };
-function swap(input, index_A, index_B) {
-    console.log('-> before : ');
-    console.log(input);
 
-    var temp = input[index_A];
-
-    input[index_A] = input[index_B];
-    input[index_B] = temp;
-
-   return input;
-}
-Array.prototype.insert = function ( index, item ) {
-    this.splice( index, 0, item );
-};
-
-function arraymove(arr, fromIndex, toIndex) {
-    var element = arr[fromIndex];
-    arr.splice(fromIndex, 1);
-    arr.splice(toIndex, 0, element);
-    return arr;
-}
 //Contents
 exports.delete_a_content = function(req, res) {
     var p = {};
@@ -206,7 +184,6 @@ exports.delete_a_content = function(req, res) {
         }
     )
 };
-
 exports.update_a_survey = function(req, res) {
     Survey.findOneAndUpdate(req.params.surveyId, req.body, {new: true}, function(err, task) {
         if (err)
@@ -216,10 +193,36 @@ exports.update_a_survey = function(req, res) {
 };
 exports.delete_a_survey = function(req, res) {
     Survey.remove({
-        _id: req.body._id
+        _id: req.params.surveyId
     }, function(err, survey) {
         if (err)
             res.send(err);
-        res.json({ message: 'Survey successfully deleted' });
+        res.json({
+            success: true,
+            text: 'Survey successfully deleted'
+        });
     });
 };
+
+
+function swap(input, index_A, index_B) {
+    console.log('-> before : ');
+    console.log(input);
+
+    var temp = input[index_A];
+
+    input[index_A] = input[index_B];
+    input[index_B] = temp;
+
+    return input;
+}
+Array.prototype.insert = function ( index, item ) {
+    this.splice( index, 0, item );
+};
+
+function arraymove(arr, fromIndex, toIndex) {
+    var element = arr[fromIndex];
+    arr.splice(fromIndex, 1);
+    arr.splice(toIndex, 0, element);
+    return arr;
+}

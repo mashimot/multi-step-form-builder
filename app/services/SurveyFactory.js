@@ -9,6 +9,9 @@ create.factory('SurveyFactory', ['$http', function($http){
     SurveyFactory.getSurvey = function(id){
         return $http.get(url + '/' + id);
     };
+    SurveyFactory.deleteSurvey = function(id){
+        return $http.delete(url + '/' + id);
+    };
     SurveyFactory.clone = function(newObj){
         var nextIndex = _keyP + 1;
         this.getSections().insert(nextIndex, newObj);

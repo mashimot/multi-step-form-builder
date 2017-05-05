@@ -28,7 +28,6 @@ create.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'Modal
     };
     $scope.deletePage = function(pageId){
         SurveyFactory.deletePage( surveyId, pageId ).then(function(response){
-//            console.log(response);
             updateSurvey();
         }, function(err){
             console.log(err);

@@ -12,3 +12,8 @@
 $ git clone git://github.com/mashimot/multi-step-form-builder/
 $ npm install
 ```
+
+## Usage
+
+* Create a new survey: http://localhost:3000/#/
+
