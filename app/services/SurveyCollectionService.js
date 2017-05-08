@@ -1,4 +1,4 @@
-create.service('SurveyCollectionService', function(){
+app.service('SurveyCollectionService', function(){
     this.getKeyValue = function(array){
         var keys = [];
         var values = [];

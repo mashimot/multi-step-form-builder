@@ -1,6 +1,8 @@
-var create = angular.module('app');
-create.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'ModalService', '$routeParams', '$timeout', function($scope, $uibModal, SurveyFactory, ModalService, $routeParams, $timeout){
+var app = angular.module('app');
+var newObject = {};
+app.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'ModalService', '$routeParams', '$timeout', function($scope, $uibModal, SurveyFactory, ModalService, $routeParams, $timeout){
     var surveyId = $routeParams.surveyId;
+
     $scope.columns = [];
     $scope.activeTabIndex = 0;
     $scope.number = 0;
@@ -54,9 +56,7 @@ create.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'Modal
         });
     };
     $scope.edit = function(pageContent){
-        //var Survey = init(keyC, keyP, $scope.columns.form);
-        var type = pageContent.input._type;
-        var templateToLoad = ModalService.getTemplateToLoad(type, pageContent);
+        var templateToLoad = ModalService.getTemplateToLoad(pageContent);
         if(templateToLoad !== 'error'){
             var modalInstance = $uibModal.open({
                 templateUrl: templateToLoad.templateUrl,
@@ -77,12 +77,7 @@ create.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'Modal
     $scope.removeTitle = function(p, $index){
         p.titles.splice($index, 1);
     };
-    $scope.removeAll = function(){
-        Survey.removeAll();
-    };
     $scope.clone = function(keyC, keyP){
-        var Survey = init(keyC, keyP, $scope.columns.form);
-        Survey.clone(generateNew('question'));
     };
     $scope.deleteContent = function(surveyId, contentId){
         SurveyFactory.deleteContent( surveyId, contentId ).then(function(response){
@@ -95,10 +90,11 @@ create.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'Modal
         update: function(event, ui){
             var new_position = ui.item.sortable.dropindex;
             var old_position = ui.item.sortable.index;
-            var model = ui.item.sortable.model;
+            //var model = ui.item.sortable.model;
             var pageId = ui.item.sortable.droptarget.scope().page._id;
             var data = {
-                content: model,
+                //content: model,
+                content: newObject,
                 new_position: new_position,
                 old_position: old_position
             };
@@ -109,11 +105,7 @@ create.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'Modal
             });
         }
     };
-    $scope.sortableContents = {
-        items: '.sortable-item-contents'
-    };
-
-    $scope.sort = function() {
+    $scope.sortPages = function() {
         var tabs = $("#sortable").sortable({
             items: '.uib-tab:not(.unsortable)',
             "axis": "x",
@@ -123,15 +115,18 @@ create.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'Modal
             "stop": function(event, ui) {
                 var old_position = ui.item.startPos;
                 var new_position = ui.item.index();
-                var data = {
-                    new_position: new_position,
-                    old_position: old_position
-                };
-                SurveyFactory.sortPage(surveyId, data).then(function (res) {
-                    updateSurvey();
-                }, function (err) {
-                    console.log(err);
-                });
+                if(old_position !== new_position){
+                    var data = {
+                        new_position: new_position,
+                        old_position: old_position
+                    };
+                    /*                    SurveyFactory.sortPage(surveyId, data).then(function (res) {
+                     updateSurvey();
+                     }, function (err) {
+                     console.log(err);
+                     });*/
+                }
+
             }
         });
     };

@@ -54,7 +54,7 @@ const InputSchema = new Schema({
     number: String,
     description: String,
     "input": {
-        "_type": String,
+        "type": {type: String},
         "elements": [{
             _id: false,
             "text": String,

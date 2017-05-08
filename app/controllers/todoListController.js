@@ -148,7 +148,7 @@ exports.save_per_page = function(req, res) {
 
                 if (typeof content._id === "undefined") {
                     var inpt = new Input();
-                    inpt.input._type = content.input._type;
+                    inpt.input.type = content.input.type;
                     inpt.input.elements = content.input.elements;
                     //pg.contents.push({_id: inpt._id});
                     pg.contents.insert(new_position, {_id: inpt._id});
@@ -204,7 +204,6 @@ exports.delete_a_survey = function(req, res) {
     });
 };
 
-
 function swap(input, index_A, index_B) {
     console.log('-> before : ');
     console.log(input);
@@ -219,7 +218,6 @@ function swap(input, index_A, index_B) {
 Array.prototype.insert = function ( index, item ) {
     this.splice( index, 0, item );
 };
-
 function arraymove(arr, fromIndex, toIndex) {
     var element = arr[fromIndex];
     arr.splice(fromIndex, 1);

@@ -1,5 +1,5 @@
-var create = angular.module('app');
-create.controller('createCtrl', [ '$scope', '$http', 'SurveyFactory', function($scope, $http, SurveyFactory){
+var app = angular.module('app');
+app.controller('createCtrl', [ '$scope', '$http', 'SurveyFactory', function($scope, $http, SurveyFactory){
     $scope.surveyList = [];
     $scope.message = {};
 

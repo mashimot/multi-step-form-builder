@@ -11,7 +11,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="bower_components/bootstrap-css/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://bootswatch.com/paper/bootstrap.min.css"/>
     <style>
         .disable-all-contents{
             pointer-events:none;
@@ -34,6 +33,7 @@
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
 <script src="bower_components/angular/angular.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular-sanitize.min.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/angular-ui-sortable/sortable.min.js"></script>
@@ -61,87 +61,90 @@
 
 <!-- templates -->
 <script type="text/ng-template" id="configTemplate.html">
-    <div class="modal-header">
-        <h3>Descrição: {{ p.description }} Tipo: {{ p.type }}</h3>
-    </div>
-    <div class="modal-body">
-        <uib-tabset active="active">
-            <uib-tab index="0" heading="Configuração Geral">
-                <div class="form-group">
-                    <label>
-                        <div class="checkbox-inline">
-                            <input type="checkbox" ng-model="p.isRequired"  ng-true-value="true" ng-false-value="''"  style="display: none;" checked>
-                            Questão obrigatória?
-                            <div ng-switch on="p.isRequired" >
-                                <span ng-switch-when="true"><i class="fa fa-check-square-o"></i> Sim</span>
-                                <span ng-switch-when="false"><i class="fa fa-square-o"></i> Não</span>
-                                <span ng-switch-default><i class="fa fa-square-o"></i> Não</span>
+    <form name="config-modal">
+        <div class="modal-header">
+            <h3>Descrição: {{ content.description }} Tipo: {{ content.type }}</h3>
+        </div>
+        <div class="modal-body">
+            <uib-tabset active="active">
+                <uib-tab index="0" heading="Configuração Geral">
+                    <div class="form-group">
+                        <label>
+                            <div class="checkbox-inline">
+                                <input type="checkbox" ng-model="content.isRequired" ng-change="isRequired(content.isRequired)" style="display: none;" checked>
+                                Questão obrigatória?
+                                <div ng-switch on="content.isRequired" >
+                                    <span ng-switch-when="true"><i class="fa fa-check-square-o"></i> Sim</span>
+                                    <span ng-switch-when="false"><i class="fa fa-square-o"></i> Não</span>
+                                    <span ng-switch-default><i class="fa fa-square-o"></i> Não</span>
+                                </div>
                             </div>
-                        </div>
-                    </label>
-                    <label>
-                        <div class="checkbox-inline">
-                            <input type="checkbox" ng-model="p.isHide" ng-true-value="true" ng-false-value="''"   style="display: none;">
-                            Mostra Questão?
-                            <div ng-switch on="p.isHide">
-                                <span ng-switch-when="true"><i class="fa fa-eye-slash"></i> Não</span>
-                                <span ng-switch-when="false"><i class="fa fa-eye"></i> Sim</span>
-                                <span ng-switch-default><i class="fa fa-eye"></i> Sim</span>
+                        </label>
+                        <label>
+                            <div class="checkbox-inline">
+                                <input type="checkbox" ng-model="content.isHide" ng-change="isHide(content.isHide)" style="display: none;">
+                                Mostra Questão?
+                                <div ng-switch on="content.isHide">
+                                    <span ng-switch-when="true"><i class="fa fa-eye-slash"></i> Não</span>
+                                    <span ng-switch-when="false"><i class="fa fa-eye"></i> Sim</span>
+                                    <span ng-switch-default><i class="fa fa-eye"></i> Sim</span>
+                                </div>
                             </div>
-                        </div>
-                    </label>
-                </div>
-                <div class="form-group">
-                    <input type="text" ng-model="p.joeysworldtour" class="form-control"/>
-                </div>
-            </uib-tab>
-            <uib-tab index="1" heading="Escolhas">
-                <div class="well well-sm">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <label><input type="checkbox"> Ordenar</label>
-                            <div class="form-group">
-                                <button ng-click="addContent()" class="btn btn-default btn-sm"> add new content</button>
-                                <br/>
-                                <br/>
-                                <div ui-sortable="sortableContents" ng-model="p.input.elements">
-                                    <div ng-repeat="(id_content, content) in p.input.elements" class="sortable-item-contents">
-                                        <div class="row">
-                                            <div class="col-sm-5">
-                                                <input type="text" ng-model="content.text" class="form-control"/>
-                                            </div>
-                                            <div class="col-sm-5">
-                                                <input type="text" ng-model="content.value" class="form-control"/>
-                                            </div>
-                                            <div class="col-md-1">
-                                                <button ng-click="removeContent(id_content)" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i></button>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" ng-model="content.joeysworldtour" class="form-control"/>
+                    </div>
+                </uib-tab>
+                <uib-tab index="1" heading="Escolhas">
+                    <div class="well well-sm">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <label><input type="checkbox"> Ordenar</label>
+                                <div class="form-group">
+                                    <button ng-click="addElement()" class="btn btn-default btn-sm"> add new element</button>
+                                    <br/>
+                                    <br/>
+                                    <div ui-sortable="sortableContents" ng-model="content.input.elements">
+                                        <div ng-repeat="(id_content, content) in content.input.elements" class="sortable-item-contents">
+                                            <div class="row">
+                                                <div class="col-sm-5">
+                                                    <input type="text" ng-model="content.text" class="form-control"/>
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <input type="text" ng-model="content.value" class="form-control"/>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <button ng-click="removeContent(id_content)" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <textarea  ng-model="string" ng-trim="false" ng-list="&#10;" class="form-control" style="resize: none; height: 210px;"></textarea>
-                                <button ng-click="addToInput(string)" class="btn btn-primary btn-block  "> Gerar</button>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <textarea  ng-model="string" ng-trim="false" ng-list="&#10;" class="form-control" style="resize: none; height: 210px;"></textarea>
+                                    <button ng-click="addToInput(string)" class="btn btn-primary btn-block  "> Gerar</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </uib-tab>
-            <uib-tab index="2" heading="Visivel Se">
-                <div class="form-group">
-                    <textarea ng-model="p.isHideWhen" class="form-control" cols="30" rows="10"></textarea>
-                </div>
-            </uib-tab>
-        </uib-tabset>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="apply()">Aplicar</button>
-        <button class="btn btn-primary" ng-click="ok()">OK</button>
-        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-    </div>
+                </uib-tab>
+                <uib-tab index="2" heading="Visivel Se">
+                    <div class="form-group">
+                        <textarea ng-model="content.isHideWhen" ng-change="isHideWhen(content.isHideWhen)" class="form-control" cols="30" rows="10"></textarea>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+        <div class="modal-footer">
+            <pre> {{ content | json }} </pre>
+            <button class="btn btn-primary" ng-click="apply()">Aplicar</button>
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </form>
 </script>
 <script type="text/ng-template" id="input-radio-template.html">
     <div ng-repeat="i in input.elements">

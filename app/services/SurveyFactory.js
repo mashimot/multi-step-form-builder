@@ -1,4 +1,4 @@
-create.factory('SurveyFactory', ['$http', function($http){
+app.factory('SurveyFactory', ['$http', function($http){
     var url = 'survey';
     var SurveyFactory = {};
 

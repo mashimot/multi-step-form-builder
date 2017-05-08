@@ -1,7 +1,6 @@
-create.factory('ModalService', function(){
-    var getTemplateToLoad = function(type, pageContent){
-        //The templates are loaded via the script tag
-        switch(type){
+app.factory('ModalService', function(){
+    var getTemplateToLoad = function(pageContent){
+        switch(pageContent.input.type){
             case 'radio':
                 return {
                     templateUrl: 'configTemplate.html',
@@ -33,19 +32,39 @@ create.factory('ModalService', function(){
 });
 
 var ConfigModalController = function ($scope, $uibModalInstance, pageContent) {
-    $scope.p = pageContent; //pega o elemento
-
+    $scope.content = angular.copy(pageContent);
+    $scope.isRequired = function(required){
+        if(!required){
+            delete $scope.content.isRequired;
+        }
+    };
+    $scope.isHide = function(hide){
+        if(!hide){
+            delete $scope.content.isHide;
+        }
+    };
+    $scope.isHideWhen = function(string){
+        if(string.trim() === ''){
+            delete $scope.content.isHideWhen;
+        }
+    };
     $scope.removeContent = function ($index) {
-        $scope.p.input.elements.splice($index, 1);
+        $scope.content.input.elements.splice($index, 1);
+    };
+    $scope.addElement = function () {
+        $scope.content.input.elements.push({
+            text: '',
+            value: ''
+        });
     };
     $scope.addToInput = function (string) {
         var error = {};
         if (typeof string !== 'undefined') {
             var strlen = string.length;
             if (strlen > 0) {
-                $scope.p.input.elements = [];
+                $scope.content.input.elements = [];
                 for (var i = 0; i < strlen; i++) {
-                    $scope.p.input.elements.push({
+                    $scope.content.input.elements.push({
                         text: string[i],
                         value: string[i]
                     });
