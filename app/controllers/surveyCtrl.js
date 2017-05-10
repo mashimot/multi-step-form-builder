@@ -1,36 +1,38 @@
 var app = angular.module('app');
-var newObject = {};
-app.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'ModalService', '$routeParams', '$timeout', function($scope, $uibModal, SurveyFactory, ModalService, $routeParams, $timeout){
+app.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'ModalService', 'SortableService', '$routeParams', '$timeout', function($scope, $uibModal, SurveyFactory, ModalService, SortableService ,$routeParams, $timeout){
     var surveyId = $routeParams.surveyId;
-
     $scope.columns = [];
     $scope.activeTabIndex = 0;
     $scope.number = 0;
     $scope.countInit = function() {
         return $scope.number++;
     };
-    function updateSurvey(){
+    function updateSurvey(currentTabIndex){
         $scope.number = 0;
         SurveyFactory.getSurvey(surveyId).then(function(response){
             $scope.columns = response.data;
             $timeout(function(){
-                $scope.activeTabIndex = 0;
+                if(currentTabIndex <= 0){
+                    $scope.activeTabIndex = 0;
+                } else {
+                    $scope.activeTabIndex = currentTabIndex;
+                }
             });
         }, function(error){
         });
     }
-    updateSurvey();
+    updateSurvey(0);
 
     $scope.newPage = function(){
         SurveyFactory.newPage( surveyId ).then(function(response){
-            updateSurvey();
+            updateSurvey($scope.activeTabIndex);
         }, function(err){
             console.log(err);
         });
     };
     $scope.deletePage = function(pageId){
         SurveyFactory.deletePage( surveyId, pageId ).then(function(response){
-            updateSurvey();
+            updateSurvey($scope.activeTabIndex - 1);
         }, function(err){
             console.log(err);
         });
@@ -81,7 +83,7 @@ app.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'ModalSer
     };
     $scope.deleteContent = function(surveyId, contentId){
         SurveyFactory.deleteContent( surveyId, contentId ).then(function(response){
-            updateSurvey();
+            updateSurvey($scope.activeTabIndex);
         }, function(err){
             console.log(err);
         });
@@ -90,19 +92,21 @@ app.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'ModalSer
         update: function(event, ui){
             var new_position = ui.item.sortable.dropindex;
             var old_position = ui.item.sortable.index;
-            //var model = ui.item.sortable.model;
+            var model = ui.item.sortable.model;
             var pageId = ui.item.sortable.droptarget.scope().page._id;
-            var data = {
-                //content: model,
-                content: newObject,
-                new_position: new_position,
-                old_position: old_position
-            };
+            var data = {};
+            data.new_position = new_position;
+            data.old_position = old_position;
+            data.content = (!SortableService.getObjectToDrop())? model: SortableService.getObjectToDrop();
+
             SurveyFactory.savePerPage(surveyId, pageId, data).then(function (res) {
-                updateSurvey();
+                updateSurvey($scope.activeTabIndex);
+                SortableService.setObjectToDrop(false);
             }, function (err) {
                 console.log(err);
             });
+        },
+        stop: function(){
         }
     };
     $scope.sortPages = function() {
@@ -120,11 +124,12 @@ app.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'ModalSer
                         new_position: new_position,
                         old_position: old_position
                     };
-                    /*                    SurveyFactory.sortPage(surveyId, data).then(function (res) {
-                     updateSurvey();
-                     }, function (err) {
-                     console.log(err);
-                     });*/
+                    SurveyFactory.sortPage(surveyId, data).then(function (res) {
+                        console.log(res);
+                        updateSurvey($scope.activeTabIndex);
+                    }, function (err) {
+                        console.log(err);
+                    });
                 }
 
             }

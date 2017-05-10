@@ -23,8 +23,9 @@ app.factory('SurveyFactory', ['$http', function($http){
     SurveyFactory.deletePage = function(surveyId, pageId){
         return $http.delete(url + '/' + surveyId  + '/page/' + pageId);
     };
-    SurveyFactory.savePerPage = function(id, pageId, toAdd){
-        return $http.put(url + '/' + id  + '/page/' + pageId, toAdd);
+    SurveyFactory.savePerPage = function(id, pageId, data){
+        console.log(data);
+        return $http.put(url + '/' + id  + '/page/' + pageId, data);
     };
     SurveyFactory.sortPage = function(id, toAdd){
         return $http.put(url + '/' + id  + '/sort-page', toAdd);

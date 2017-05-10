@@ -1,5 +1,5 @@
 var app = angular.module('app');
-app.controller('inputMenuCtrl', [ '$scope', function($scope){
+app.controller('inputMenuCtrl', [ '$scope', 'SortableService', function($scope, SortableService){
     $scope.mainInputs = [];
     var mainInputs = function(){
         return [
@@ -92,12 +92,8 @@ app.controller('inputMenuCtrl', [ '$scope', function($scope){
                 // check that it's an actual moving between the two lists
             ui.item.sortable.source[0] !== ui.item.sortable.droptarget[0]) {
                 ui.item.sortable.cancel(); // cancel drag and drop
-                newObject = jQuery.extend({}, ui.item.sortable.model.content_to_drop);
-                //console.log($scope.newObject);
-
-                //$scope.columns.pages[0].contents.push(newObj);
-                // Or for a single object in the drop target, it must be provided as an Array:
-                //$scope.column = [newObj];
+                var object = jQuery.extend({}, ui.item.sortable.model.content_to_drop);
+                SortableService.setObjectToDrop(object);
             }
         },
         stop: function (e, ui){

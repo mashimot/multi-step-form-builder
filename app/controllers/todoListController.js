@@ -134,7 +134,7 @@ exports.save_per_page = function(req, res) {
     survey.content = req.body.content;
     survey.new_position = req.body.new_position;
     survey.old_position = req.body.old_position;
-    console.log(survey.page_id);
+    console.log(survey);
     //return false;
     Page.findById(
         { _id: survey.page_id },
@@ -150,7 +150,7 @@ exports.save_per_page = function(req, res) {
                     var inpt = new Input();
                     inpt.input.type = content.input.type;
                     inpt.input.elements = content.input.elements;
-                    //pg.contents.push({_id: inpt._id});
+
                     pg.contents.insert(new_position, {_id: inpt._id});
                     inpt.save();
                 } else {
