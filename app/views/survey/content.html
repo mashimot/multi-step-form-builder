@@ -27,8 +27,9 @@
     <div class="panel-body">
         <section class="informations">
             <div class="row">
-                <div class="col-md-1"><div class="form-group"><input type="text" class="form-control" ng-init="p.number  = number + 1" ng-model="p.number"/></div></div>
-                <div class="col-md-10"><div class="form-group"><input type="text" class="form-control" ng-model="p.description"  placeholder="Digite a Questão"/></div></div>
+                <!--div class="col-md-1"><div class="form-group"><input type="text" class="form-control" ng-init="p.number  = number + 1" ng-model="p.number"/></div></div>
+                <div class="col-md-10"><div class="form-group"><input type="text" class="form-control" ng-model="p.description"  placeholder="Digite a Questão"/></div></div-->
+                <div class="col-md-11" ng-init="p.number  = number + 1"><b>{{ p.number }} - {{ p.description }}</b></div>
                 <div class="col-md-1 text-center">
                     <div class="form-group"><button type="button" ng-click="edit(p)" class="btn btn-default btn-sm"><i class="fa fa-cog" aria-hidden="true"></i> edit</button></div>
                 </div>

@@ -164,6 +164,20 @@ exports.save_per_page = function(req, res) {
         }
     );
 };
+exports.update_a_content = function(req, res){
+    var i = {};
+    i._id = req.params.contentId;
+    i.content = req.body;
+    //console.log(i);
+    Input.findByIdAndUpdate(
+        { _id: i._id },
+        { '$set': i.content },
+        function(err, model){
+            if(err)
+                res.send(err);
+        }
+    )
+};
 
 //Contents
 exports.delete_a_content = function(req, res) {

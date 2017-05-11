@@ -58,7 +58,7 @@ app.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'ModalSer
         });
     };
     $scope.edit = function(pageContent){
-        var templateToLoad = ModalService.getTemplateToLoad(pageContent);
+        var templateToLoad = ModalService.getTemplateToLoad(pageContent, SurveyFactory);
         if(templateToLoad !== 'error'){
             var modalInstance = $uibModal.open({
                 templateUrl: templateToLoad.templateUrl,

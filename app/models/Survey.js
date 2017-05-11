@@ -53,6 +53,9 @@ const InputSchema = new Schema({
     name: String,
     number: String,
     description: String,
+    isRequired: Boolean,
+    isHide: Boolean,
+    isHideWhen: String,
     "input": {
         "type": {type: String},
         "elements": [{

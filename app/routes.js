@@ -27,6 +27,7 @@ module.exports = function(app) {
     app.route('/survey/:surveyId/sort-page')
         .put(todoList.sort_page);
     app.route('/survey/:surveyId/content/:contentId')
-        .delete(todoList.delete_a_content);
+        .delete(todoList.delete_a_content)
+        .put(todoList.update_a_content);
 
 };

@@ -1,5 +1,5 @@
 app.factory('ModalService', function(){
-    var getTemplateToLoad = function(pageContent){
+    var getTemplateToLoad = function(pageContent, SurveyFactory){
         switch(pageContent.input.type){
             case 'radio':
                 return {
@@ -8,6 +8,9 @@ app.factory('ModalService', function(){
                     resolve: { //passa variavel para o modal, no caso a variavel p.
                         pageContent: function () {
                             return pageContent;
+                        },
+                        SurveyFactory: function(){
+                            return SurveyFactory;
                         }
                     }
                 };
@@ -18,6 +21,9 @@ app.factory('ModalService', function(){
                     resolve: { //passa variavel para o modal, no caso a variavel p.
                         pageContent: function () {
                             return pageContent;
+                        },
+                        SurveyFactory: function(){
+                            return SurveyFactory;
                         }
                     }
                 };
@@ -31,8 +37,9 @@ app.factory('ModalService', function(){
     }
 });
 
-var ConfigModalController = function ($scope, $uibModalInstance, pageContent) {
+var ConfigModalController = function ($scope, $uibModalInstance, pageContent, SurveyFactory) {
     $scope.content = angular.copy(pageContent);
+
     $scope.isRequired = function(required){
         if(!required){
             delete $scope.content.isRequired;
@@ -81,7 +88,12 @@ var ConfigModalController = function ($scope, $uibModalInstance, pageContent) {
             alert(error.message);
         }
     };
+    $scope.apply = function(){
+        SurveyFactory.updateContent(null, $scope.content._id, $scope.content ).then(function(result){
+
+        });
+    };
     $scope.ok = function(){
         $uibModalInstance.dismiss();
-    }
+    };
 };
