@@ -68,77 +68,9 @@
             <h4>{{ content.number }} - {{ content.description }}</h4>
         </div>
         <div class="modal-body">
-            <uib-tabset active="active">
-                <uib-tab index="0" heading="Configuração Geral">
-                    <div class="form-group">
-                        <label>
-                            <div class="checkbox-inline">
-                                <input type="checkbox" ng-model="content.isRequired" ng-change="isRequired(content.isRequired)" style="display: none;" checked>
-                                Questão obrigatória?
-                                <div ng-switch on="content.isRequired" >
-                                    <span ng-switch-when="true"><i class="fa fa-check-square-o"></i> Sim</span>
-                                    <span ng-switch-when="false"><i class="fa fa-square-o"></i> Não</span>
-                                    <span ng-switch-default><i class="fa fa-square-o"></i> Não</span>
-                                </div>
-                            </div>
-                        </label>
-                        <label>
-                            <div class="checkbox-inline">
-                                <input type="checkbox" ng-model="content.isHide" ng-change="isHide(content.isHide)" style="display: none;">
-                                Mostra Questão?
-                                <div ng-switch on="content.isHide">
-                                    <span ng-switch-when="true"><i class="fa fa-eye-slash"></i> Não</span>
-                                    <span ng-switch-when="false"><i class="fa fa-eye"></i> Sim</span>
-                                    <span ng-switch-default><i class="fa fa-eye"></i> Sim</span>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label> Description:
-                            <input type="text" ng-model="content.description" class="form-control"/>
-                        </label>
-                    </div>
-                </uib-tab>
-                <uib-tab index="1" heading="Escolhas">
-                    <div class="well well-sm">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <label><input type="checkbox"> Ordenar</label>
-                                <div class="form-group">
-                                    <button ng-click="addElement()" class="btn btn-default btn-sm"> add new element</button>
-                                    <br/>
-                                    <br/>
-                                    <div ui-sortable="sortableContents" ng-model="content.input.elements">
-                                        <div ng-repeat="(id_content, content) in content.input.elements" class="sortable-item-contents">
-                                            <div class="row">
-                                                <div class="col-sm-5">
-                                                    <input type="text" ng-model="content.text" class="form-control"/>
-                                                </div>
-                                                <div class="col-sm-5">
-                                                    <input type="text" ng-model="content.value" class="form-control"/>
-                                                </div>
-                                                <div class="col-md-1">
-                                                    <button ng-click="removeContent(id_content)" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <textarea  ng-model="string" ng-trim="false" ng-list="&#10;" class="form-control" style="resize: none; height: 210px;"></textarea>
-                                    <button ng-click="addToInput(string)" class="btn btn-primary btn-block  "> Gerar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </uib-tab>
-                <uib-tab index="2" heading="Visivel Se">
-                    <div class="form-group">
-                        <textarea ng-model="content.isHideWhen" ng-change="isHideWhen(content.isHideWhen)" class="form-control" cols="30" rows="10"></textarea>
-                    </div>
+            <uib-tabset active="activeConfig">
+                <uib-tab ng-repeat="(i, config) in configs" heading="{{ config.title }}" index="i">
+                    <div ng-include src="config.template"></div>
                 </uib-tab>
             </uib-tabset>
         </div>

@@ -25,7 +25,7 @@ var SurveySchema = new Schema({
 module.exports = mongoose.model('Survey', SurveySchema);*/
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-const SurveySchema = new Schema({
+var SurveySchema = new Schema({
     name: String,
     pages: [
         {
@@ -37,7 +37,7 @@ const SurveySchema = new Schema({
     versionKey: false // You should be aware of the outcome after set to false
 });
 
-const PageSchema = new Schema({
+var PageSchema = new Schema({
     name: String,
     contents: [
         {
@@ -48,16 +48,28 @@ const PageSchema = new Schema({
 }, {
     versionKey: false // You should be aware of the outcome after set to false
 });
-
-const InputSchema = new Schema({
+function toLower (v) {
+    console.log(v);
+}
+var InputSchema = new Schema({
     name: String,
     number: String,
-    description: String,
+    description: {
+        type: String,
+        lowercase: true
+    },
     isRequired: Boolean,
     isHide: Boolean,
-    isHideWhen: String,
+    isHideWhen: {
+        type: String,
+        lowercase: true
+    },
     "input": {
-        "type": {type: String},
+        "type": {
+            type: String,
+            enum: ["radio", "checkbox", "comments"],
+            required: true
+        },
         "elements": [{
             _id: false,
             "text": String,
@@ -66,6 +78,12 @@ const InputSchema = new Schema({
     }
 }, {
     versionKey: false // You should be aware of the outcome after set to false
+});
+
+InputSchema.pre("save", function (next) {
+    console.log(this.description);
+    this.description = 'joeysworldtour';
+    next();
 });
 PageSchema.pre('remove', function(next) {
     var page = this;
@@ -86,6 +104,13 @@ InputSchema.pre('remove', function(next) {
     );
     //this.smodel('Page').remove({ pages: this._id }, next);
 });
-const Input = mongoose.model('Input', InputSchema);
-const Page = mongoose.model('Page', PageSchema);
-const Survey = mongoose.model('Survey', SurveySchema);
+function deleteEmpty (v) {
+    if(v== ''){
+        return undefined;
+    }
+    return v;
+}
+
+var Input = mongoose.model('Input', InputSchema);
+var Page = mongoose.model('Page', PageSchema);
+var Survey = mongoose.model('Survey', SurveySchema);

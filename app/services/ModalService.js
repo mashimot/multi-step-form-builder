@@ -6,6 +6,9 @@ app.factory('ModalService', function(){
                     templateUrl: 'configTemplate.html',
                     controller: ConfigModalController,
                     resolve: { //passa variavel para o modal, no caso a variavel p.
+                        tabIndexToRemove: function(){
+                            return -1;
+                        },
                         pageContent: function () {
                             return pageContent;
                         },
@@ -19,6 +22,26 @@ app.factory('ModalService', function(){
                     templateUrl: 'configTemplate.html',
                     controller: ConfigModalController,
                     resolve: { //passa variavel para o modal, no caso a variavel p.
+                        tabIndexToRemove: function(){
+                            return -1;
+                        },
+                        pageContent: function () {
+                            return pageContent;
+                        },
+                        SurveyFactory: function(){
+                            return SurveyFactory;
+                        }
+                    }
+                };
+                break;
+            case 'comments':
+                return {
+                    templateUrl: 'configTemplate.html',
+                    controller: ConfigModalController,
+                    resolve: { //passa variavel para o modal, no caso a variavel p.
+                        tabIndexToRemove: function(){
+                            return 1;
+                        },
                         pageContent: function () {
                             return pageContent;
                         },
@@ -37,24 +60,17 @@ app.factory('ModalService', function(){
     }
 });
 
-var ConfigModalController = function ($scope, $uibModalInstance, pageContent, SurveyFactory) {
+var ConfigModalController = function ($scope, $uibModalInstance, tabIndexToRemove, pageContent, SurveyFactory) {
+    var modalUrl = "views/modal/";
     $scope.content = angular.copy(pageContent);
-
-    $scope.isRequired = function(required){
-        if(!required){
-            delete $scope.content.isRequired;
-        }
-    };
-    $scope.isHide = function(hide){
-        if(!hide){
-            delete $scope.content.isHide;
-        }
-    };
-    $scope.isHideWhen = function(string){
-        if(string.trim() === ''){
-            delete $scope.content.isHideWhen;
-        }
-    };
+    $scope.configs = [
+        { title: "Configuração Geral", template: modalUrl + "general-config.html" },
+        { title: "Escolhas", template:  modalUrl + "choice.html" },
+        { title: "Vísivel Se", template:  modalUrl + "is-hide-when.html" }
+    ];
+    if($scope.configs.length > 0 && tabIndexToRemove !== -1){
+        $scope.configs.splice(tabIndexToRemove, 1);
+    }
     $scope.removeContent = function ($index) {
         $scope.content.input.elements.splice($index, 1);
     };
@@ -94,6 +110,9 @@ var ConfigModalController = function ($scope, $uibModalInstance, pageContent, Su
         });
     };
     $scope.ok = function(){
+        $uibModalInstance.dismiss();
+    };
+    $scope.cancel = function(){
         $uibModalInstance.dismiss();
     };
 };

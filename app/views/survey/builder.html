@@ -1,13 +1,14 @@
 <div class="col-lg-7 col-md-7 col-sm-8 col-xs-11">
-
     <uib-tabset  active="activeTabIndex"  ng-init="sortPages()" id="sortable">
-        <uib-tab ng-repeat="(keyC, page) in columns.pages"  index="keyC" heading="Page {{ keyC + 1 }}">
-            <div class="well well-sm">
-                <button class="btn btn-danger btn-small btn-block" ng-click="deletePage(page._id)">
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove Page {{ keyC + 1 }}
-                </button>
-            </div>
+        <uib-tab ng-repeat="(keyC, page) in columns.pages"  index="keyC">
+            <uib-tab-heading>
+                <span>Page {{ keyC + 1 }}</span>
+                <a class="" ng-click="deletePage(page._id)" style="cursor: pointer; ">
+                    [ <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> ]
+                </a>
+            </uib-tab-heading>
             <div ng-if="page.contents.length <= 0">
+                <br/>
                 <div class="alert alert-warning">
                     Place your elements here
                 </div>

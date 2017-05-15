@@ -23,6 +23,22 @@ app.controller('inputMenuCtrl', [ '$scope', 'SortableService', function($scope, 
                 }
             },
             {
+                name: 'Sim/Nâo',
+                icon: '<i class="fa fa-dot-circle-o" aria-hidden="true"></i>',
+                content_to_drop: {
+                    input: {
+                        type: 'radio',
+                        elements: [{
+                            text: 'Sim',
+                            value: 'Sim'
+                        },{
+                            text: 'Não',
+                            value: 'Não'
+                        }]
+                    }
+                }
+            },
+            {
                 name: 'checkbox',
                 icon: '<i class="fa fa-check-square-o" aria-hidden="true"></i>',
                 content_to_drop: {

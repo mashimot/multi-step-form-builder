@@ -1,0 +1,33 @@
+<div class="well well-sm">
+    <div class="row">
+        <div class="col-md-8">
+            <label><input type="checkbox"> Ordenar</label>
+            <div class="form-group">
+                <button ng-click="addElement()" class="btn btn-default btn-sm"> add new element</button>
+                <br/>
+                <br/>
+                <div ui-sortable="sortableContents" ng-model="content.input.elements">
+                    <div ng-repeat="(id_content, content) in content.input.elements" class="sortable-item-contents">
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <input type="text" ng-model="content.text" class="form-control"/>
+                            </div>
+                            <div class="col-sm-5">
+                                <input type="text" ng-model="content.value" class="form-control"/>
+                            </div>
+                            <div class="col-md-1">
+                                <button ng-click="removeContent(id_content)" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <textarea  ng-model="string" ng-trim="false" ng-list="&#10;" class="form-control" style="resize: none; height: 210px;"></textarea>
+                <button ng-click="addToInput(string)" class="btn btn-primary btn-block  "> Gerar</button>
+            </div>
+        </div>
+    </div>
+</div>
