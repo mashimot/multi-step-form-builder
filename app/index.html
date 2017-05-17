@@ -69,14 +69,14 @@
         </div>
         <div class="modal-body">
             <uib-tabset active="activeConfig">
-                <uib-tab ng-repeat="(i, config) in configs" heading="{{ config.title }}" index="i">
-                    <div ng-include src="config.template"></div>
+                <uib-tab ng-repeat="(i, tab) in tabsToRender" heading="{{ tab.title }}" index="i">
+                    <div ng-include src="tab.template"></div>
                 </uib-tab>
             </uib-tabset>
         </div>
         <div class="modal-footer">
             <pre> {{ content | json }} </pre>
-            <button class="btn btn-primary" ng-click="apply()">Aplicar</button>
+            <!--button class="btn btn-primary" ng-click="apply()">Aplicar</button-->
             <button class="btn btn-primary" ng-click="ok()">OK</button>
             <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
         </div>

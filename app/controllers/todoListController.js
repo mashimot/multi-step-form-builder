@@ -175,6 +175,7 @@ exports.update_a_content = function(req, res){
         function(err, model){
             if(err)
                 res.send(err);
+            res.json('success');
         }
     )
 };

@@ -1,75 +1,76 @@
-app.factory('ModalService', function(){
-    var getTemplateToLoad = function(pageContent, SurveyFactory){
+app.factory('ModalService', [ 'SurveyFactory', function(SurveyFactory){
+    var modalUrl = "views/modal/";
+
+    var getTabs = function() {
+        return {
+            general: {
+                title: "Configuração Geral", template: modalUrl + "general-config.html"
+            },
+            choices: {
+                title: "Escolhas", template: modalUrl + "choice.html"
+            },
+            visibleIf: {
+                title: "Vísivel Se", template: modalUrl + "is-hide-when.html"
+            }
+        };
+    };
+
+    var getTemplateToLoad = function(pageContent){
+        var render = [];
+        var inputToHide = [];
+        var tab = getTabs();
+
         switch(pageContent.input.type){
             case 'radio':
-                return {
-                    templateUrl: 'configTemplate.html',
-                    controller: ConfigModalController,
-                    resolve: { //passa variavel para o modal, no caso a variavel p.
-                        tabIndexToRemove: function(){
-                            return -1;
-                        },
-                        pageContent: function () {
-                            return pageContent;
-                        },
-                        SurveyFactory: function(){
-                            return SurveyFactory;
-                        }
-                    }
-                };
+                render.push(tab.general, tab.choices, tab.visibleIf);
+                break;
             case 'checkbox':
-                return {
-                    templateUrl: 'configTemplate.html',
-                    controller: ConfigModalController,
-                    resolve: { //passa variavel para o modal, no caso a variavel p.
-                        tabIndexToRemove: function(){
-                            return -1;
-                        },
-                        pageContent: function () {
-                            return pageContent;
-                        },
-                        SurveyFactory: function(){
-                            return SurveyFactory;
-                        }
-                    }
-                };
+                render.push(tab.general, tab.choices, tab.visibleIf);
                 break;
             case 'comments':
-                return {
-                    templateUrl: 'configTemplate.html',
-                    controller: ConfigModalController,
-                    resolve: { //passa variavel para o modal, no caso a variavel p.
-                        tabIndexToRemove: function(){
-                            return 1;
-                        },
-                        pageContent: function () {
-                            return pageContent;
-                        },
-                        SurveyFactory: function(){
-                            return SurveyFactory;
-                        }
-                    }
-                };
+                render.push(tab.general, tab.visibleIf);
+                inputToHide = ['hasComment'];
                 break;
-            default:
-                return 'error';
+            default :
+                render = [];
+                inputToHide = [];
+                break;
         }
+
+        return {
+            templateUrl: 'configTemplate.html',
+            controller: ConfigModalController,
+            resolve: {
+                tabToRender: function(){
+                    return render;
+                },
+                inputToHide: function(){
+                    return inputToHide;
+                },
+                pageContent: function () {
+                    return pageContent;
+                },
+                SurveyFactory: function () {
+                    return SurveyFactory;
+                }
+            }
+        };
     };
     return {
         getTemplateToLoad: getTemplateToLoad
     }
-});
+}]);
 
-var ConfigModalController = function ($scope, $uibModalInstance, tabIndexToRemove, pageContent, SurveyFactory) {
-    var modalUrl = "views/modal/";
+var ConfigModalController = function ($scope, $uibModalInstance, tabToRender, inputToHide, pageContent, SurveyFactory) {
+    $scope.tabsToRender = [];
     $scope.content = angular.copy(pageContent);
-    $scope.configs = [
-        { title: "Configuração Geral", template: modalUrl + "general-config.html" },
-        { title: "Escolhas", template:  modalUrl + "choice.html" },
-        { title: "Vísivel Se", template:  modalUrl + "is-hide-when.html" }
-    ];
-    if($scope.configs.length > 0 && tabIndexToRemove !== -1){
-        $scope.configs.splice(tabIndexToRemove, 1);
+    $scope.tabsToRender = tabToRender;
+
+    if(inputToHide.length){
+        for(var i = 0; i < inputToHide.length; i++){
+            console.log(inputToHide[i]);
+            $scope[inputToHide[i]] = true;
+        }
     }
     $scope.removeContent = function ($index) {
         $scope.content.input.elements.splice($index, 1);
@@ -104,15 +105,26 @@ var ConfigModalController = function ($scope, $uibModalInstance, tabIndexToRemov
             alert(error.message);
         }
     };
-    $scope.apply = function(){
-        SurveyFactory.updateContent(null, $scope.content._id, $scope.content ).then(function(result){
-
-        });
-    };
+    /*$scope.apply = function(){
+        updateContent();
+    };*/
     $scope.ok = function(){
-        $uibModalInstance.dismiss();
+        updateContent();
     };
     $scope.cancel = function(){
         $uibModalInstance.dismiss();
     };
+    var updateContent = function(){
+        var result = {
+            id: $scope.content._id,
+            content: $scope.content
+        };
+        SurveyFactory.updateContent(null, result.id, result.content ).then(function(result){
+            $uibModalInstance.close('success');
+        }, function(err){
+            console.log(err);
+        });
+    }
+
 };
+

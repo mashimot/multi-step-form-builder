@@ -58,12 +58,18 @@ app.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'ModalSer
         });
     };
     $scope.edit = function(pageContent){
-        var templateToLoad = ModalService.getTemplateToLoad(pageContent, SurveyFactory);
+        var templateToLoad = ModalService.getTemplateToLoad(pageContent);
         if(templateToLoad !== 'error'){
             var modalInstance = $uibModal.open({
                 templateUrl: templateToLoad.templateUrl,
                 controller: templateToLoad.controller, //return a string and then converts to a function
                 resolve: templateToLoad.resolve
+            });
+            modalInstance.result.then(function(result){
+                console.log(result);
+                if(result === 'success'){
+                    updateSurvey($scope.activeTabIndex);
+                }
             });
         } else {
             alert('Template not Founded!');
