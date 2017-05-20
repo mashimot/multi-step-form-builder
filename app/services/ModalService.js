@@ -31,6 +31,10 @@ app.factory('ModalService', [ 'SurveyFactory', function(SurveyFactory){
                 render.push(tab.general, tab.visibleIf);
                 inputToHide = ['hasComment'];
                 break;
+            case 'net-promoter-score':
+                render.push(tab.general, tab.visibleIf);
+                inputToHide = ['hasComment'];
+                break;
             default :
                 render = [];
                 inputToHide = [];
@@ -62,8 +66,9 @@ app.factory('ModalService', [ 'SurveyFactory', function(SurveyFactory){
 }]);
 
 var ConfigModalController = function ($scope, $uibModalInstance, tabToRender, inputToHide, pageContent, SurveyFactory) {
-    $scope.tabsToRender = [];
+    var isChanged = false;
     $scope.content = angular.copy(pageContent);
+    $scope.tabsToRender = [];
     $scope.tabsToRender = tabToRender;
 
     if(inputToHide.length){
@@ -108,8 +113,22 @@ var ConfigModalController = function ($scope, $uibModalInstance, tabToRender, in
     /*$scope.apply = function(){
         updateContent();
     };*/
+
+    //verifica se houve alguma atualiazação no model
+    $scope.$watch('content', function(newValue, oldValue) {
+        if(angular.equals(newValue, angular.copy(pageContent))){
+            isChanged = false;
+        } else {
+            isChanged = true;
+        }
+    }, true);
+    //se houve atualização no model, faz o update; caso ao contrário fecha-se o modal.
     $scope.ok = function(){
-        updateContent();
+        if(isChanged){
+            updateContent();
+        } else {
+            $uibModalInstance.close();
+        }
     };
     $scope.cancel = function(){
         $uibModalInstance.dismiss();

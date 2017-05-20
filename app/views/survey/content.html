@@ -17,10 +17,14 @@
             -->
         <div class="text-right">
            <span class="btn-group" ng-click="clone(keyC, keyP)">
-               <button class="btn btn-primary btn-sm form-control"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
+               <button class="btn btn-primary btn-sm">
+                   <i class="fa fa-plus" aria-hidden="true"></i>
+               </button>
            </span>
            <span class="btn-group" ng-click="deleteContent(123, p._id)">
-               <button class="btn btn-danger btn-sm form-control"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </button>
+               <button class="btn btn-danger btn-sm">
+                   <i class="fa fa-times" aria-hidden="true"></i>
+               </button>
            </span>
         </div>
     </div>
@@ -29,9 +33,9 @@
             <div class="row">
                 <!--div class="col-md-1"><div class="form-group"><input type="text" class="form-control" ng-init="p.number  = number + 1" ng-model="p.number"/></div></div>
                 <div class="col-md-10"><div class="form-group"><input type="text" class="form-control" ng-model="p.description"  placeholder="Digite a Questão"/></div></div-->
-                <div class="col-md-11" ng-init="p.number  = number + 1"><b>{{ p.number }} - {{ p.description }}</b></div>
-                <div class="col-md-1 text-center">
-                    <div class="form-group"><button type="button" ng-click="edit(p)" class="btn btn-default btn-sm"><i class="fa fa-cog" aria-hidden="true"></i> edit</button></div>
+                <div class="col-md-10" ng-init="p.number  = number + 1"><b>{{ p.number }} - {{ p.description }}</b></div>
+                <div class="col-md-2">
+                    <div class="form-group"><button type="button" ng-click="edit(p)" class="btn btn-default btn-sm btn-block"><i class="fa fa-cog" aria-hidden="true"></i> edit</button></div>
                 </div>
             </div>
             <render-inputs input="p.input"></render-inputs>

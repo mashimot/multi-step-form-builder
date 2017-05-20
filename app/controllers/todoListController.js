@@ -127,6 +127,28 @@ exports.sort_page = function(req, res) {
 
 }
 
+exports.push_new_content = function(req, res){
+    var p = {};
+    p.survey_id = req.params.surveyId;
+    p.page_id = req.params.pageId;
+    p.content = req.body;
+    Page.findById(
+        { _id: p.page_id },
+        function(err, _page){
+            if(err)
+                res.send(err);
+
+            var content = new Input();
+            content = mix(p.content, content);
+            _page.contents.push(content._id);
+            _page.save();
+            content.save();
+            res.json('success');
+        }
+    );
+};
+
+
 exports.save_per_page = function(req, res) {
     var survey = {};
     survey.id = req.params.surveyId;
@@ -138,28 +160,25 @@ exports.save_per_page = function(req, res) {
     //return false;
     Page.findById(
         { _id: survey.page_id },
-        function(err, pg){
+        function(err, _page){
             if(err){
                 res.send(err);
             } else {
-                var content = survey.content;
                 var new_position = survey.new_position;
                 var old_position = survey.old_position;
 
-                if (typeof content._id === "undefined") {
-                    var inpt = new Input();
-                    inpt.input.type = content.input.type;
-                    inpt.input.elements = content.input.elements;
-
-                    pg.contents.insert(new_position, {_id: inpt._id});
-                    inpt.save();
+                if (typeof survey.content._id === "undefined") {
+                    var content = new Input();
+                    content = mix(survey.content, content);
+                    _page.contents.insert(new_position, { _id: content._id });
+                    content.save();
                 } else {
-                    var new_contents_swap = swap(pg.contents, new_position, old_position);
-                    pg.contents = [];
-                    pg.contents = new_contents_swap;
+                    var new_contents_swap = swap(_page.contents, new_position, old_position);
+                    _page.contents = [];
+                    _page.contents = new_contents_swap;
                 }
-                pg.save();
-                res.json(pg);
+                _page.save();
+                res.json(_page);
             }
         }
     );
@@ -181,9 +200,10 @@ exports.update_a_content = function(req, res){
 };
 
 //Contents
+
 exports.delete_a_content = function(req, res) {
     var p = {};
-    p.page_id = req.params.sectionId;
+    p.page_id = req.params.surveyId;
     p.content_id = req.params.contentId;
 
     Input.findOne(
@@ -220,11 +240,7 @@ exports.delete_a_survey = function(req, res) {
 };
 
 function swap(input, index_A, index_B) {
-    console.log('-> before : ');
-    console.log(input);
-
     var temp = input[index_A];
-
     input[index_A] = input[index_B];
     input[index_B] = temp;
 
@@ -238,4 +254,12 @@ function arraymove(arr, fromIndex, toIndex) {
     arr.splice(fromIndex, 1);
     arr.splice(toIndex, 0, element);
     return arr;
+}
+function mix(source, target) {
+    for(var key in source) {
+        if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+        }
+    }
+    return target;
 }

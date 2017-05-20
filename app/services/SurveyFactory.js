@@ -17,8 +17,8 @@ app.factory('SurveyFactory', ['$http', function($http){
         this.getSections().insert(nextIndex, newObj);
     };
     //Page
-    SurveyFactory.newPage = function(id, toAdd){
-        return $http.post(url + '/' + id  + '/' + 'new-page', toAdd);
+    SurveyFactory.newPage = function(id, data){
+        return $http.post(url + '/' + id  + '/' + 'new-page', data);
     };
     SurveyFactory.deletePage = function(surveyId, pageId){
         return $http.delete(url + '/' + surveyId  + '/page/' + pageId);
@@ -30,6 +30,10 @@ app.factory('SurveyFactory', ['$http', function($http){
         return $http.put(url + '/' + id  + '/sort-page', toAdd);
     };
     //Content
+    SurveyFactory.pushNewContent = function(surveyId, pageId, data){
+        //survey/{surveyid}/page/{pageid}/push-content
+        return $http.put(url + '/' + surveyId  + '/page/' + pageId + '/push-content', data);
+    };
     SurveyFactory.deleteContent = function(surveyId, contentId){
         return $http.delete(url + '/' + surveyId  + '/content/' + contentId);
     };

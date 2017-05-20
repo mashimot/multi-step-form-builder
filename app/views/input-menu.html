@@ -2,7 +2,7 @@
     <div class="list-group">
     <div ui-sortable="sortableContent" ng-model="mainInputs">
             <div ng-repeat="(i, input) in mainInputs | orderBy: input.name">
-                <div class="list-group-item"><span ng-bind-html="input.icon"></span> {{ input.name }}</div>
+                <div class="btn btn-default btn-md btn-block" ng-click="pushNewContent(input.content_to_drop)"><span ng-bind-html="input.icon"></span> {{ input.name }}</div>
             </div>
         </div>
     </div>

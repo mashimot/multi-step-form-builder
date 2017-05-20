@@ -17,7 +17,7 @@ app.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'ModalSer
                 } else {
                     $scope.activeTabIndex = currentTabIndex;
                 }
-            });
+            }, 100);
         }, function(error){
         });
     }
@@ -87,6 +87,19 @@ app.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'ModalSer
     };
     $scope.clone = function(keyC, keyP){
     };
+    $scope.pushNewContent = function(content_to_drop){
+        var currentTabIndex = $scope.activeTabIndex;
+        var pages = $scope.columns.pages;
+        if(pages.length > 0 && currentTabIndex >= 0){
+            var pageId = pages[currentTabIndex]._id;
+            var data = content_to_drop;
+            SurveyFactory.pushNewContent( surveyId, pageId, data).then(function(response){
+                updateSurvey($scope.activeTabIndex);
+            }, function(err){
+                console.log(err);
+            });
+        }
+    };
     $scope.deleteContent = function(surveyId, contentId){
         SurveyFactory.deleteContent( surveyId, contentId ).then(function(response){
             updateSurvey($scope.activeTabIndex);
@@ -95,6 +108,8 @@ app.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'ModalSer
         });
     };
     $scope.sortableContent = {
+        //handle: '.handle',
+        placeholder: 'ui-state-highlight',
         update: function(event, ui){
             var new_position = ui.item.sortable.dropindex;
             var old_position = ui.item.sortable.index;
@@ -112,7 +127,11 @@ app.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'ModalSer
                 console.log(err);
             });
         },
-        stop: function(){
+        start: function(event, ui){
+            ui.item.toggleClass("highlight");
+        },
+        stop: function(event, ui){
+            ui.item.toggleClass("highlight");
         }
     };
     $scope.sortPages = function() {

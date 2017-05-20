@@ -22,7 +22,8 @@ module.exports = function(app) {
         .get(todoList.read_a_page)
         .delete(todoList.delete_a_page)
         .put(todoList.save_per_page);
-
+    app.route('/survey/:surveyId/page/:pageId/push-content')
+        .put(todoList.push_new_content)
 
     app.route('/survey/:surveyId/sort-page')
         .put(todoList.sort_page);

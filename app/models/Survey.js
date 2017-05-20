@@ -67,7 +67,7 @@ var InputSchema = new Schema({
     "input": {
         "type": {
             type: String,
-            enum: ["radio", "checkbox", "comments"],
+            enum: ["radio", "checkbox", "comments", "net-promoter-score"],
             required: true
         },
         "elements": [{
