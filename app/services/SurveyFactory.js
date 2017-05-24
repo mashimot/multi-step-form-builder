@@ -12,10 +12,6 @@ app.factory('SurveyFactory', ['$http', function($http){
     SurveyFactory.deleteSurvey = function(id){
         return $http.delete(url + '/' + id);
     };
-    SurveyFactory.clone = function(newObj){
-        var nextIndex = _keyP + 1;
-        this.getSections().insert(nextIndex, newObj);
-    };
     //Page
     SurveyFactory.newPage = function(id, data){
         return $http.post(url + '/' + id  + '/' + 'new-page', data);

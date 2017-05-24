@@ -1,11 +1,13 @@
 var app = angular.module('app');
 app.controller('inputMenuCtrl', [ '$scope', 'SortableService', function($scope, SortableService){
     $scope.mainInputs = [];
+
     var mainInputs = function(){
-        return [
-            {
-                name: 'Radio group',
-                icon: '<i class="fa fa-dot-circle-o" aria-hidden="true"></i>',
+        return [{
+            group_name: "Radio",
+            icon_class: 'fa fa-dot-circle-o',
+            inputs: [{
+                name: 'radio group',
                 content_to_drop: {
                     input: {
                         type: 'radio',
@@ -21,10 +23,8 @@ app.controller('inputMenuCtrl', [ '$scope', 'SortableService', function($scope, 
                         }]
                     }
                 }
-            },
-            {
+            },{
                 name: 'Sim/Nâo',
-                icon: '<i class="fa fa-dot-circle-o" aria-hidden="true"></i>',
                 content_to_drop: {
                     input: {
                         type: 'radio',
@@ -37,29 +37,8 @@ app.controller('inputMenuCtrl', [ '$scope', 'SortableService', function($scope, 
                         }]
                     }
                 }
-            },
-            {
-                name: 'checkbox',
-                icon: '<i class="fa fa-check-square-o" aria-hidden="true"></i>',
-                content_to_drop: {
-                    input: {
-                        type: 'checkbox',
-                        elements: [{
-                            text: 'checkbox 1',
-                            value: '1'
-                        },{
-                            text: 'checkbox 2',
-                            value: '2'
-                        },{
-                            text: 'checkbox 3',
-                            value: '3'
-                        }]
-                    }
-                }
-            },
-            {
+            },{
                 name: 'disagreement',
-                icon: '<i class="fa fa-dot-circle-o" aria-hidden="true"></i>',
                 content_to_drop: {
                     input: {
                         type: 'radio',
@@ -84,20 +63,8 @@ app.controller('inputMenuCtrl', [ '$scope', 'SortableService', function($scope, 
                         }]
                     }
                 }
-
-            },
-            {
-                name: 'comments',
-                icon: '<i class="fa fa-commenting-o" aria-hidden="true"></i>',
-                content_to_drop: {
-                    input: {
-                        type: 'comments'
-                    }
-                }
-            },
-            {
+            },{
                 name: 'net-promoter-score',
-                icon: '<i class="fa fa-dot-circle-o" aria-hidden="true"></i>',
                 content_to_drop: {
                     input: {
                         type: 'net-promoter-score',
@@ -137,22 +104,64 @@ app.controller('inputMenuCtrl', [ '$scope', 'SortableService', function($scope, 
                         }]
                     }
                 }
-            }
-        ];
+            }]
+        },{
+            group_name: "Checkbox",
+            icon_class: 'fa fa-check-square-o',
+            inputs: [{
+                name: 'checkbox',
+                content_to_drop: {
+                    input: {
+                        type: 'checkbox',
+                        elements: [{
+                            text: 'checkbox 1',
+                            value: '1'
+                        },{
+                            text: 'checkbox 2',
+                            value: '2'
+                        },{
+                            text: 'checkbox 3',
+                            value: '3'
+                        }]
+                    }
+                }
+            }]
+        },{
+            group_name: "Textarea",
+            icon_class: 'fa fa-commenting-o',
+            inputs: [{
+                name: 'comments',
+                content_to_drop: {
+                    input: {
+                        type: 'comments'
+                    }
+                }
+            }]
+        },{
+            group_name: "Title",
+            icon_class: 'fa fa-commenting-o',
+            inputs: [{
+                name: 'H1',
+                content_to_drop: {
+                    input: {
+                        type: 'title'
+                    }
+                }
+            }]
+        }];
     };
     $scope.mainInputs = mainInputs();
     $scope.sortableContent = {
         connectWith: ".connected-apps-container",
         placeholder: 'ui-state-highlight',
         update: function(event, ui) {
-            //var index = ui.item.sortable.dropindex;
-
             if ( // ensure we are in the first update() callback
             !ui.item.sortable.received &&
                 // check that it's an actual moving between the two lists
             ui.item.sortable.source[0] !== ui.item.sortable.droptarget[0]) {
                 ui.item.sortable.cancel(); // cancel drag and drop
                 var object = jQuery.extend({}, ui.item.sortable.model.content_to_drop);
+                console.log(object);
                 SortableService.setObjectToDrop(object);
             }
         },

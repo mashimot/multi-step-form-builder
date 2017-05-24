@@ -5,8 +5,6 @@ angular.module('app', [
     'ngRoute',
     'ui.sortable',
     'ui.bootstrap',
-    'ngMaterial',
-    'ngSanitize'
 ]).config(function($routeProvider, $locationProvider){
     $routeProvider.when('/', {
         templateUrl: 'views/survey/new.html',

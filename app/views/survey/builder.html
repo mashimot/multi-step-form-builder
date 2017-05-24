@@ -3,25 +3,24 @@
         <uib-tab ng-repeat="(keyC, page) in columns.pages"  index="keyC">
             <uib-tab-heading>
                 <span>Page {{ keyC + 1 }}</span>
-                <a class="" ng-click="deletePage(page._id)" style="cursor: pointer; ">
+                <a class="text-danger" ng-click="deletePage(page._id)" style="cursor: pointer; ">
                     [ <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> ]
                 </a>
             </uib-tab-heading>
             <div ng-if="page.contents.length <= 0">
-                <br/>
-                <div class="alert alert-warning">
+                <div class="well well-sm">
                     Place your elements here
                 </div>
             </div>
             <div ui-sortable="sortableContent" ng-model="page.contents" class="connected-apps-container" style="min-height: 40px;">
-                <div ng-repeat="(keyP, p) in page.contents" ng-init="number = countInit();">
-                    <survey-content></survey-content>
+                <div ng-repeat="(keyP, content) in page.contents" ng-init="number = countInit();">
+                    <render-content content="content" number="number"></render-content>
                 </div>
             </div>
         </uib-tab>
         <li class="uib-tab nav-item unsortable">
             <button type="button" class="btn btn-default btn-small unsortable" ng-click="newPage()" aria-label="toggle fullscreen">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                <i class="fa fa-plus" aria-hidden="true"></i>
             </button>
         </li>
     </uib-tabset>

@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="bower_components/bootstrap-css/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.min.css">
-    <!--link rel="stylesheet" href="https://bootswatch.com/lumen/bootstrap.css"/-->
+    <link rel="stylesheet" href="https://bootswatch.com/paper/bootstrap.css"/>
     <style>
         .disable-all-contents{
             pointer-events:none;
@@ -47,23 +47,15 @@
 
 <div ng-view></div>
 
-
 <!-- In production use:
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
 -->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
 <script src="bower_components/angular/angular.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular-sanitize.min.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/angular-ui-sortable/sortable.min.js"></script>
-
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
-
-<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
-
 
 <script src="app.js"></script>
 <script src="controllers/surveyCtrl.js"></script>
@@ -72,6 +64,7 @@
 <script src="services/SurveyFactory.js"></script>
 <script src="services/ModalService.js"></script>
 <script src="services/SortableService.js"></script>
+<script src="services/TabService.js"></script>
 <script src="services/SurveyCollectionService.js"></script>
 <script src="directives/inputMenuDirective.js"></script>
 <script src="directives/surveyDirective.js"></script>
@@ -89,8 +82,8 @@
         </div>
         <div class="modal-body">
             <uib-tabset active="activeConfig">
-                <uib-tab ng-repeat="(i, tab) in tabsToRender" heading="{{ tab.title }}" index="i">
-                    <div ng-include src="tab.template"></div>
+                <uib-tab ng-repeat="(i, tab) in render.templates" heading="{{ tab.title }}" index="i">
+                    <div ng-include src="tab.url"></div>
                 </uib-tab>
             </uib-tabset>
         </div>
@@ -104,20 +97,20 @@
 </script>
 <script type="text/ng-template" id="input-net-promoter-score-template.html">
     <div class="text-center">
-        <label class="radio-inline"  ng-repeat="i in input.elements">
+        <label class="radio-inline"  ng-repeat="i in content.input.elements">
             <input type="radio" class="radio"/> {{ i.text }}
         </label>
     </div>
 </script>
 <script type="text/ng-template" id="input-radio-template.html">
-    <div ng-repeat="i in input.elements">
+    <div ng-repeat="i in content.input.elements">
         <label>
             <input type="radio"/> {{ i.text }}
         </label>
     </div>
 </script>
 <script type="text/ng-template" id="input-checkbox-template.html">
-    <div ng-repeat="i in input.elements">
+    <div ng-repeat="i in content.input.elements">
         <label>
             <input type="checkbox"/> {{ i.text }}
         </label>

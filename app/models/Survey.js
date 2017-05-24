@@ -34,6 +34,7 @@ var SurveySchema = new Schema({
         }
     ]
 }, {
+    timestamps: true,
     versionKey: false // You should be aware of the outcome after set to false
 });
 
@@ -77,6 +78,7 @@ var InputSchema = new Schema({
         }]
     }
 }, {
+    timestamps: true,
     versionKey: false // You should be aware of the outcome after set to false
 });
 

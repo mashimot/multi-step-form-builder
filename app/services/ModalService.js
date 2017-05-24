@@ -1,82 +1,56 @@
-app.factory('ModalService', [ 'SurveyFactory', function(SurveyFactory){
-    var modalUrl = "views/modal/";
-
-    var getTabs = function() {
-        return {
-            general: {
-                title: "Configuração Geral", template: modalUrl + "general-config.html"
-            },
-            choices: {
-                title: "Escolhas", template: modalUrl + "choice.html"
-            },
-            visibleIf: {
-                title: "Vísivel Se", template: modalUrl + "is-hide-when.html"
-            }
-        };
-    };
-
+app.factory('ModalService', [ 'SurveyFactory', 'TabService', function(SurveyFactory, TabService){
     var getTemplateToLoad = function(pageContent){
-        var render = [];
-        var inputToHide = [];
-        var tab = getTabs();
+        var render = TabService.render();
+        var tabToRender = [];
+        //var renderlength = render.length ;
+        var type = pageContent.input.type;
+        tabToRender = render[type];
 
-        switch(pageContent.input.type){
-            case 'radio':
-                render.push(tab.general, tab.choices, tab.visibleIf);
+        /*for(var i = 0; i < renderlength; i++){
+            if(pageContent.input.type === render[i].type){
+                tabToRender = render[i];
                 break;
-            case 'checkbox':
-                render.push(tab.general, tab.choices, tab.visibleIf);
-                break;
-            case 'comments':
-                render.push(tab.general, tab.visibleIf);
-                inputToHide = ['hasComment'];
-                break;
-            case 'net-promoter-score':
-                render.push(tab.general, tab.visibleIf);
-                inputToHide = ['hasComment'];
-                break;
-            default :
-                render = [];
-                inputToHide = [];
-                break;
+            }
+        }*/
+        if(tabToRender !== undefined){
+            return {
+                templateUrl: 'configTemplate.html',
+                controller: ConfigModalController,
+                resolve: {
+                    render: function(){
+                        return tabToRender;
+                    },
+                    pageContent: function () {
+                        return pageContent;
+                    },
+                    SurveyFactory: function () {
+                        return SurveyFactory;
+                    }
+                }
+            };
+        } else {
+            return 'error';
         }
 
-        return {
-            templateUrl: 'configTemplate.html',
-            controller: ConfigModalController,
-            resolve: {
-                tabToRender: function(){
-                    return render;
-                },
-                inputToHide: function(){
-                    return inputToHide;
-                },
-                pageContent: function () {
-                    return pageContent;
-                },
-                SurveyFactory: function () {
-                    return SurveyFactory;
-                }
-            }
-        };
     };
     return {
         getTemplateToLoad: getTemplateToLoad
     }
 }]);
 
-var ConfigModalController = function ($scope, $uibModalInstance, tabToRender, inputToHide, pageContent, SurveyFactory) {
+var ConfigModalController = function ($scope, $uibModalInstance, render, pageContent, SurveyFactory) {
     var isChanged = false;
     $scope.content = angular.copy(pageContent);
-    $scope.tabsToRender = [];
-    $scope.tabsToRender = tabToRender;
+    $scope.render = [];
 
-    if(inputToHide.length){
-        for(var i = 0; i < inputToHide.length; i++){
-            console.log(inputToHide[i]);
-            $scope[inputToHide[i]] = true;
+    //look at TabService, hide some inputs
+    $scope.render = render;
+    if(render.hide.length){
+        for(var i = 0; i < render.hide.length; i++){
+            $scope[render.hide[i]] = true;
         }
     }
+
     $scope.removeContent = function ($index) {
         $scope.content.input.elements.splice($index, 1);
     };
