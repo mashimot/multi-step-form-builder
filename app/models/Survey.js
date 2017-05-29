@@ -68,8 +68,16 @@ var InputSchema = new Schema({
     "input": {
         "type": {
             type: String,
-            enum: ["radio", "checkbox", "comments", "net-promoter-score"],
+            enum: ["radio", "title", "checkbox", "comments", "net-promoter-score"],
             required: true
+        },
+        title: {
+            text: { type: String },
+            color: {
+                type: String,
+                trim: true,
+                required: false
+            }
         },
         "elements": [{
             _id: false,
@@ -83,8 +91,12 @@ var InputSchema = new Schema({
 });
 
 InputSchema.pre("save", function (next) {
-    console.log(this.description);
-    this.description = 'joeysworldtour';
+    this.description = 'question';
+    if(this.input.type == 'title'){
+        this.input.title.text = 'Title';
+        this.description = undefined;
+        this.isRequired = undefined;
+    }
     next();
 });
 PageSchema.pre('remove', function(next) {

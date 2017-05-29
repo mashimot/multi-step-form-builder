@@ -9,12 +9,19 @@ app.service('TabService', function(){
         },
         visibleIf: {
             title: "Vísivel Se", url: modalUrl + "is-hide-when.html"
+        },
+        title: {
+            title: "Title", url: modalUrl + "title.html"
         }
     };
     this.render = function(){
         return {
             'radio': {
                 templates: this.radio(), //is an array
+                hide: []
+            },
+            'title': {
+                templates: this.title(), //is an array
                 hide: []
             },
             'checkbox': {
@@ -31,27 +38,13 @@ app.service('TabService', function(){
                 hide: ['hasComment']
             }
         };
-        /*return [{
-            type: 'radio',
-            templates: this.radio(), //is an array
-            hide: []
-        },{
-            type: 'checkbox',
-            templates: this.checkbox(), //is an array
-            hide: []
-        },{
-            type: 'comments',
-            templates: this.comments(), //is an array
-            hide: ['hasComment']
-        },{
-            type: 'net-promoter-score',
-            templates: this.netPromoterScore(), //is an array
-            hide: ['hasComment']
-        }];*/
     };
 
     this.radio = function(){
         return [tabs.general, tabs.choices, tabs.visibleIf];
+    };
+    this.title = function(){
+        return [tabs.title];
     };
     this.checkbox = function(){
         return [tabs.general, tabs.choices, tabs.visibleIf];

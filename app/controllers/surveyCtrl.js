@@ -75,6 +75,8 @@ app.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'ModalSer
         //handle: '.handle',
         placeholder: 'ui-state-highlight',
         update: function(event, ui){
+            //ui.item.sortable.cancel();
+
             var new_position = ui.item.sortable.dropindex;
             var old_position = ui.item.sortable.index;
             var model = ui.item.sortable.model;
@@ -83,7 +85,6 @@ app.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'ModalSer
             data.new_position = new_position;
             data.old_position = old_position;
             data.content = (!SortableService.getObjectToDrop())? model: SortableService.getObjectToDrop();
-
             SurveyFactory.savePerPage(surveyId, pageId, data).then(function (res) {
                 $scope.updateSurvey($scope.activeTabIndex);
                 SortableService.setObjectToDrop(false);

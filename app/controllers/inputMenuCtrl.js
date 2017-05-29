@@ -144,7 +144,11 @@ app.controller('inputMenuCtrl', [ '$scope', 'SortableService', function($scope, 
                 name: 'H1',
                 content_to_drop: {
                     input: {
-                        type: 'title'
+                        type: 'title',
+                        title: {
+                            text: 'Title',
+                            color: '#FFFFFF'
+                        }
                     }
                 }
             }]
