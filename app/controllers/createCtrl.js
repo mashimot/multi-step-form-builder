@@ -16,7 +16,7 @@ app.controller('createCtrl', [ '$scope', '$http', 'SurveyFactory', function($sco
     $scope.survey = new Survey();
 
     $scope.newSurvey = function(){
-        $http.post('/survey/new', $scope.survey).then(function(res) {
+        $http.post('/survey', $scope.survey).then(function(res) {
             $scope.surveyList.push(res.data);
             $scope.message = {};
         });

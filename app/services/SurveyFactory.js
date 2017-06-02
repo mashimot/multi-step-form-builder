@@ -4,7 +4,7 @@ app.factory('SurveyFactory', ['$http', function($http){
 
     //Survey
     SurveyFactory.showAllSurveys = function(){
-        return $http.get(url + '/list-all');
+        return $http.get(url);
     };
     SurveyFactory.getSurvey = function(id){
         return $http.get(url + '/' + id);
@@ -14,7 +14,7 @@ app.factory('SurveyFactory', ['$http', function($http){
     };
     //Page
     SurveyFactory.newPage = function(id, data){
-        return $http.post(url + '/' + id  + '/' + 'new-page', data);
+        return $http.post(url + '/' + id  + '/' + 'page', data);
     };
     SurveyFactory.deletePage = function(surveyId, pageId){
         return $http.delete(url + '/' + surveyId  + '/page/' + pageId);
@@ -23,7 +23,7 @@ app.factory('SurveyFactory', ['$http', function($http){
         return $http.put(url + '/' + id  + '/page/' + pageId, data);
     };
     SurveyFactory.sortPage = function(id, toAdd){
-        return $http.put(url + '/' + id  + '/sort-page', toAdd);
+        return $http.put(url + '/' + id  + '/page', toAdd);
     };
     //Content
     SurveyFactory.pushNewContent = function(surveyId, pageId, data){
@@ -37,4 +37,5 @@ app.factory('SurveyFactory', ['$http', function($http){
         return $http.put(url + '/' + surveyId  + '/content/' + contentId, data);
     };
     return SurveyFactory;
+
 }]);

@@ -158,6 +158,7 @@ app.controller('inputMenuCtrl', [ '$scope', 'SortableService', function($scope, 
     $scope.sortableContent = {
         connectWith: ".connected-apps-container",
         placeholder: 'ui-state-highlight',
+        cancel: ".unsortable",
         update: function(event, ui) {
             if ( // ensure we are in the first update() callback
             !ui.item.sortable.received &&
@@ -171,10 +172,6 @@ app.controller('inputMenuCtrl', [ '$scope', 'SortableService', function($scope, 
         },
         stop: function (e, ui){
             $scope.mainInputs = mainInputs();
-            /*if ($(e.target).hasClass('first') &&
-             ui.item.sortable.droptarget &&
-             e.target != ui.item.sortable.droptarget[0]) {
-             }*/
         }
     };
 }]);

@@ -1,8 +1,8 @@
 <div class="col-lg-7 col-md-7 col-sm-8 col-xs-11">
-    <uib-tabset  active="activeTabIndex"  ng-init="sortPages()" id="sortable">
-        <uib-tab ng-repeat="(keyC, page) in columns.pages"  index="keyC">
+    <uib-tabset active="activeTabIndex"  ng-init="sortPages()" id="sortable">
+        <uib-tab  ng-repeat="(pageIndex, page) in survey.pages"  index="pageIndex">
             <uib-tab-heading>
-                <span>Page {{ keyC + 1 }}</span>
+                <span>Page {{ pageIndex + 1 }}</span>
                 <a class="text-danger" ng-click="deletePage(page._id)" style="cursor: pointer; ">
                     [ <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> ]
                 </a>
@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div ui-sortable="sortableContent" ng-model="page.contents" class="connected-apps-container" style="min-height: 40px;">
-                <div ng-repeat="(keyP, content) in page.contents" ng-init="number = countInit();">
+                <div ng-repeat="content in page.contents" ng-init="number = countInit(content.input.type);">
                     <render-content content="content" number="number"></render-content>
                 </div>
             </div>

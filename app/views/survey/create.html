@@ -35,7 +35,7 @@
                 </button>
             </div>
         </div-->
-        <div ng-controller="surveyCtrl as survey">
+        <div ng-controller="surveyCtrl">
             <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
                 <li>
                     <a href="" data-target="#editor" data-toggle="tab" ><i class="fa fa-pencil-square-o pull-left"></i> Editor</a>
@@ -52,7 +52,7 @@
                         <input-menu></input-menu>
                         <survey-builder></survey-builder>
                         <div class="col-md-3">
-                            <pre>{{ columns | json }}</pre>
+                            <pre>{{ survey | json }}</pre>
                         </div>
                     </div>
                 </div>

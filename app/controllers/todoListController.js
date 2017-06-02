@@ -14,7 +14,6 @@ exports.create_a_survey = function(req, res) {
     var new_survey = new Survey(req.body);
     new_survey.save(function(err, survey) {
         if (err){ res.send(err); } else {
-            //return res.redirect('/#/survey/' + survey._id);
             res.json(survey);
         }
     });
@@ -22,10 +21,10 @@ exports.create_a_survey = function(req, res) {
 
 //return an entire survey page and content
 exports.read_a_survey = function(req, res) {
-    var s = {};
-    s.survey_id = req.params.surveyId;
+    var survey = {};
+    survey.id = req.params.surveyId;
     Survey.findOne(
-        { _id: s.survey_id }
+        { _id: survey.id }
     ).populate({
             path: 'pages',
             populate: {
@@ -33,10 +32,12 @@ exports.read_a_survey = function(req, res) {
                 model: 'Input'
             }
         })
-        .exec(function(err, survey){
-            if(err)
-                res.send(err);
-            res.json(survey)
+        .exec(function(err, model){
+            if(err) res.send(err);
+            res.json({
+                success: true,
+                model: model
+            });
         });
 };
 //return page with content
@@ -66,28 +67,24 @@ exports.new_page = function(req, res) {
     var s = {
         id: req.params.surveyId
     };
-    /* Single Survey Schema
-    Survey.findByIdAndUpdate(
-        { _id: survey.id },
-        { $push: {'sections': { contents: [] } } },
-        function(err, survey){
-            if(err)
-                res.send(err)
-            res.json(survey);
-        }
-    );*/
     Survey.findById({ _id: s.id }, function(err, survey) {
         if (err)
             res.send(err);
-        var number = survey.length + 1;
         //survey is finded
         var new_page = new Page({
             name: 'joeysworldtour'
         });
-        survey.pages.push({ _id: new_page._id });
-        new_page.save();
-        survey.save();
-        res.json(survey);
+        new_page.save(function(err){
+            if(err) res.send(err);
+            survey.pages.push({ _id: new_page._id });
+            survey.save(function(err){
+                if(err) res.send(err);
+                res.json({
+                    success: true,
+                    message: 'Page created successfully!'
+                });
+            });
+        });
     });
 };
 
@@ -112,22 +109,22 @@ exports.sort_page = function(req, res) {
     var old_position = req.body.old_position;
     Survey.findById(
         { _id: survey.survey_id },
-        function(err, s){
-            if(err){
-                res.send(err);
-            } else {
-                var newpage = arraymove(s.pages, old_position, new_position);
-                s.pages = [];
-                s.pages = newpage;
-                s.save();
-                res.json(s);
-            }
+        function(err, _survey){
+            if(err) res.send(err);
+            var newpage = arraymove(_survey.pages, old_position, new_position);
+            _survey.pages = [];
+            _survey.pages = newpage;
+            _survey.save(function(err){
+                if(err) res.send(err);
+                res.json({
+                    success: true,
+                    message: 'Page sorted successfully!'
+                });
+            });
         }
     )
-
-}
-
-exports.push_new_content = function(req, res){
+};
+exports.create_a_content = function(req, res){
     var p = {};
     p.survey_id = req.params.surveyId;
     p.page_id = req.params.pageId;
@@ -135,51 +132,55 @@ exports.push_new_content = function(req, res){
     Page.findById(
         { _id: p.page_id },
         function(err, _page){
-            if(err)
-                res.send(err);
-
-            var content = new Input();
-            content = mix(p.content, content);
-            _page.contents.push(content._id);
-            _page.save();
-            content.save();
-            res.json('success');
+            if(err) res.send(err);
+            var newContent = new Input();
+            newContent = mixObject(p.content, newContent);
+            _page.contents.push(newContent._id);
+            _page.save(function(err){
+                if(err) res.send(err);
+                newContent.save(function(err){
+                    if(err) res.send(err);
+                    res.json({
+                        success: true,
+                        message: 'Content created successfully!'
+                    });
+                });
+            });
         }
     );
 };
 
 
-exports.save_per_page = function(req, res) {
+exports.save_a_page = function(req, res) {
     var survey = {};
     survey.id = req.params.surveyId;
     survey.page_id = req.params.pageId;
     survey.content = req.body.content;
     survey.new_position = req.body.new_position;
     survey.old_position = req.body.old_position;
-    console.log(survey);
-    //return false;
     Page.findById(
         { _id: survey.page_id },
         function(err, _page){
-            if(err){
-                res.send(err);
+            if(err) res.send(err);
+            if (typeof survey.content._id === "undefined") {
+                var newContent = new Input();
+                newContent = mixObject(survey.content, newContent);
+                _page.contents.insert( survey.new_position, { _id: newContent._id } );
+                newContent.save(function(err){
+                    if(err) res.send(err);
+                });
             } else {
-                var new_position = survey.new_position;
-                var old_position = survey.old_position;
-
-                if (typeof survey.content._id === "undefined") {
-                    var content = new Input();
-                    content = mix(survey.content, content);
-                    _page.contents.insert(new_position, { _id: content._id });
-                    content.save();
-                } else {
-                    var new_contents_swap = swap(_page.contents, new_position, old_position);
-                    _page.contents = [];
-                    _page.contents = new_contents_swap;
-                }
-                _page.save();
-                res.json(_page);
+                var new_contents_swap = swap(_page.contents, survey.new_position, survey.old_position);
+                _page.contents = [];
+                _page.contents = new_contents_swap;
             }
+            _page.save(function(err, _page){
+                if(err) res.send(err);
+                res.json({
+                    success: true,
+                    message: 'Content sorted successfully!'
+                });
+            });
         }
     );
 };
@@ -200,7 +201,6 @@ exports.update_a_content = function(req, res){
 };
 
 //Contents
-
 exports.delete_a_content = function(req, res) {
     var p = {};
     p.page_id = req.params.surveyId;
@@ -220,16 +220,15 @@ exports.delete_a_content = function(req, res) {
     )
 };
 exports.update_a_survey = function(req, res) {
-    Survey.findOneAndUpdate(req.params.surveyId, req.body, {new: true}, function(err, task) {
-        if (err)
-            res.send(err);
-        res.json(task);
+    Survey.findOneAndUpdate(req.params.surveyId, req.body, {new: true}, function(err, survey) {
+        if (err) res.send(err);
+        res.json(survey);
     });
 };
 exports.delete_a_survey = function(req, res) {
     Survey.remove({
         _id: req.params.surveyId
-    }, function(err, survey) {
+    }, function(err) {
         if (err)
             res.send(err);
         res.json({
@@ -255,7 +254,7 @@ function arraymove(arr, fromIndex, toIndex) {
     arr.splice(toIndex, 0, element);
     return arr;
 }
-function mix(source, target) {
+function mixObject(source, target) {
     for(var key in source) {
         if (source.hasOwnProperty(key)) {
             target[key] = source[key];

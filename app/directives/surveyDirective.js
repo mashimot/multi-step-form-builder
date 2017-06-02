@@ -28,7 +28,8 @@ app.directive('renderContent', ['$uibModal', 'ModalService', 'SurveyFactory',  f
                     var modalInstance = $uibModal.open({
                         templateUrl: templateToLoad.templateUrl,
                         controller: templateToLoad.controller, //return a string and then converts to a function
-                        resolve: templateToLoad.resolve
+                        resolve: templateToLoad.resolve,
+                        animation: false
                     });
                     modalInstance.result.then(function(result){
                         console.log(result);
