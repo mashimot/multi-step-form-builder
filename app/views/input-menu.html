@@ -1,17 +1,11 @@
 <div class="col-lg-2 col-md-2 col-sm-1 col-xs-1" ng-controller="inputMenuCtrl">
     <div ng-repeat="main in mainInputs">
-        <div class="panel">
-            <div class="panel-body">
-                <div class="text-center">
-                    <i class="{{ main.icon_class }}"></i> {{ main.group_name }}
-                </div>
-                <div class="text-center">
-                    <div ui-sortable="sortableContent" ng-model="main.inputs">
-                        <div ng-repeat="(i, input) in main.inputs">
-                            <div class="btn btn-default btn-md btn-block" ng-click="pushNewContent(input.content_to_drop)">
-                                <i class="{{ input.icon_class }}" aria-hidden="true"></i>  {{ input.name }}
-                            </div>
-                        </div>
+        <div class="form-group text-center">
+            <i class="{{ main.icon_class }}"></i> {{ main.group_name }}
+            <div ui-sortable="sortableContent" ng-model="main.inputs">
+                <div ng-repeat="(i, input) in main.inputs">
+                    <div class="btn btn-default btn-md btn-block" ng-click="pushNewContent(input.content_to_drop)">
+                        <i class="{{ input.icon_class }}" aria-hidden="true"></i>  {{ input.name }}
                     </div>
                 </div>
             </div>

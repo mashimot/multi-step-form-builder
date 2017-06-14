@@ -45,6 +45,11 @@
                         <i class="fa fa-code pull-left"></i> Desenvolvedor
                     </a>
                 </li>
+                <li>
+                    <a href="" data-target="#preview" data-toggle="tab">
+                        Preview
+                    </a>
+                </li>
             </ul>
             <div class="tab-content">
                 <div id="editor" class="tab-pane fade in active">
@@ -54,6 +59,11 @@
                         <div class="col-md-3">
                             <pre>{{ survey | json }}</pre>
                         </div>
+                    </div>
+                </div>
+                <div id="preview" class="tab-pane fade in">
+                    <div class="container">
+                        <survey-preview></survey-preview>
                     </div>
                 </div>
                 <div id="developer" class="tab-pane fade in">
@@ -93,9 +103,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="secaoPrevia" class="tab-pane fade">
-                    <h1>PRÉVIA</h1>
-                </div>
+
             </div>
         </div>
     </div>

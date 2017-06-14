@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-md-8">
+        <div class="jumbotron">
+            Still under construction
+        </div>
+        <form ng-submit="submit()" method="POST">
+            <div ng-model="survey.pages" ng-repeat="(pageIndex, page) in survey.pages">
+                <div ng-model="page.contents" ng-repeat="(contentIndex, content) in page.contents">
+                    <section ng-if="content.input.type === 'title'">
+                        <h1 class="alert alert-danger">{{ content.input.title.text }}</h1>
+                    </section>
+                    <section ng-if="content.input.type === 'checkbox'">
+                        <strong>{{ content.number }} - {{ content.description }}</strong><br/>
+                        <div ng-repeat="element in content.input.elements track by $index">
+                            <input type="checkbox"  ng-model="element.isChecked" ng-change="checkbox(content._id, content)" value="{{ element.value }}"/>{{ element.text }}
+                        </div>
+                    </section>
+                    <section ng-if="content.input.type === 'radio'">
+                        <strong>{{ content.number }} - {{ content.description }}</strong><br/>
+                        <div ng-repeat="(elementId, element) in content.input.elements track by $index">
+                            <input type="radio" ng-model="answers[content._id].anwser" value="{{ element.value }}"/>{{ element.text }}
+                        </div>
+                    </section>
+                    <section ng-if="content.input.type === 'comments'">
+                        <strong>{{ content.number }} - {{ content.description }}</strong><br/>
+                        <textarea ng-model="answers[content._id].anwser" class="form-control" cols="30" rows="10"></textarea>
+                    </section>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">SUbmit</button>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <pre>{{ answers | json }}</pre>
+        <pre>{{ selected | json }}</pre>
+    </div>
+</div>

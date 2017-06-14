@@ -37,11 +37,15 @@ app.controller('inputMenuCtrl', [ '$scope', 'SortableService', function($scope, 
                         }]
                     }
                 }
-            },{
+            }]
+        },{
+            group_name: "Gradients",
+            icon_class: 'fa fa-dot-circle-o',
+            inputs: [{
                 name: 'disagreement',
                 content_to_drop: {
                     input: {
-                        type: 'radio',
+                        type: 'gradient',
                         elements: [{
                             text: 'Discordo plenamente',
                             value: '1'
@@ -60,47 +64,6 @@ app.controller('inputMenuCtrl', [ '$scope', 'SortableService', function($scope, 
                         },{
                             text: 'NA (Não Aplicável)',
                             value: '0'
-                        }]
-                    }
-                }
-            },{
-                name: 'net-promoter-score',
-                content_to_drop: {
-                    input: {
-                        type: 'net-promoter-score',
-                        elements: [{
-                            text: '0',
-                            value: '0'
-                        },{
-                            text: '1',
-                            value: '1'
-                        },{
-                            text: '2',
-                            value: '2'
-                        },{
-                            text: '3',
-                            value: '3'
-                        },{
-                            text: '4',
-                            value: '4'
-                        },{
-                            text: '5',
-                            value: '5'
-                        },{
-                            text: '6',
-                            value: '6'
-                        },{
-                            text: '7',
-                            value: '7'
-                        },{
-                            text: '8',
-                            value: '8'
-                        },{
-                            text: '9',
-                            value: '9'
-                        },{
-                            text: '10',
-                            value: '10'
                         }]
                     }
                 }
@@ -139,7 +102,7 @@ app.controller('inputMenuCtrl', [ '$scope', 'SortableService', function($scope, 
             }]
         },{
             group_name: "Title",
-            icon_class: 'fa fa-commenting-o',
+            icon_class: 'fa fa-header',
             inputs: [{
                 name: 'H1',
                 content_to_drop: {
@@ -149,6 +112,62 @@ app.controller('inputMenuCtrl', [ '$scope', 'SortableService', function($scope, 
                             text: 'Title',
                             color: '#FFFFFF'
                         }
+                    }
+                }
+            }]
+        },{
+            group_name: "Identification",
+            icon_class: 'fa fa-user-o',
+            inputs: [{
+                name: 'identification',
+                content_to_drop: {
+                    input: {
+                        type: 'identification'
+                    }
+                }
+            }]
+        },{
+            group_name: "Net Promoter Score",
+            icon_class: 'fa fa-commenting-o',
+            inputs: [{
+                name: 'net-promoter-score',
+                content_to_drop: {
+                    input: {
+                        type: 'net-promoter-score',
+                        elements: [{
+                            text: '0',
+                            value: '0'
+                        },{
+                            text: '1',
+                            value: '1'
+                        },{
+                            text: '2',
+                            value: '2'
+                        },{
+                            text: '3',
+                            value: '3'
+                        },{
+                            text: '4',
+                            value: '4'
+                        },{
+                            text: '5',
+                            value: '5'
+                        },{
+                            text: '6',
+                            value: '6'
+                        },{
+                            text: '7',
+                            value: '7'
+                        },{
+                            text: '8',
+                            value: '8'
+                        },{
+                            text: '9',
+                            value: '9'
+                        },{
+                            text: '10',
+                            value: '10'
+                        }]
                     }
                 }
             }]

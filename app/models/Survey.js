@@ -1,32 +1,13 @@
 'use strict'
-/*
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var SurveySchema = new Schema({
-    name: String,
-    sections: [{
-        contents: [{
-            name: String,
-            description: String,
-            input: {
-                _type: String,
-                contents: [
-                    {
-                        _id: false,
-                        "text": String,
-                        "value": String
-                    }
-                ]
-            }
-        }]
-    }]
-});
 
-module.exports = mongoose.model('Survey', SurveySchema);*/
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var SurveySchema = new Schema({
-    name: String,
+    name: {
+        type: String,
+        unique: true,
+        required : true
+    },
     pages: [
         {
             type: Schema.Types.ObjectId,
@@ -56,8 +37,7 @@ var InputSchema = new Schema({
     name: String,
     number: String,
     description: {
-        type: String,
-        lowercase: true
+        type: String
     },
     isRequired: Boolean,
     isHide: Boolean,
@@ -68,7 +48,7 @@ var InputSchema = new Schema({
     "input": {
         "type": {
             type: String,
-            enum: ["radio", "title", "checkbox", "comments", "net-promoter-score"],
+            enum: ["radio", "title", "checkbox", "comments", "net-promoter-score", "gradient", "identification"],
             required: true
         },
         title: {
@@ -91,7 +71,7 @@ var InputSchema = new Schema({
 });
 
 InputSchema.pre("save", function (next) {
-    this.description = 'question';
+    this.description = 'Add Your Question';
     if(this.input.type == 'title'){
         this.input.title.text = 'Title';
         this.description = undefined;

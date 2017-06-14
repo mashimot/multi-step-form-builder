@@ -9,7 +9,7 @@
     <title>Multi Step Form Builder</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="bower_components/bootstrap-css/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://bootswatch.com/paper/bootstrap.css"/>
     <style>
@@ -46,6 +46,11 @@
             background-color: darkred !important;
             color: white !important;
         }
+        @media (min-width: 767px) {
+            #navigation{
+                position: fixed;
+            }
+        }
     </style>
 </head>
 <body>
@@ -66,6 +71,7 @@
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/angular-ui-sortable/sortable.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script src="app.js"></script>
 <script src="controllers/surveyCtrl.js"></script>
@@ -78,10 +84,15 @@
 <script src="services/SurveyCollectionService.js"></script>
 <script src="directives/InputMenuDirective.js"></script>
 <script src="directives/SurveyDirective.js"></script>
+<script src="directives/PreviewDirective.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
 <script src="components/version/version.js"></script>
 <script src="components/version/version-directive.js"></script>
 <script src="components/version/interpolate-filter.js"></script>
+
 
 
 <!-- templates -->
@@ -105,13 +116,70 @@
         </div>
     </form>
 </script>
-<script type="text/ng-template" id="input-net-promoter-score-template.html">
-    <div class="text-center">
-        <label ng-repeat="i in content.input.elements">
-            <input type="radio" class="radio"/> {{ i.text }}
-        </label>
+<script type="text/ng-template" id="input-identification-template.html">
+    <div class="form-group">
+        <div class="radio">
+            <label><input type="radio" name="notaperguntaIdentificacao" class="identificacao" value="Sim"/> Sim</label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="notaperguntaIdentificacao" class="identificacao" value="Não"/> Não</label>
+        </div>
+    </div>
+    <div id="contato" class="margin-top">
+        <div class="alert alert-default linha">
+            <div class="form-group has-success has-feedback">
+                <label for="nome">Nome Completo:</label>
+                <div class="input-group">
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-user"></span>
+                        </span>
+                    <input class="form-control" name="nomeDireto" placeholder="Digite o Nome" required="" type="text" value="">
+                </div>
+            </div>
+            <div class="form-group has-success has-feedback">
+                <label for="telefone">Telefone</label>
+                <div class="input-group">
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-earphone"></span>
+                        </span>
+                    <input class="form-control" name="telefoneDireto" placeholder="Digite o Telefone" value="" type="text">
+                </div>
+            </div>
+            <div class="form-group has-feedback has-success">
+                <label for="email">Email</label>
+                <div class="input-group">
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-envelope"></span>
+                        </span>
+                    <input class="form-control" name="emailDireto" placeholder="Digite o Email" value="" type="text">
+                </div>
+            </div>
+        </div><!--/alert-->
     </div>
 </script>
+<script type="text/ng-template" id="input-gradient-template.html">
+    <div class="radio-inline" ng-repeat="i in content.input.elements">
+        <label>
+            <input type="radio"/> {{ i.text }}
+        </label>
+    </div>
+    <div class="textarea-justificativa">
+        <span class="justificativa">O que foi decisivo para dar esta nota? Justificar notas 1 e 2</span>
+        <textarea class="form-control" ></textarea>
+    </div>
+</script>
+<script type="text/ng-template" id="input-net-promoter-score-template.html">
+    <div class="text-center">
+        <div class="btn-group" data-toggle="buttons"  ng-repeat="(i, e) in content.input.elements">
+            <label class="btn btn-lg" ng-class="e.text > 8 ? 'btn-success' : ( e.text < 7? 'btn-danger' : 'btn-warning' ) ">
+                <input type="radio"/> {{ e.text }}
+            </label>
+        </div>
+        <!-- Image Courtesy of http://hummingbird.com.au/nps/ -->
+        <img src="http://hummingbird.com.au/wp/wp-content/uploads/2015/05/nps.png" alt="nps" class="img-responsive center-block"/>
+    </div>
+</script>
+
 <script type="text/ng-template" id="input-radio-template.html">
     <div ng-repeat="i in content.input.elements">
         <label>

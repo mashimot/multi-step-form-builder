@@ -2,6 +2,7 @@ var app = angular.module('app');
 app.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'ModalService', 'TabService', 'SortableService', '$routeParams', '$timeout', function($scope, $uibModal, SurveyFactory, ModalService, TabService, SortableService ,$routeParams, $timeout){
     var surveyId = $routeParams.surveyId;
     $scope.survey = [];
+    $scope.currentPage = [];
     $scope.activeTabIndex = 0;
     $scope.number = 0;
     $scope.countInit = function(type) {
@@ -25,7 +26,9 @@ app.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'ModalSer
     };
 
     $scope.updateSurvey(0);
-
+    $scope.pageSelected = function(pageIndex){
+        $scope.currentPage = $scope.survey.pages[pageIndex];
+    };
     $scope.newPage = function(){
         SurveyFactory.newPage( surveyId ).then(function(result){
             var data = result.data;
@@ -47,7 +50,7 @@ app.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'ModalSer
     $scope.developer = function(){
         $.ajax({
             //url: 'geraFormulario2.php',
-            url: 'http://localhost/daniel/Projetos/2016/only-human/main.php',
+            url: 'http://localhost:8080/projetos/2016/only-human/main.php',
             type: 'POST',
             data:  {
                 data : JSON.stringify($scope.survey)
@@ -56,7 +59,7 @@ app.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'ModalSer
                 console.log(data);
                 var resultado = JSON.parse(data);
                 //$('.resultado').html(data);
-                alert(resultado);
+                //alert(resultado);
                 $('#htmlResult').html(resultado.arquivoHTML);
                 $('#javascriptResult').html(resultado.arquivoJavascript);
                 $('#customScriptResult').html(resultado.customScript);
@@ -87,11 +90,14 @@ app.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'ModalSer
             var new_position = ui.item.sortable.dropindex;
             var old_position = ui.item.sortable.index;
             var model = ui.item.sortable.model;
+            console.log(ui.item.sortable.droptarget.scope());
             var pageId = ui.item.sortable.droptarget.scope().page._id;
+            //var pageId = ui.item.sortable.droptarget.scope().currentPage._id;
             var data = {};
             data.new_position = new_position;
             data.old_position = old_position;
             data.content = (!SortableService.getObjectToDrop())? model: SortableService.getObjectToDrop();
+            console.log(data);
             SurveyFactory.savePerPage(surveyId, pageId, data).then(function (result) {
                 var data = result.data;
                 if(data.success === true){
@@ -113,7 +119,7 @@ app.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'ModalSer
     $scope.sortPages = function() {
         var tabs = $("#sortable").sortable({
             items: '.uib-tab:not(.unsortable)',
-            "axis": "x",
+            helper: "clone",
             "start": function(event, ui) {
                 ui.item.startPos = ui.item.index();
             },

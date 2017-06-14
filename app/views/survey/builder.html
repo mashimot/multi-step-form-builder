@@ -1,6 +1,36 @@
 <div class="col-lg-7 col-md-7 col-sm-8 col-xs-11">
-    <uib-tabset active="activeTabIndex"  ng-init="sortPages()" id="sortable">
-        <uib-tab  ng-repeat="(pageIndex, page) in survey.pages"  index="pageIndex">
+    <!--div class="row" >
+        <div class="col-md-2">
+            <div  ng-repeat="(pageIndex, page) in survey.pages">
+                <button class="btn btn-block" ng-click="pageSelected(pageIndex)">
+                    <span>Page {{ pageIndex + 1 }}</span>
+                    <a class="text-danger" ng-click="deletePage(page._id)" style="cursor: pointer; ">
+                        [ <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> ]
+                    </a>
+                </button>
+            </div>
+            <button type="button" class="btn btn-default btn-small unsortable" ng-click="newPage()" aria-label="toggle fullscreen">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="col-md-10"  ng-init="sortPages()">
+            <div ng-model="currentPage">
+                <div ng-if="currentPage.contents.length <= 0">
+                    <div class="well well-sm">
+                        Place your elements here
+                    </div>
+                </div>
+                <div ui-sortable="sortableContent" ng-model="currentPage.contents" ng-init="currentPage._id" class="connected-apps-container" style="min-height: 40px;">
+                    <div ng-repeat="content in currentPage.contents" ng-model="currentPage.contents" ng-init="number = countInit(content.input.type);">
+                            <render-content content="content" number="number"></render-content>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div-->
+
+    <uib-tabset active="activeTabIndex" type="pills" id="sortable">
+        <uib-tab ng-repeat="(pageIndex, page) in survey.pages"  index="pageIndex"  ng-init="sortPages()">
             <uib-tab-heading>
                 <span>Page {{ pageIndex + 1 }}</span>
                 <a class="text-danger" ng-click="deletePage(page._id)" style="cursor: pointer; ">
@@ -18,10 +48,8 @@
                 </div>
             </div>
         </uib-tab>
-        <li class="uib-tab nav-item unsortable">
-            <button type="button" class="btn btn-default btn-small unsortable" ng-click="newPage()" aria-label="toggle fullscreen">
-                <i class="fa fa-plus" aria-hidden="true"></i>
-            </button>
-        </li>
+        <uib-tab-button  class="btn btn-default btn-small unsortable" ng-click="newPage()">
+            <i class="fa fa-files-o fa-2x" aria-hidden="true"></i>
+        </uib-tab-button>
     </uib-tabset>
 </div>

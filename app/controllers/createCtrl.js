@@ -17,8 +17,17 @@ app.controller('createCtrl', [ '$scope', '$http', 'SurveyFactory', function($sco
 
     $scope.newSurvey = function(){
         $http.post('/survey', $scope.survey).then(function(res) {
-            $scope.surveyList.push(res.data);
-            $scope.message = {};
+            if(res.data.code){
+                $scope.message = {
+                    success: true,
+                    text: res.data.errmsg
+                };
+            } else {
+                $scope.surveyList.push(res.data);
+                $scope.message = {};
+            }
+
+        }, function(err, status, headers, config){
         });
     };
     $scope.deleteSurvey = function(surveyId){

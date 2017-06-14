@@ -72,7 +72,7 @@ exports.new_page = function(req, res) {
             res.send(err);
         //survey is finded
         var new_page = new Page({
-            name: 'joeysworldtour'
+            name: 'page name'
         });
         new_page.save(function(err){
             if(err) res.send(err);

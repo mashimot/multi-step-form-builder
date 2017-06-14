@@ -36,6 +36,16 @@ app.service('TabService', function(){
             {
                 templates: this.netPromoterScore(), //is an array
                 hide: ['hasComment']
+            },
+            'gradient':
+            {
+                templates: this.gradient(), //is an array
+                hide: ['hasComment']
+            },
+            'identification':
+            {
+                templates: this.identification(), //is an array
+                hide: ['hasComment']
             }
         };
     };
@@ -46,6 +56,9 @@ app.service('TabService', function(){
     this.title = function(){
         return [tabs.title];
     };
+    this.gradient = function(){
+        return [tabs.general, tabs.choices];
+    };
     this.checkbox = function(){
         return [tabs.general, tabs.choices, tabs.visibleIf];
     };
@@ -53,6 +66,9 @@ app.service('TabService', function(){
         return [tabs.general, tabs.visibleIf];
     };
     this.netPromoterScore = function(){
+        return [tabs.general, tabs.visibleIf];
+    };
+    this.identification = function(){
         return [tabs.general, tabs.visibleIf];
     };
 
