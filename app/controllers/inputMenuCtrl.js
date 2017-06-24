@@ -127,6 +127,17 @@ app.controller('inputMenuCtrl', [ '$scope', 'SortableService', function($scope, 
                 }
             }]
         },{
+            group_name: "Conheco",
+            icon_class: 'fa fa-user-o',
+            inputs: [{
+                name: 'conheco',
+                content_to_drop: {
+                    input: {
+                        type: 'conheco'
+                    }
+                }
+            }]
+        },{
             group_name: "Net Promoter Score",
             icon_class: 'fa fa-commenting-o',
             inputs: [{

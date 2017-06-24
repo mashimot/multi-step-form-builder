@@ -4,8 +4,6 @@
             <label><input type="checkbox"> Ordenar</label>
             <div class="form-group">
                 <button type="button" ng-click="addElement()" class="btn btn-default btn-sm"> add new element</button>
-                <br/>
-                <br/>
                 <div ui-sortable="sortableContents" ng-model="content.input.elements">
                     <div ng-repeat="(id_content, content) in content.input.elements" class="sortable-item-contents">
                         <div class="row">
@@ -20,6 +18,11 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="form-group" ng-hide="hasOther">
+                <div class="checkbox">
+                    <label><input type="checkbox" ng-model="content.hasOther" /> has other?</label>
                 </div>
             </div>
         </div>

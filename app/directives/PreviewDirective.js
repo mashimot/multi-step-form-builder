@@ -8,10 +8,26 @@ app.directive('surveyPreview', function(){
     return {
         templateUrl: '../views/preview.html',
         restrict: 'E',
+        scope: {
+            survey: '=surveyData    '
+        },
         controller: function($scope){
             $scope.answers = {};
+            $scope.step = 0;
+
         },
         link: function($scope){
+            $scope.nextStep = function() {
+                $scope.step++;
+            }
+
+            $scope.prevStep = function() {
+                $scope.step--;
+            }
+
+            $scope.submitForm = function() {
+                // submit code goes here
+            }
             $scope.checkbox = function(_id, content){
                 var elements = content.input.elements;
                 var elementlength = elements.length;

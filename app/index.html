@@ -99,7 +99,8 @@
 <script type="text/ng-template" id="configTemplate.html">
     <form name="config-modal" ng-submit="ok()" method="post">
         <div class="modal-header">
-            <h4>{{ content.number }} - {{ content.description }}</h4>
+            <h4 ng-if="content.input.type !== 'title'">{{ content.number }} - {{ content.description }}</h4>
+            <h4 ng-if="content.input.type === 'title'">{{ content.input.title.text }}</h4>
         </div>
         <div class="modal-body">
             <uib-tabset active="activeConfig">
@@ -186,6 +187,9 @@
             <input type="radio"/> {{ i.text }}
         </label>
     </div>
+    <label ng-if="content.hasOther">
+        <input type="radio"/> Other
+    </label>
 </script>
 <script type="text/ng-template" id="input-checkbox-template.html">
     <div ng-repeat="i in content.input.elements">
@@ -193,9 +197,15 @@
             <input type="checkbox"/> {{ i.text }}
         </label>
     </div>
+    <label ng-if="content.hasOther">
+        <input type="checkbox"/> Other
+    </label>
 </script>
 <script type="text/ng-template" id="input-comments-template.html">
     <textarea class="form-control" rows="4"></textarea>
+</script>
+<script type="text/ng-template" id="input-conheco-template.html">
+    CONHECO
 </script>
 </body>
 </html>

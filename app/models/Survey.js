@@ -41,6 +41,7 @@ var InputSchema = new Schema({
     },
     isRequired: Boolean,
     isHide: Boolean,
+    hasOther: Boolean,
     isHideWhen: {
         type: String,
         lowercase: true
@@ -48,7 +49,7 @@ var InputSchema = new Schema({
     "input": {
         "type": {
             type: String,
-            enum: ["radio", "title", "checkbox", "comments", "net-promoter-score", "gradient", "identification"],
+            enum: ["radio", "title", "checkbox", "comments", "net-promoter-score", "gradient", "identification", "conheco"],
             required: true
         },
         title: {

@@ -18,34 +18,34 @@ app.service('TabService', function(){
         return {
             'radio': {
                 templates: this.radio(), //is an array
-                hide: []
+                hide: [] //ng-hide
             },
             'title': {
                 templates: this.title(), //is an array
-                hide: []
+                hide: [] //ng-hide
             },
             'checkbox': {
                 templates: this.checkbox(), //is an array
-                hide: []
+                hide: [] //ng-hide
             },
             'comments': {
                 templates: this.comments(), //is an array
-                hide: ['hasComment']
+                hide: ['hasComment'] //ng-hide
             },
             'net-promoter-score':
             {
                 templates: this.netPromoterScore(), //is an array
-                hide: ['hasComment']
+                hide: ['hasComment'] //ng-hide
             },
             'gradient':
             {
                 templates: this.gradient(), //is an array
-                hide: ['hasComment']
+                hide: ['hasComment', 'hasOther'] //ng-hide
             },
             'identification':
             {
                 templates: this.identification(), //is an array
-                hide: ['hasComment']
+                hide: ['hasComment'] //ng-hide
             }
         };
     };

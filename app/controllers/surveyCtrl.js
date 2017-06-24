@@ -50,7 +50,7 @@ app.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'ModalSer
     $scope.developer = function(){
         $.ajax({
             //url: 'geraFormulario2.php',
-            url: 'http://localhost:8080/projetos/2016/only-human/main.php',
+            url: 'http://localhost:8080/projetos/2016/multi-step-form-builder/only-human/main.php',
             type: 'POST',
             data:  {
                 data : JSON.stringify($scope.survey)
