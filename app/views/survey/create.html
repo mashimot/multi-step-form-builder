@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <add-menu></add-menu>
+
     <!--div id="page-content-wrapper">
         <div class="row equal-height-panels">
             <div class="col-md-6">
@@ -35,75 +35,39 @@
                 </button>
             </div>
         </div-->
-        <div ng-controller="surveyCtrl">
-            <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-                <li>
-                    <a href="" data-target="#editor" data-toggle="tab" ><i class="fa fa-pencil-square-o pull-left"></i> Editor</a>
-                <li>
-                <li>
-                    <a href="" ng-click="developer()"  data-target="#developer" data-toggle="tab">
-                        <i class="fa fa-code pull-left"></i> Desenvolvedor
-                    </a>
-                </li>
-                <li>
-                    <a href="" data-target="#preview" data-toggle="tab">
-                        Preview
-                    </a>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div id="editor" class="tab-pane fade in active">
-                    <div class="row">
-                        <input-menu></input-menu>
-                        <survey-builder></survey-builder>
-                        <div class="col-md-3">
-                            <pre>{{ survey | json }}</pre>
-                        </div>
+    <div ng-controller="surveyCtrl as vm">
+        <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+            <li>
+                <a href="" data-target="#editor" data-toggle="tab" ><i class="fa fa-pencil-square-o pull-left"></i> Editor</a>
+            <li>
+            <li>
+                <a href="" ng-click="vm.developer()"  data-target="#developer" data-toggle="tab">
+                    <i class="fa fa-code pull-left"></i> Desenvolvedor
+                </a>
+            </li>
+            <li>
+                <a href="" data-target="#preview" data-toggle="tab">
+                    Preview
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div id="editor" class="tab-pane fade in active">
+                <div class="row">
+                    <input-menu></input-menu>
+                    <survey-builder></survey-builder>
+                    <div class="col-md-3">
+                        <pre ng-bind="vm.survey | json"></pre>
                     </div>
                 </div>
-                <div id="preview" class="tab-pane fade in">
-                    <div class="container">
-                        <survey-preview survey-data="survey"></survey-preview>
-                    </div>
+            </div>
+            <div id="developer" class="tab-pane fade in">
+                <textarea class="form-control" id="htmlResult" cols="30" rows="30"></textarea>
+            </div>
+            <div id="preview" class="tab-pane fade in">
+                <div class="container">
+                    <survey-preview survey-data="vm.survey"></survey-preview>
                 </div>
-                <div id="developer" class="tab-pane fade in">
-                    <h1 class="alert alert-success alert-white rounded">
-                        Desenvolvedor
-                    </h1>
-                    <div class="well well-sm">
-                        <h2 class="alert alert-success alert-white rounded">
-                            <i class="fa fa-html5"></i> HTML
-                        </h2>
-                        <div class="form-group">
-                            <textarea id="htmlResult" name="" cols="30" rows="40" class="form-control"></textarea>
-                        </div>
-                    </div>
-                    <div class="well well-sm">
-                        <h2 class="alert alert-success alert-white rounded">
-                            <i class="fa fa-rebel"></i> Javascript
-                        </h2>
-                        <div class="form-group">
-                            <textarea name="" cols="30" rows="40" class="form-control"></textarea>
-                        </div>
-                    </div>
-                    <div class="well well-sm">
-                        <h2 class="alert alert-info alert-white rounded">
-                            <i class="fa fa-rebel"></i> Custom Javascript
-                        </h2>
-                        <div class="form-group">
-                            <textarea name="" cols="30" rows="40" class="form-control"></textarea>
-                        </div>
-                    </div>
-                    <div class="well well-sm">
-                        <h2 class="alert alert-danger alert-white rounded">
-                            <i class="fa fa-rebel"></i> Show or Hide Javascript
-                        </h2>
-                        <div class="form-group">
-                            <textarea name="" cols="30" rows="40" class="form-control"></textarea>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>

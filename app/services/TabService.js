@@ -28,6 +28,10 @@ app.service('TabService', function(){
                 templates: this.checkbox(), //is an array
                 hide: [] //ng-hide
             },
+            'select': {
+                templates: this.select(), //is an array
+                hide: [] //ng-hide
+            },
             'comments': {
                 templates: this.comments(), //is an array
                 hide: ['hasComment'] //ng-hide
@@ -46,6 +50,11 @@ app.service('TabService', function(){
             {
                 templates: this.identification(), //is an array
                 hide: ['hasComment'] //ng-hide
+            },
+            'conheco':
+            {
+                templates: this.identification(), //is an array
+                hide: ['hasComment'] //ng-hide
             }
         };
     };
@@ -60,6 +69,9 @@ app.service('TabService', function(){
         return [tabs.general, tabs.choices];
     };
     this.checkbox = function(){
+        return [tabs.general, tabs.choices, tabs.visibleIf];
+    };
+    this.select = function(){
         return [tabs.general, tabs.choices, tabs.visibleIf];
     };
     this.comments = function(){

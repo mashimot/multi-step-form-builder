@@ -11,7 +11,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://bootswatch.com/paper/bootstrap.css"/>
     <style>
         .disable-all-contents{
             pointer-events:none;
@@ -60,6 +59,7 @@
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 
+<theme-switcher themes="vm.themes"></theme-switcher>
 <div ng-view></div>
 
 <!-- In production use:
@@ -79,15 +79,14 @@
 <script src="controllers/inputMenuCtrl.js"></script>
 <script src="services/SurveyFactory.js"></script>
 <script src="services/ModalService.js"></script>
+<script src="services/InputService.js"></script>
 <script src="services/SortableService.js"></script>
 <script src="services/TabService.js"></script>
 <script src="services/SurveyCollectionService.js"></script>
+<script src="directives/ThemeSwitcherDirective.js"></script>
 <script src="directives/InputMenuDirective.js"></script>
 <script src="directives/SurveyDirective.js"></script>
 <script src="directives/PreviewDirective.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
 <script src="components/version/version.js"></script>
 <script src="components/version/version-directive.js"></script>
@@ -99,20 +98,22 @@
 <script type="text/ng-template" id="configTemplate.html">
     <form name="config-modal" ng-submit="ok()" method="post">
         <div class="modal-header">
-            <h4 ng-if="content.input.type !== 'title'">{{ content.number }} - {{ content.description }}</h4>
-            <h4 ng-if="content.input.type === 'title'">{{ content.input.title.text }}</h4>
+            <h4 ng-if="content.input.type !== 'title'"><span ng-bind="content.number"></span> - <span ng-bind="content.description"></span></h4>
+            <h4 ng-if="content.input.type === 'title'" ng-bind="content.input.title.text"></h4>
         </div>
         <div class="modal-body">
-            <uib-tabset active="activeConfig">
-                <uib-tab ng-repeat="(i, tab) in render.templates" heading="{{ tab.title }}" index="i">
-                    <div ng-include src="tab.url"></div>
-                </uib-tab>
-            </uib-tabset>
+            <div class="panel">
+                <uib-tabset active="activeConfig">
+                    <uib-tab ng-repeat="(i, tab) in render.templates" heading="{{ tab.title }}" index="i">
+                        <div ng-include src="tab.url"></div>
+                    </uib-tab>
+                </uib-tabset>
+            </div>
         </div>
         <div class="modal-footer">
-            <pre> {{ content | json }} </pre>
+            <pre ng-bind="content | json"></pre>
             <!--button class="btn btn-primary" ng-click="apply()">Aplicar</button-->
-            <button  type="submit" class="btn btn-primary" >OK</button>
+            <button type="submit" class="btn btn-primary" >OK</button>
             <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
         </div>
     </form>
@@ -161,7 +162,7 @@
 <script type="text/ng-template" id="input-gradient-template.html">
     <div class="radio-inline" ng-repeat="i in content.input.elements">
         <label>
-            <input type="radio"/> {{ i.text }}
+            <input type="radio"/> <span ng-bind="i.text"></span>
         </label>
     </div>
     <div class="textarea-justificativa">
@@ -173,18 +174,25 @@
     <div class="text-center">
         <div class="btn-group" data-toggle="buttons"  ng-repeat="(i, e) in content.input.elements">
             <label class="btn btn-lg" ng-class="e.text > 8 ? 'btn-success' : ( e.text < 7? 'btn-danger' : 'btn-warning' ) ">
-                <input type="radio"/> {{ e.text }}
+                <input type="radio"/> <span ng-bind="e.text"></span>
             </label>
         </div>
         <!-- Image Courtesy of http://hummingbird.com.au/nps/ -->
         <img src="http://hummingbird.com.au/wp/wp-content/uploads/2015/05/nps.png" alt="nps" class="img-responsive center-block"/>
     </div>
 </script>
-
+<script type="text/ng-template" id="input-select-template.html">
+    SELECT BOX
+    <div ng-repeat="i in content.input.elements">
+        <b class="text-danger">text: </b> <kbd ng-bind="i.text"></kbd>
+        <b class="text-danger">value: </b> <kbd ng-bind="i.value"></kbd>
+    </div>
+</script>
 <script type="text/ng-template" id="input-radio-template.html">
+    <br/>
     <div ng-repeat="i in content.input.elements">
         <label>
-            <input type="radio"/> {{ i.text }}
+            <input type="radio"/> <span ng-bind="i.text"></span>
         </label>
     </div>
     <label ng-if="content.hasOther">
@@ -194,7 +202,7 @@
 <script type="text/ng-template" id="input-checkbox-template.html">
     <div ng-repeat="i in content.input.elements">
         <label>
-            <input type="checkbox"/> {{ i.text }}
+            <input type="checkbox"/> <span ng-bind="i.text"></span>
         </label>
     </div>
     <label ng-if="content.hasOther">

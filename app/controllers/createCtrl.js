@@ -1,11 +1,12 @@
 var app = angular.module('app');
 app.controller('createCtrl', [ '$scope', '$http', 'SurveyFactory', function($scope, $http, SurveyFactory){
-    $scope.surveyList = [];
-    $scope.message = {};
+    var vm = this;
+    vm.surveyList = [];
+    vm.message = {};
 
     function showSurveys(){
         SurveyFactory.showAllSurveys().then(function(res){
-            $scope.surveyList = res.data;
+            vm.surveyList = res.data;
         });
     }
     function Survey(){
@@ -13,27 +14,31 @@ app.controller('createCtrl', [ '$scope', '$http', 'SurveyFactory', function($sco
     }
     showSurveys();
 
-    $scope.survey = new Survey();
+    vm.survey = new Survey();
 
-    $scope.newSurvey = function(){
-        $http.post('/survey', $scope.survey).then(function(res) {
-            if(res.data.code){
-                $scope.message = {
+    vm.newSurvey = function(){
+        $http.post('/survey', vm.survey).then(function(res) {
+            console.log(res);
+            if(res.data.errors){
+                vm.message = {
                     success: true,
-                    text: res.data.errmsg
+                    text: res.data.errors.name.message
                 };
             } else {
-                $scope.surveyList.push(res.data);
-                $scope.message = {};
+                vm.surveyList.push(res.data);
+                vm.message = {};
             }
-
         }, function(err, status, headers, config){
-        });
+            console.log(err);
+        })
+            .catch(function(err){
+                console.log(err);
+            });
     };
-    $scope.deleteSurvey = function(surveyId){
+    vm.deleteSurvey = function(surveyId){
         SurveyFactory.deleteSurvey( surveyId ).then(function(resp){
             showSurveys();
-            $scope.message = {
+            vm.message = {
                 success: resp.data.success,
                 text: resp.data.text
             };

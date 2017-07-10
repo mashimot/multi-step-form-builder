@@ -33,6 +33,7 @@ app.factory('ModalService', [ 'SurveyFactory', 'TabService', function(SurveyFact
         }
 
     };
+    //dinamically generate the modal content
     return {
         getTemplateToLoad: getTemplateToLoad
     }
@@ -40,9 +41,16 @@ app.factory('ModalService', [ 'SurveyFactory', 'TabService', function(SurveyFact
 
 var ConfigModalController = function ($scope, $uibModalInstance, render, pageContent, SurveyFactory) {
     var isChanged = false;
+
     $scope.content = angular.copy(pageContent);
     $scope.render = [];
+    $scope.orderBy = function(key){
+        $scope.content.input.elements.sort(sortBy(key));
+    };
 
+    $scope.sortableElements = {
+        handle: '.element-handle'
+    };
     //look at TabService, hide some inputs
     $scope.render = render;
     if(render.hide.length){
@@ -60,34 +68,38 @@ var ConfigModalController = function ($scope, $uibModalInstance, render, pageCon
             value: ''
         });
     };
-    $scope.addToInput = function (string) {
-        var error = {};
-        if (typeof string !== 'undefined') {
-            var strlen = string.length;
-            if (strlen > 0) {
-                $scope.content.input.elements = [];
-                for (var i = 0; i < strlen; i++) {
-                    $scope.content.input.elements.push({
-                        text: string[i],
-                        value: string[i]
-                    });
-                }
-            } else {
-                error.hasError = true;
-                error.message = "Adicione um Valor";
-            }
-        } else {
-            error.hasError = true;
-            error.message = "Adicione um Valor";
-        }
-        if (error.hasError) {
-            alert(error.message);
-        }
-    };
-    /*$scope.apply = function(){
-        updateContent();
-    };*/
 
+    $scope.text = {};
+    $scope.$watch('text.string', function(s){
+        var string = s.split('\n');
+        if(string.length > 0) {
+            var newElements = [];
+            for (var i = 0; i < string.length; i++) {
+                var str = string[i];
+                var obj = {};
+                var firstMatch = str.split('|')[0];
+                var secondMatch = str.substring(firstMatch.length + 1); //return '' if '|' was not found
+
+                obj.text = firstMatch;
+                obj.value = secondMatch;
+
+                newElements.push(obj);
+            }
+            $scope.content.input.elements = newElements;
+        }
+    });
+    $scope.$watch('content.input.elements', function(e){
+        var string = '';
+        for(var i = 0; i < e.length; i++){
+            var str = e[i];
+            var value = '';
+            if(str.value !== ''){
+                value = ('|' + e[i].value);
+            }
+            string += (str.text + value) + (i == e.length - 1 ? '' : "\n");
+        }
+        $scope.text.string = string;
+    }, true);
     //verifica se houve alguma atualiazação no model
     $scope.$watch('content', function(newValue, oldValue) {
         if(angular.equals(newValue, angular.copy(pageContent))){
@@ -120,4 +132,25 @@ var ConfigModalController = function ($scope, $uibModalInstance, render, pageCon
     }
 
 };
+
+var sortBy = function(key, reverse) {
+    var moveSmaller = reverse ? 1 : -1;
+    var moveLarger = reverse ? -1 : 1;
+
+    /**
+     * @param  {*} a
+     * @param  {*} b
+     * @return {Number}
+     */
+    return function(a, b) {
+        if (a[key] < b[key]) {
+            return moveSmaller;
+        }
+        if (a[key] > b[key]) {
+            return moveLarger;
+        }
+        return 0;
+    };
+
+}
 

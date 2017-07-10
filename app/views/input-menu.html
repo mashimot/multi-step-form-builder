@@ -1,11 +1,27 @@
-<div class="col-lg-2 col-md-2 col-sm-1 col-xs-1" ng-controller="inputMenuCtrl">
-    <div ng-repeat="main in mainInputs">
-        <div class="form-group text-center">
-            <i class="{{ main.icon_class }}"></i> {{ main.group_name }}
-            <div ui-sortable="sortableContent" ng-model="main.inputs">
-                <div ng-repeat="(i, input) in main.inputs">
-                    <div class="btn btn-default btn-md btn-block" ng-click="pushNewContent(input.content_to_drop)">
-                        <i class="{{ input.icon_class }}" aria-hidden="true"></i>  {{ input.name }}
+<div class="col-lg-2 col-md-2" ng-controller="inputMenuCtrl as vm">
+    <div class="panel">
+        <div class="panel-heading">
+            <h1 class="text-center">
+                <i class="fa fa-list" aria-hidden="true"></i> Input List
+            </h1>
+        </div>
+        <div class="panel-body">
+            <div ng-repeat="main in vm.Inputs">
+                <div class="form-group text-center">
+                    <i class="{{ main.icon_class }}"></i> <span ng-bind="main.group_name"></span>
+                    <div ui-sortable="vm.sortableContent" ng-model="main.inputs">
+                        <div class="row" ng-repeat="(i, input) in main.inputs">
+                            <div ng-class="{'col-md-12': !input.newInput, 'col-md-9': input.newInput}">
+                                <button class="btn btn-default btn-sm btn-block" type="button" ng-click="vm.pushNewContent(input.content_to_drop)">
+                                    <i class="{{ input.icon_class }}" aria-hidden="true"></i>  <span ng-bind="input.name"></span>
+                                </button>
+                            </div>
+                            <div ng-class="{'col-md-3': input.newInput}" ng-show="input.newInput">
+                                <button class="btn btn-danger btn-sm btn-block" ng-click="vm.removeInput(i, main.inputs)">
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

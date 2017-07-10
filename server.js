@@ -4,8 +4,8 @@ var express = require('express'),
     port = process.env.PORT || 3000,
     mongoose = require('mongoose'),
     Survey = require('./app/models/Survey'),
-    Page = require('./app/models/Survey'),
-    Input = require('./app/models/Survey'),
+    Page = require('./app/models/Page'),
+    Content = require('./app/models/Content'),
     bodyParser = require('body-parser');
 
 app.use(express.static(path.join(__dirname, 'app')));

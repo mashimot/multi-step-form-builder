@@ -3,8 +3,9 @@
 // Declare app level module which depends on views, and components
 angular.module('app', [
     'ngRoute',
+    'theme.switcher',
     'ui.sortable',
-    'ui.bootstrap',
+    'ui.bootstrap'
 ]).config(function($routeProvider, $locationProvider){
     $routeProvider.when('/', {
         templateUrl: 'views/survey/new.html',

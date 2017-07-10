@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 var Survey = mongoose.model('Survey');
 var Page = mongoose.model('Page');
-var Input = mongoose.model('Input');
+var Content = mongoose.model('Content');
 
 exports.list_all_surveys = function(req, res) {
     Survey.find({}, function(err, surveys) {
@@ -29,7 +29,7 @@ exports.read_a_survey = function(req, res) {
             path: 'pages',
             populate: {
                 path: 'contents',
-                model: 'Input'
+                model: 'Content'
             }
         })
         .exec(function(err, model){
@@ -133,7 +133,7 @@ exports.create_a_content = function(req, res){
         { _id: p.page_id },
         function(err, _page){
             if(err) res.send(err);
-            var newContent = new Input();
+            var newContent = new Content();
             newContent = mixObject(p.content, newContent);
             _page.contents.push(newContent._id);
             _page.save(function(err){
@@ -163,7 +163,7 @@ exports.save_a_page = function(req, res) {
         function(err, _page){
             if(err) res.send(err);
             if (typeof survey.content._id === "undefined") {
-                var newContent = new Input();
+                var newContent = new Content();
                 newContent = mixObject(survey.content, newContent);
                 _page.contents.insert( survey.new_position, { _id: newContent._id } );
                 newContent.save(function(err){
@@ -189,7 +189,7 @@ exports.update_a_content = function(req, res){
     i._id = req.params.contentId;
     i.content = req.body;
     //console.log(i);
-    Input.findByIdAndUpdate(
+    Content.findByIdAndUpdate(
         { _id: i._id },
         { '$set': i.content },
         function(err, model){
@@ -206,7 +206,7 @@ exports.delete_a_content = function(req, res) {
     p.page_id = req.params.surveyId;
     p.content_id = req.params.contentId;
 
-    Input.findOne(
+    Content.findOne(
         { '_id' : p.content_id },
         function(err, input){
             if(err)

@@ -1,9 +1,7 @@
 app.directive('surveyPreview', function(){
-    var getModel =  function(){
-        return {
-            description: '',
-            anwser: ''
-        }
+    function Model(){
+        this.description =  '';
+        this.anwser = '';
     };
     return {
         templateUrl: '../views/preview.html',
@@ -14,7 +12,6 @@ app.directive('surveyPreview', function(){
         controller: function($scope){
             $scope.answers = {};
             $scope.step = 0;
-
         },
         link: function($scope){
             $scope.nextStep = function() {
@@ -41,7 +38,7 @@ app.directive('surveyPreview', function(){
                         }
                     }
                 }
-                var model = getModel();
+                var model = new Model();
                 model.description = content.description;
                 model.anwser = $scope.selected;
                 $scope.answers[_id] = model;

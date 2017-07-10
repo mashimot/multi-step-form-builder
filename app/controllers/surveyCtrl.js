@@ -1,23 +1,28 @@
 var app = angular.module('app');
-app.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'ModalService', 'TabService', 'SortableService', '$routeParams', '$timeout', function($scope, $uibModal, SurveyFactory, ModalService, TabService, SortableService ,$routeParams, $timeout){
+app.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'TabService', 'SortableService', '$routeParams', '$timeout', function($scope, $uibModal, SurveyFactory, TabService, SortableService ,$routeParams, $timeout){
     var surveyId = $routeParams.surveyId;
-    $scope.survey = [];
-    $scope.currentPage = [];
-    $scope.activeTabIndex = 0;
-    $scope.number = 0;
-    $scope.countInit = function(type) {
+    var vm = this;
+
+
+    vm.survey = [];
+    vm.currentPage = [];
+    vm.activeTabIndex = 0;
+    vm.number = 0;
+    vm.countInit = function(type) {
         if(type !== 'title'){
-            return $scope.number++;
+            return vm.number++;
         }
     };
-    $scope.updateSurvey = function(currentTabIndex){
-        $scope.number = 0;
+
+    vm.updateSurvey = function(currentTabIndex){
+        vm.number = 0;
         SurveyFactory.getSurvey(surveyId).then(function(result){
             var data = result.data;
             if(data.success){
-                $scope.survey = data.model;
+                vm.survey = data.model;
+                //console.log(vm.survey);
                 $timeout(function(){
-                    $scope.activeTabIndex = (currentTabIndex <= 0)? 0 : currentTabIndex;
+                    vm.activeTabIndex = (currentTabIndex <= 0)? 0 : currentTabIndex;
                 });
             }
         }, function(error){
@@ -25,65 +30,44 @@ app.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'ModalSer
         });
     };
 
-    $scope.updateSurvey(0);
-    $scope.pageSelected = function(pageIndex){
-        $scope.currentPage = $scope.survey.pages[pageIndex];
+    vm.updateSurvey(0);
+    vm.pageSelected = function(pageIndex){
+        vm.currentPage = vm.survey.pages[pageIndex];
     };
-    $scope.newPage = function(){
+    vm.newPage = function(){
         SurveyFactory.newPage( surveyId ).then(function(result){
             var data = result.data;
-            if(data.success === true){
-                $scope.updateSurvey($scope.activeTabIndex);
+            if(data.success){
+                vm.updateSurvey(vm.activeTabIndex);
                 console.log(data.message);
             }
         }, function(err){
             console.log(err);
         });
     };
-    $scope.deletePage = function(pageId){
+    vm.deletePage = function(pageId){
         SurveyFactory.deletePage( surveyId, pageId ).then(function(response){
-            $scope.updateSurvey($scope.activeTabIndex - 1);
+            vm.updateSurvey(vm.activeTabIndex - 1);
         }, function(err){
             console.log(err);
         });
     };
-    $scope.developer = function(){
+    vm.developer = function(){
+        var url = 'http://localhost:8080/projetos/2016/msfb/only-human/main.php';
         $.ajax({
-            //url: 'geraFormulario2.php',
-            url: 'http://localhost:8080/projetos/2016/multi-step-form-builder/only-human/main.php',
+            url: url,
             type: 'POST',
             data:  {
-                data : JSON.stringify($scope.survey)
+                data : JSON.stringify(vm.survey)
             },
             success: function (data) {
                 console.log(data);
                 var resultado = JSON.parse(data);
-                //$('.resultado').html(data);
-                //alert(resultado);
-                $('#htmlResult').html(resultado.arquivoHTML);
-                $('#javascriptResult').html(resultado.arquivoJavascript);
-                $('#customScriptResult').html(resultado.customScript);
-                $('#showOrhideScriptResult').html(resultado.showOrhideScript);
+                $('#htmlResult').html(resultado.html);
             }
         });
     };
-    $scope.pushNewContent = function(content_to_drop){
-        var currentTabIndex = $scope.activeTabIndex;
-        var pages = $scope.survey.pages;
-        if(pages.length > 0 && currentTabIndex >= 0){
-            var pageId = pages[currentTabIndex]._id;
-            SurveyFactory.pushNewContent( surveyId, pageId, content_to_drop).then(function(response){
-                var data = response.data;
-                if(data.success === true){
-                    $scope.updateSurvey($scope.activeTabIndex);
-                    console.log(data.message);
-                }
-            }, function(err){
-                console.log(err);
-            });
-        }
-    };
-    $scope.sortableContent = {
+    vm.sortableContent = {
         //handle: '.handle',
         placeholder: 'ui-state-highlight',
         update: function(event, ui){
@@ -101,7 +85,7 @@ app.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'ModalSer
             SurveyFactory.savePerPage(surveyId, pageId, data).then(function (result) {
                 var data = result.data;
                 if(data.success === true){
-                    $scope.updateSurvey($scope.activeTabIndex);
+                    vm.updateSurvey(vm.activeTabIndex);
                     console.log(data.message);
                 }
                 SortableService.setObjectToDrop(false);
@@ -116,7 +100,7 @@ app.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'ModalSer
             ui.item.toggleClass("highlight");
         }
     };
-    $scope.sortPages = function() {
+    vm.sortPages = function() {
         var tabs = $("#sortable").sortable({
             items: '.uib-tab:not(.unsortable)',
             helper: "clone",
@@ -134,8 +118,8 @@ app.controller('surveyCtrl', [ '$scope', '$uibModal', 'SurveyFactory', 'ModalSer
                     SurveyFactory.sortPage(surveyId, data).then(function (result) {
                         var data = result.data;
                         if(data.success === true){
-                            $scope.updateSurvey($scope.activeTabIndex);
-                            console.log(data.message);
+                            vm.updateSurvey(vm.activeTabIndex);
+                            console.log(vm.activeTabIndex);
                         }
                     }, function (err) {
                         console.log(err);

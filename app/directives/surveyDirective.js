@@ -1,4 +1,4 @@
-app.directive('renderContent', ['$uibModal', 'ModalService', 'SurveyFactory',  function($uibModal, ModalService, SurveyFactory){
+app.directive('renderContent', ['$uibModal', 'ModalService', 'SurveyFactory', 'InputService',  function($uibModal, ModalService, SurveyFactory, InputService){
     return {
         //template: '<div class="disable-all-contents"><div class="form-group"><ng-include src="getInputTemplate()"/></div></div>',
         templateUrl: '../views/survey/content.html',
@@ -13,10 +13,22 @@ app.directive('renderContent', ['$uibModal', 'ModalService', 'SurveyFactory',  f
                 return 'input-' + type + '-template.html';
             }
         },
+        controllerAs: 'vm',
         link: function($scope){
+            $scope.addToListInput = function(input, description){
+                var scopeInputs = InputService.getScopeInput();
+                var len = scopeInputs.length - 1;
+                scopeInputs[len].inputs.push({
+                    newInput: true,
+                    name: description,
+                    content_to_drop: {
+                        input: input
+                    }
+                });
+            }
             $scope.deleteContent = function(surveyId, contentId){
                 SurveyFactory.deleteContent( surveyId, contentId ).then(function(response){
-                    $scope.$parent.updateSurvey($scope.$parent.activeTabIndex);
+                    $scope.$parent.vm.updateSurvey($scope.$parent.vm.activeTabIndex);
                 }, function(err){
                     console.log(err);
                 });
@@ -34,7 +46,7 @@ app.directive('renderContent', ['$uibModal', 'ModalService', 'SurveyFactory',  f
                     modalInstance.result.then(function(result){
                         console.log(result);
                         if(result === 'success'){
-                            $scope.$parent.updateSurvey($scope.$parent.activeTabIndex);
+                            $scope.$parent.vm.updateSurvey($scope.$parent.vm.activeTabIndex);
                         }
                     });
                 } else {

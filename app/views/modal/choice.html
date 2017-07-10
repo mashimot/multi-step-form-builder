@@ -1,36 +1,61 @@
-<div class="well well-sm">
+<div class="panel-heading">
     <div class="row">
-        <div class="col-md-8">
-            <label><input type="checkbox"> Ordenar</label>
-            <div class="form-group">
-                <button type="button" ng-click="addElement()" class="btn btn-default btn-sm"> add new element</button>
-                <div ui-sortable="sortableContents" ng-model="content.input.elements">
-                    <div ng-repeat="(id_content, content) in content.input.elements" class="sortable-item-contents">
-                        <div class="row">
-                            <div class="col-sm-5">
-                                <input type="text" ng-model="content.text" class="form-control"/>
-                            </div>
-                            <div class="col-sm-5">
-                                <input type="text" ng-model="content.value" class="form-control"/>
-                            </div>
-                            <div class="col-md-1">
-                                <button type="button" ng-click="removeContent(id_content)" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group" ng-hide="hasOther">
-                <div class="checkbox">
-                    <label><input type="checkbox" ng-model="content.hasOther" /> has other?</label>
-                </div>
-            </div>
+        <div class="col-md-4">
+            <button class="btn btn-default btn-xs btn-block" type="button" ng-click="orderBy('text')"> Order by Text</button>
         </div>
         <div class="col-md-4">
-            <div class="form-group">
-                <textarea  ng-model="string" ng-trim="false" ng-list="&#10;" class="form-control" style="resize: none; height: 210px;"></textarea>
-                <button type="button" ng-click="addToInput(string)" class="btn btn-primary btn-block  "> Gerar</button>
-            </div>
+            <button class="btn btn-default btn-xs btn-block" type="button" ng-click="orderBy('value')"> Order by Value</button>
         </div>
     </div>
 </div>
+<div class="panel-body">
+    <div ui-sortable="sortableElements" ng-model="content.input.elements" >
+        <div class="row">
+            <div class="col-md-4">
+                <legend>Text</legend>
+            </div>
+            <div class="col-md-4">
+                <legend>Value</legend>
+            </div>
+            <div class="col-md-4">
+                <button class="btn btn-default btn-block" type="button" ng-click="addElement()">
+                    <i class="fa fa-plus" aria-hidden="true"></i> add new element
+                </button>
+            </div>
+        </div>
+        <div class="sortable-item-contents"  ng-repeat="(id, content) in content.input.elements track by $index">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <input type="text" ng-model="content.text" class="form-control" required/>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <input type="text" ng-model="content.value" class="form-control" required   />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-danger btn-block" ng-click="removeContent(id)" >
+                        <i class="fa fa-trash-o"></i>
+                    </button>
+                </div>
+                <div class="col-md-2">
+                    <span class="btn btn-default btn-block element-handle"><i class="fa fa-arrows" aria-hidden="true"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group" ng-hide="hasOther">
+        <div class="checkbox">
+            <label><input type="checkbox" ng-model="content.hasOther" /> has other?</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <!--textarea  ng-model="string" ng-trim="false" ng-list="&#10;" class="form-control" style="resize: none; height: 210px;"></textarea-->
+        <textarea  ng-model="text.string" class="form-control" style="resize: none; height: 210px;"></textarea>
+    </div>
+</div>
+
+
+

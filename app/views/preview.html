@@ -9,21 +9,21 @@
                     <legend>Page {{ pageIndex + 1 }}</legend>
                     <div ng-model="page.contents" ng-repeat="(contentIndex, content) in page.contents" ng-class="{ 'well well-sm': content.input.type !== 'title' }">
                         <section ng-if="content.input.type === 'title'" class="form-group">
-                            <h1 class="alert alert-danger">{{ content.input.title.text }}</h1>
+                            <h1 class="alert alert-danger" ng-bind="content.input.title.text"></h1>
                         </section>
                         <section ng-if="content.input.type !== 'title'" class="form-group">
-                            <h5>{{ content.number }} - {{ content.description }}</h5>
+                            <h5 ng-bind="content.number + ' - ' + content.description" class="text-center"></h5>
                         </section>
                         <section ng-if="content.input.type === 'checkbox'" class="form-group">
                             <div ng-repeat="element in content.input.elements track by $index">
                                 <label>
-                                    <input type="checkbox"  ng-model="element.isChecked" ng-change="checkbox(content._id, content)" value="{{ element.value }}"/> {{ element.text }}
+                                    <input type="checkbox"  ng-model="element.isChecked" ng-change="checkbox(content._id, content)" value="{{ element.value }}"/> <span ng-bind="element.text"></span>
                                 </label>
                             </div>
                         </section>
                         <section ng-if="content.input.type === 'radio'" class="form-group">
                             <div ng-repeat="(elementId, element) in content.input.elements track by $index">
-                                <label><input type="radio" ng-model="answers[content._id].anwser" value="{{ element.value }}"/> {{ element.text }}</label>
+                                <label><input type="radio" ng-model="answers[content._id].anwser" value="{{ element.value }}"/> <span ng-bind="element.text"></span></label>
                             </div>
                         </section>
                         <section ng-if="content.input.type === 'comments'" class="form-group">
@@ -44,7 +44,7 @@
         </form>
     </div>
     <div class="col-md-4">
-        <pre>{{ answers | json }}</pre>
-        <pre>{{ selected | json }}</pre>
+        <pre ng-bind="answers | json"></pre>
+        <pre ng-bind="selected | json"></pre>
     </div>
 </div>
