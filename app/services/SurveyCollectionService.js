@@ -1,5 +1,25 @@
-app.service('SurveyCollectionService', function(){
-    this.getKeyValue = function(array){
+angular.module('app')
+    .service('SurveyCollectionService', function(){
+    this.sortBy = function(key, reverse) {
+        var moveSmaller = reverse ? 1 : -1;
+        var moveLarger = reverse ? -1 : 1;
+
+        /**
+         * @param  {*} a
+         * @param  {*} b
+         * @return {Number}
+         */
+        return function(a, b) {
+            if (a[key] < b[key]) {
+                return moveSmaller;
+            }
+            if (a[key] > b[key]) {
+                return moveLarger;
+            }
+            return 0;
+        };
+    };
+    this.getKeyAndValue = function(array){
         var keys = [];
         var values = [];
         var tam = array.length;

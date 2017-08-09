@@ -71,12 +71,13 @@
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/angular-ui-sortable/sortable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-messages/1.5.11/angular-messages.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script src="app.js"></script>
-<script src="controllers/surveyCtrl.js"></script>
-<script src="controllers/createCtrl.js"></script>
-<script src="controllers/inputMenuCtrl.js"></script>
+<script src="controllers/SurveyController.js"></script>
+<script src="controllers/CreateController.js"></script>
+<script src="controllers/InputMenuController.js"></script>
 <script src="services/SurveyFactory.js"></script>
 <script src="services/ModalService.js"></script>
 <script src="services/InputService.js"></script>
@@ -86,17 +87,19 @@
 <script src="directives/ThemeSwitcherDirective.js"></script>
 <script src="directives/InputMenuDirective.js"></script>
 <script src="directives/SurveyDirective.js"></script>
+<script src="directives/ContentDirective.js"></script>
 <script src="directives/PreviewDirective.js"></script>
+<script src="directives/modal/tab/General.js"></script>
+<script src="directives/modal/tab/Choices.js"></script>
+<script src="directives/modal/tab/HideWhen.js"></script>
+<script src="directives/modal/tab/Title.js"></script>
 
-<script src="components/version/version.js"></script>
-<script src="components/version/version-directive.js"></script>
-<script src="components/version/interpolate-filter.js"></script>
 
 
 
 <!-- templates -->
 <script type="text/ng-template" id="configTemplate.html">
-    <form name="config-modal" ng-submit="ok()" method="post">
+    <form name="editModal" ng-submit="ok(editModal.$valid)" method="post">
         <div class="modal-header">
             <h4 ng-if="content.input.type !== 'title'"><span ng-bind="content.number"></span> - <span ng-bind="content.description"></span></h4>
             <h4 ng-if="content.input.type === 'title'" ng-bind="content.input.title.text"></h4>
@@ -105,7 +108,7 @@
             <div class="panel">
                 <uib-tabset active="activeConfig">
                     <uib-tab ng-repeat="(i, tab) in render.templates" heading="{{ tab.title }}" index="i">
-                        <div ng-include src="tab.url"></div>
+                        <span bind-html-compile="tab.url"></span>
                     </uib-tab>
                 </uib-tabset>
             </div>

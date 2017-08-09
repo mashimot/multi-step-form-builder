@@ -1,8 +1,11 @@
 app.factory('SurveyFactory', ['$http', function($http){
-    var url = 'survey';
+    var url = 'api/survey';
     var SurveyFactory = {};
 
     //Survey
+    SurveyFactory.newSurvey = function(data){
+        return $http.post(url, data);
+    };
     SurveyFactory.showAllSurveys = function(){
         return $http.get(url);
     };
@@ -37,5 +40,4 @@ app.factory('SurveyFactory', ['$http', function($http){
         return $http.put(url + '/' + surveyId  + '/content/' + contentId, data);
     };
     return SurveyFactory;
-
 }]);
