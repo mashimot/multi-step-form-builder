@@ -2,17 +2,19 @@
 
 // Declare app level module which depends on views, and components
 angular.module('app', [
-    'ngRoute',
     'ngMessages',
     'theme.switcher',
-    'ui.sortable',
-    'ui.bootstrap'
-]).config(function($routeProvider, $locationProvider){
-    $routeProvider.when('/', {
-        templateUrl: 'views/survey/new.html',
-        controller: 'CreateController'
-    }).when('/survey/:surveyId', {
-        templateUrl: 'views/survey/create.html',
-        controller: 'SurveyController'
-    })
-});
+    'ui.router',
+    'ui.bootstrap',
+    'survey',
+    'survey.routes'
+]);
+bootstrapConfig.$inject = ['$stateProvider'];
+function bootstrapConfig($stateProvider) {
+    $stateProvider
+        .state('/', {
+            abstract: true,
+            url: '/survey',
+            template: '<div ui-view></div>'
+        });
+}

@@ -1,0 +1,38 @@
+<div class="container-fluid">
+    <!--div ng-controller="SurveyController as vm"-->
+        <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+            <li>
+                <a href="" data-target="#editor" data-toggle="tab" ><i class="fa fa-pencil-square-o pull-left"></i> Editor</a>
+            <li>
+            <li>
+                <a href="" ng-click="vm.developer()"  data-target="#developer" data-toggle="tab">
+                    <i class="fa fa-code pull-left"></i> Desenvolvedor
+                </a>
+            </li>
+            <li>
+                <a href="" data-target="#preview" data-toggle="tab">
+                    Preview
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div id="editor" class="tab-pane fade in active">
+                <div class="row">
+                    <input-menu></input-menu>
+                    <survey-builder></survey-builder>
+                    <div class="col-md-3">
+                        <pre ng-bind="vm.survey | json"></pre>
+                    </div>
+                </div>
+            </div>
+            <div id="developer" class="tab-pane fade in">
+                <textarea class="form-control" id="htmlResult" cols="30" rows="30"></textarea>
+            </div>
+            <div id="preview" class="tab-pane fade in">
+                <div class="container">
+                    <survey-preview survey-data="vm.survey"></survey-preview>
+                </div>
+            </div>
+        </div>
+    <!--/div-->
+</div>

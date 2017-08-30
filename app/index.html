@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="bower_components/angular-ui-notification/dist/angular-ui-notification.min.css"/>
     <style>
         .disable-all-contents{
             pointer-events:none;
@@ -50,6 +51,16 @@
                 position: fixed;
             }
         }
+        .md-toast-done .md-toast-content{
+            background: #004f75 !important;
+        }
+        .selected {
+            background-color: red;
+        }
+
+        .md-toast-error .md-toast-content{
+            background: rgb(193, 30, 23) !important;
+        }
     </style>
 </head>
 <body>
@@ -60,7 +71,9 @@
 <![endif]-->
 
 <theme-switcher themes="vm.themes"></theme-switcher>
-<div ng-view></div>
+<section class="content">
+    <section ui-view></section>
+</section>
 
 <!-- In production use:
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
@@ -68,35 +81,34 @@
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
 <script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/angular-ui-sortable/sortable.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-messages/1.5.11/angular-messages.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="bower_components/angular-ui-notification/dist/angular-ui-notification.min.js"></script>
 
-<script src="app.js"></script>
-<script src="controllers/SurveyController.js"></script>
-<script src="controllers/CreateController.js"></script>
-<script src="controllers/InputMenuController.js"></script>
-<script src="services/SurveyFactory.js"></script>
-<script src="services/ModalService.js"></script>
-<script src="services/InputService.js"></script>
-<script src="services/SortableService.js"></script>
-<script src="services/TabService.js"></script>
-<script src="services/SurveyCollectionService.js"></script>
-<script src="directives/ThemeSwitcherDirective.js"></script>
-<script src="directives/InputMenuDirective.js"></script>
-<script src="directives/SurveyDirective.js"></script>
-<script src="directives/ContentDirective.js"></script>
-<script src="directives/PreviewDirective.js"></script>
-<script src="directives/modal/tab/General.js"></script>
-<script src="directives/modal/tab/Choices.js"></script>
-<script src="directives/modal/tab/HideWhen.js"></script>
-<script src="directives/modal/tab/Title.js"></script>
-
-
-
-
+<script type="text/javascript" src="app.js"></script>
+<script type="text/javascript" src="survey/client/config/survey.client.routes.js"></script>
+<script type="text/javascript" src="survey/client/survey.client.module.js"></script>
+<script type="text/javascript" src="common/directives/theme.switcher.js"></script>
+<script type="text/javascript" src="survey/client/builder/controllers/survey-input-menu.client.controller.js"></script>
+<script type="text/javascript" src="survey/client/builder/controllers/survey-main.client.controller.js"></script>
+<script type="text/javascript" src="survey/client/builder/directives/modal/tab/survey-choices.client.directive.js"></script>
+<script type="text/javascript" src="survey/client/builder/directives/modal/tab/survey-hide-when.client.directive.js"></script>
+<script type="text/javascript" src="survey/client/builder/directives/modal/tab/survey-title.client.directive.js"></script>
+<script type="text/javascript" src="survey/client/builder/directives/modal/tab/survey.general-config.client.directive.js"></script>
+<script type="text/javascript" src="survey/client/builder/directives/survey-builder.client.directive.js"></script>
+<script type="text/javascript" src="survey/client/builder/directives/survey-content.client.directive.js"></script>
+<script type="text/javascript" src="survey/client/builder/directives/survey-input-menu.client.directive.js"></script>
+<script type="text/javascript" src="survey/client/builder/directives/survey-preview.client.directive.js"></script>
+<script type="text/javascript" src="survey/client/builder/services/survey-collection.service.js"></script>
+<script type="text/javascript" src="survey/client/builder/services/survey-content-tab.service.js"></script>
+<script type="text/javascript" src="survey/client/builder/services/survey-input-menu.service.js"></script>
+<script type="text/javascript" src="survey/client/builder/services/survey-sortable.service.js"></script>
+<script type="text/javascript" src="survey/client/builder/services/survey.service.js"></script>
+<script type="text/javascript" src="survey/client/config/survey.client.routes.js"></script>
+<script type="text/javascript" src="survey/client/new/controllers/survey-new.client.controller.js"></script>
 <!-- templates -->
 <script type="text/ng-template" id="configTemplate.html">
     <form name="editModal" ng-submit="ok(editModal.$valid)" method="post">
