@@ -24,7 +24,7 @@ $ npm install
 ## Usage
 -------------------
 
-* Create a new Survey: http://localhost:3000/#/survey/
+* Create a new Survey: http://localhost:3000/#/survey
 
 ## Features
 -------------------
