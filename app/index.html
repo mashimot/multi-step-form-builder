@@ -88,10 +88,17 @@
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="bower_components/angular-ui-notification/dist/angular-ui-notification.min.js"></script>
 
+
 <script type="text/javascript" src="app.js"></script>
+
+<!--common scripts-->
+<script type="text/javascript" src="common/directives/theme.switcher.js"></script>
+<script type="text/javascript" src="common/directives/bind-html-compile.directive.js"></script>
+<script type="text/javascript" src="common/services/logger.service.js"></script>
+
+<!--survey-->
 <script type="text/javascript" src="survey/client/config/survey.client.routes.js"></script>
 <script type="text/javascript" src="survey/client/survey.client.module.js"></script>
-<script type="text/javascript" src="common/directives/theme.switcher.js"></script>
 <script type="text/javascript" src="survey/client/builder/controllers/survey-input-menu.client.controller.js"></script>
 <script type="text/javascript" src="survey/client/builder/controllers/survey-main.client.controller.js"></script>
 <script type="text/javascript" src="survey/client/builder/directives/modal/tab/survey-choices.client.directive.js"></script>
@@ -119,8 +126,8 @@
         <div class="modal-body">
             <div class="panel">
                 <uib-tabset active="activeConfig">
-                    <uib-tab ng-repeat="(i, tab) in render.templates" heading="{{ tab.title }}" index="i">
-                        <span bind-html-compile="tab.url"></span>
+                    <uib-tab ng-repeat="(i, tab) in render.tabs" heading="{{ tab.title }}" index="i">
+                        <span bind-html-compile="tab.template"></span>
                     </uib-tab>
                 </uib-tabset>
             </div>

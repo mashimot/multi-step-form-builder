@@ -1,6 +1,5 @@
 (function() {
     'use strict';
-
     function ThemeSwitcherDirective(){
         var defaultTheme = '//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/cosmo/bootstrap.min.css';
         return {

@@ -6,7 +6,7 @@ var SurveySchema = new Schema({
     name: {
         type: String,
         unique: true,
-        required : true
+        required : 'The Survey Name is Required!'
     },
     pages: [
         {

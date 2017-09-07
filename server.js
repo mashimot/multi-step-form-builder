@@ -7,8 +7,8 @@ var express = require('express'),
     Page = require('./app/models/Page'),
     Content = require('./app/models/Content'),*/
     Survey = require('./app/survey/server/models/survey.server.model'),
-    Page = require('./app/survey/server/models/survey-page.server.model'),
-    Content = require('./app/survey/server/models/survey-content.server.model'),
+    Page = require('./app/survey/server/models/page.server.model'),
+    Content = require('./app/survey/server/models/content.server.model'),
     bodyParser = require('body-parser');
 
 app.use(express.static(path.join(__dirname, 'app')));
@@ -21,6 +21,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 require('./app/survey/server/routes/survey.server.routes')(app);
+require('./app/survey/server/routes/page.server.routes')(app);
+require('./app/survey/server/routes/content.server.routes')(app);
+
 app.listen(port);
 
 

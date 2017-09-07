@@ -1,44 +1,149 @@
-angular.module('survey')
-    .factory('SurveyFactory', ['$http', function($http){
+(function() {
+    'use strict';
+    angular.module('survey')
+        .factory('SurveyFactory', SurveyFactory);
+    SurveyFactory.$inject = ['$http', 'Logger'];
+    function SurveyFactory($http){
         var url = '../api/survey';
-        var SurveyFactory = {};
+        var service = {
+            newSurvey       : newSurvey,
+            showAllSurveys  : showAllSurveys,
+            getSurvey       : getSurvey,
+            deleteSurvey    : deleteSurvey,
+            newPage         : newPage,
+            deletePage      : deletePage,
+            savePerPage     : savePerPage,
+            sortPage        : sortPage,
+            pushNewContent  : pushNewContent,
+            deleteContent   : deleteContent,
+            updateContent   : updateContent
+        };
+        return service;
 
         //Survey
-        SurveyFactory.newSurvey = function(data){
-            return $http.post(url, data);
-        };
-        SurveyFactory.showAllSurveys = function(){
-            return $http.get(url);
-        };
-        SurveyFactory.getSurvey = function(id){
-            return $http.get(url + '/' + id);
-        };
-        SurveyFactory.deleteSurvey = function(id){
-            return $http.delete(url + '/' + id);
-        };
+        function newSurvey(data){
+            return $http.post(url, data)
+                .then(success)
+                .catch(fail);
+            function success(result, status, headers, config){
+                return result.data;
+            }
+            function fail(){
+                console.log('joeysworldtour');
+            }
+        }
+        function showAllSurveys(){
+            return $http.get(url)
+                .then(success)
+                .catch(fail);
+            function success(result, status, headers, config){
+                return result.data;
+            }
+            function fail(){
+
+            }
+        }
+        function getSurvey(id){
+            return $http.get(url + '/' + id)
+                .then(success)
+                .catch(fail);
+            function success(result, status, headers, config){
+                return result.data;
+            }
+            function fail(){
+
+            }
+        }
+        function deleteSurvey(id){
+            return $http.delete(url + '/' + id)
+                .then(success)
+                .catch(fail);
+            function success(result, status, headers, config){
+                return result.data;
+            }
+            function fail(){
+
+            }
+        }
         //Page
-        SurveyFactory.newPage = function(id, data){
-            return $http.post(url + '/' + id  + '/' + 'page', data);
-        };
-        SurveyFactory.deletePage = function(surveyId, pageId){
-            return $http.delete(url + '/' + surveyId  + '/page/' + pageId);
-        };
-        SurveyFactory.savePerPage = function(id, pageId, data){
-            return $http.put(url + '/' + id  + '/page/' + pageId, data);
-        };
-        SurveyFactory.sortPage = function(id, toAdd){
-            return $http.put(url + '/' + id  + '/page', toAdd);
-        };
+        function newPage(id, data){
+            return $http.post(url + '/' + id  + '/' + 'page', data)
+                .then(success)
+                .catch(fail);
+            function success(result, status, headers, config){
+                return result.data;
+            }
+            function fail(){
+
+            }
+        }
+        function deletePage(surveyId, pageId){
+            return $http.delete(url + '/' + surveyId  + '/page/' + pageId)
+                .then(success)
+                .catch(fail);
+            function success(result, status, headers, config){
+                return result.data;
+            }
+            function fail(){
+
+            }
+        }
+        function savePerPage(id, pageId, data){
+            return $http.put(url + '/' + id  + '/page/' + pageId, data)
+                .then(success)
+                .catch(fail);
+            function success(result, status, headers, config){
+                return result.data;
+            }
+            function fail(){
+
+            }
+        }
+        function sortPage(id, toAdd){
+            return $http.put(url + '/' + id  + '/page', toAdd)
+                .then(success)
+                .catch(fail);
+            function success(result, status, headers, config){
+                return result.data;
+            }
+            function fail(){
+
+            }
+        }
         //Content
-        SurveyFactory.pushNewContent = function(surveyId, pageId, data){
+        function pushNewContent(surveyId, pageId, data){
             //survey/{surveyid}/page/{pageid}/push-content
-            return $http.put(url + '/' + surveyId  + '/page/' + pageId + '/push-content', data);
-        };
-        SurveyFactory.deleteContent = function(surveyId, contentId){
-            return $http.delete(url + '/' + surveyId  + '/content/' + contentId);
-        };
-        SurveyFactory.updateContent = function(surveyId, contentId, data){
-            return $http.put(url + '/' + surveyId  + '/content/' + contentId, data);
-        };
-        return SurveyFactory;
-    }]);
+            return $http.put(url + '/' + surveyId  + '/page/' + pageId + '/push-content', data)
+                .then(success)
+                .catch(fail);
+            function success(result, status, headers, config){
+                return result.data;
+            }
+            function fail(){
+
+            }
+        }
+        function deleteContent(surveyId, contentId){
+            return $http.delete(url + '/' + surveyId  + '/content/' + contentId)
+                .then(success)
+                .catch(fail);
+            function success(result, status, headers, config){
+                return result.data;
+            }
+            function fail(){
+
+            }
+        }
+        function updateContent(surveyId, contentId, data){
+            return $http.put(url + '/' + surveyId  + '/content/' + contentId, data)
+                .then(success)
+                .catch(fail);
+            function success(result, status, headers, config){
+                return result.data;
+            }
+            function fail(){
+
+            }
+        }
+    }
+}());

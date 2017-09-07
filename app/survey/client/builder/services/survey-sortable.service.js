@@ -1,11 +1,14 @@
-angular.module('survey')
-    .service('SortableService', function(){
-        this.objectToDrop = false;
+(function() {
+    'use strict';
+    angular.module('survey')
+        .service('SortableService', function () {
+            this.objectToDrop = false;
 
-        this.setObjectToDrop = function(object){
-            this.objectToDrop = object;
-        };
-        this.getObjectToDrop = function(){
-            return this.objectToDrop;
-        };
-    });
+            this.setObjectToDrop = function (object) {
+                this.objectToDrop = object;
+            };
+            this.getObjectToDrop = function () {
+                return this.objectToDrop;
+            };
+        });
+}());
