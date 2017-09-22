@@ -6,12 +6,12 @@
     InputMenuController.$inject = ['$scope', 'SortableService', 'InputService', 'SurveyFactory', 'Logger'];
 
     function InputMenuController($scope, SortableService, InputService, SurveyFactory, Logger){
-        var vm = this;
-        vm.Inputs = [];
-        vm.Inputs = InputService.getInputs();
-        vm.pushNewContent = pushNewContent;
-        vm.removeInput = removeInput;
-        vm.sortableContent = {
+        var vm              = this;
+        vm.Inputs           = [];
+        vm.Inputs           = InputService.getInputs();
+        vm.pushNewContent   = pushNewContent;
+        vm.removeInput      = removeInput;
+        vm.sortableContent  = {
             connectWith: ".connected-apps-container",
             placeholder: 'ui-state-highlight',
             cancel: ".unsortable",
@@ -21,7 +21,8 @@
                     // check that it's an actual moving between the two lists
                 ui.item.sortable.source[0] !== ui.item.sortable.droptarget[0]) {
                     ui.item.sortable.cancel(); // cancel drag and drop
-                    var object = jQuery.extend({}, ui.item.sortable.model.content_to_drop);
+                    //var object = jQuery.extend({}, ui.item.sortable.model.content_to_drop);
+                    var object = jQuery.extend({}, ui.item.sortable.model);
                     //console.log(object);
                     SortableService.setObjectToDrop(object);
                 }
@@ -50,8 +51,14 @@
                 Logger.warning('Please add a new page.');
             }
         }
-        function removeInput(i, mainInput){
-            mainInput.splice(i, 1);
+        function removeInput(tempId){
+            for (var i=0; i < vm.Inputs.length; i++) {
+                if (vm.Inputs[i].tempId === tempId) {
+                    vm.Inputs.splice(i, 1);
+                    break;
+                }
+            }
+            //vm.Inputs.splice(id, 1);
         }
     }
 }());

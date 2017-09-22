@@ -2,8 +2,10 @@
     'use strict';
     // Declare app level module which depends on views, and components
     angular.module('app', [
+        'angular.filter',
         'ngMessages',
         'blocks.logger',
+        'checklist-model',
         'bind.html.compile',
         'theme.switcher',
         'ui.router',

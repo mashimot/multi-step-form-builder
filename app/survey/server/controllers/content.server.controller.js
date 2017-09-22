@@ -1,7 +1,9 @@
 'use strict';
 
 var mongoose = require('mongoose');
-var Content = mongoose.model('Content');
+var Page     = mongoose.model('Page');
+var Content  = mongoose.model('Content');
+var collection = require('../common/survey.collection');
 
 //Contents
 exports.delete_a_content = function(req, res) {
@@ -44,3 +46,28 @@ exports.update_a_content = function(req, res){
     )
 };
 
+exports.push_content_to_a_page = function(req, res){
+    var p = {};
+    p.survey_id = req.params.surveyId;
+    p.page_id = req.params.pageId;
+    p.content = req.body;
+    Page.findById(
+        { _id: p.page_id },
+        function(err, _page){
+            if(err) res.send(err);
+            var newContent = new Content();
+            newContent = collection.mixObject(p.content, newContent);
+            _page.contents.push(newContent._id);
+            _page.save(function(err){
+                if(err) res.send(err);
+                newContent.save(function(err){
+                    if(err) res.send(err);
+                    res.json({
+                        success: true,
+                        message: 'Content created successfully!'
+                    });
+                });
+            });
+        }
+    );
+};

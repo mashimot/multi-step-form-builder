@@ -6,7 +6,7 @@ var Content = mongoose.model('Content');
 
 exports.list_all_surveys = function(req, res) {
     Survey.find({}, function(err, surveys) {
-        if (err){ res.send(err); }
+        if (err){ res.status(500).send(err); }
         res.json(surveys);
     });
 };
@@ -32,11 +32,10 @@ exports.read_a_survey = function(req, res) {
                 model: 'Content'
             }
         })
-        .exec(function(err, model){
-            if(err) res.send(err);
+        .exec(function(err, surveys){
+            if(err) return res.status(500).send(err);
             res.json({
-                success: true,
-                model: model
+                model: surveys
             });
         });
 };

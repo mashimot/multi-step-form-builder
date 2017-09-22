@@ -34,14 +34,15 @@ var ContentSchema = new Schema({
             "value": String
         }]
     }
-}, {
+},{
     timestamps: true,
     versionKey: false // You should be aware of the outcome after set to false
 });
 
 ContentSchema.pre("save", function (next) {
 //    this.options.runValidators = true;
-    this.description = 'Add Your Question';
+    if(this.description == undefined)
+        this.description = 'Add Your Question';
     if(this.input.type == 'title'){
         this.input.title.text = 'Title';
         this.description = undefined;

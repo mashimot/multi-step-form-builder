@@ -1,7 +1,7 @@
 (function() {
     'use strict';
     function ThemeSwitcherDirective(){
-        var defaultTheme = '//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/cosmo/bootstrap.min.css';
+        var defaultTheme = '//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/sandstone/bootstrap.min.css';
         return {
             restrict: 'E',
             scope: {
@@ -30,6 +30,7 @@
                     { name: "Slate", url: "//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/slate/bootstrap.min.css"},
                     { name: "Spacelab", url: "//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/spacelab/bootstrap.min.css"},
                     { name: "United", url: "//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/united/bootstrap.min.css"},
+                    { name: "Sandstorm", url: "//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/sandstone/bootstrap.min.css"},
                     { name: "Yeti", url: "//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/yeti/bootstrap.min.css"}
                 ];
                 scope.urlCSS = {};

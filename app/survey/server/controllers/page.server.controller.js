@@ -92,31 +92,7 @@ exports.sort_page = function(req, res) {
         }
     )
 };
-exports.push_content_to_a_page = function(req, res){
-    var p = {};
-    p.survey_id = req.params.surveyId;
-    p.page_id = req.params.pageId;
-    p.content = req.body;
-    Page.findById(
-        { _id: p.page_id },
-        function(err, _page){
-            if(err) res.send(err);
-            var newContent = new Content();
-            newContent = collection.mixObject(p.content, newContent);
-            _page.contents.push(newContent._id);
-            _page.save(function(err){
-                if(err) res.send(err);
-                newContent.save(function(err){
-                    if(err) res.send(err);
-                    res.json({
-                        success: true,
-                        message: 'Content created successfully!'
-                    });
-                });
-            });
-        }
-    );
-};
+
 exports.save_a_page = function(req, res) {
     var survey = {};
     survey.id = req.params.surveyId;

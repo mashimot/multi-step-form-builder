@@ -8,20 +8,20 @@
     function SurveyController(SurveyFactory, SortableService, Notification , $timeout, $stateParams){
         var surveyId = $stateParams.surveyId;
         var vm = this;
-        vm.survey = [];
-        vm.currentPage = [];
-        vm.activeTabIndex = 0;
-        vm.number = 0;
-        vm.updateSurvey = updateSurvey;
-        vm.countInit = countInit;
-        vm.pageSelected = pageSelected;
-        vm.newPage = newPage;
-        vm.deletePage = deletePage;
-        vm.developer = developer;
-        vm.deletePage = deletePage;
-        vm.sortPages = sortPages;
+        vm.survey           = [];
+        vm.currentPage      = [];
+        vm.activeTabIndex   = 0;
+        vm.number           = 0;
+        vm.updateSurvey     = updateSurvey;
+        vm.countInit        = countInit;
+        vm.pageSelected     = pageSelected;
+        vm.newPage          = newPage;
+        vm.deletePage       = deletePage;
+        vm.developer        = developer;
+        vm.deletePage       = deletePage;
+        vm.sortPages        = sortPages;
         vm.updateSurvey(0);
-        vm.sortableContent = {
+        vm.sortableContent  = {
             //handle: '.handle',
             placeholder: 'ui-state-highlight',
             update: function(event, ui){
@@ -42,8 +42,6 @@
                         Notification.success(data.message);
                     }
                     SortableService.setObjectToDrop(false);
-                }, function (err) {
-                    console.log(err);
                 });
             },
             start: function(event, ui){
@@ -53,26 +51,28 @@
                 ui.item.toggleClass("highlight");
             }
         };
+
         function countInit(type) {
             //question number, if the type is title, the count is not calculated
             if(type !== 'title'){
                 return vm.number++;
             }
         }
+
         function updateSurvey(currentTabIndex){
             vm.number = 0;
             SurveyFactory.getSurvey(surveyId).then(function(data){
-                if(data.success){
-                    vm.survey = data.model;
-                    $timeout(function(){
-                        vm.activeTabIndex = (currentTabIndex <= 0)? 0 : currentTabIndex;
-                    });
-                }
+                vm.survey = data.model;
+                $timeout(function(){
+                    vm.activeTabIndex = (currentTabIndex <= 0)? 0 : currentTabIndex;
+                });
             });
         }
+
         function pageSelected(pageIndex){
             vm.currentPage = vm.survey.pages[pageIndex];
         }
+
         function newPage(){
             if(vm.survey.pages.length >= 0){
                 SurveyFactory.newPage( surveyId ).then(function(data){
@@ -83,6 +83,7 @@
                 });
             }
         }
+
         function deletePage(pageId){
             SurveyFactory.deletePage( surveyId, pageId ).then(function(data){
                 if(data.success){
@@ -91,6 +92,7 @@
                 }
             });
         }
+
         function developer(){
             var url = 'http://localhost:8080/projetos/2016/msfb/only-human/main.php';
             $.ajax({
@@ -107,7 +109,7 @@
             });
         }
 
-        function sortPages() {
+        function sortPages(){
             var tabs = $("#sortable").sortable({
                 items: '.uib-tab:not(.unsortable)',
                 helper: "clone",
@@ -134,6 +136,6 @@
 
                 }
             });
-        };
+        }
     }
 })();

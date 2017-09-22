@@ -3,12 +3,10 @@ var express = require('express'),
     path = require('path'),
     port = process.env.PORT || 3000,
     mongoose = require('mongoose'),
-    /*Survey = require('./app/models/Survey'),
-    Page = require('./app/models/Page'),
-    Content = require('./app/models/Content'),*/
     Survey = require('./app/survey/server/models/survey.server.model'),
     Page = require('./app/survey/server/models/page.server.model'),
     Content = require('./app/survey/server/models/content.server.model'),
+    Input = require('./app/survey/server/models/input-menu.server.model'),
     bodyParser = require('body-parser');
 
 app.use(express.static(path.join(__dirname, 'app')));
@@ -23,6 +21,7 @@ app.use(bodyParser.json());
 require('./app/survey/server/routes/survey.server.routes')(app);
 require('./app/survey/server/routes/page.server.routes')(app);
 require('./app/survey/server/routes/content.server.routes')(app);
+require('./app/survey/server/routes/input-menu.server.routes')(app);
 
 app.listen(port);
 

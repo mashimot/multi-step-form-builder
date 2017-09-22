@@ -15,8 +15,6 @@ var SurveySchema = new Schema({
         }
     ]
 }, {
-    timestamps: true,
-    versionKey: false // You should be aware of the outcome after set to false
 });
 
 var Survey = mongoose.model('Survey', SurveySchema);

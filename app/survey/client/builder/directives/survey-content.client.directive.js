@@ -20,21 +20,21 @@
             },
             controllerAs: 'vm',
             link: function(scope){
-                scope.idSelected = null;
-                scope.addToListInput = addToListInput;
-                scope.deleteContent = deleteContent;
-                scope.editContent = editContent;
+                scope.idSelected        = null;
+                scope.addToListInput    = addToListInput;
+                scope.editContent       = editContent;
+                scope.deleteContent     = deleteContent;
 
-                function addToListInput(input, description){
-                    var scopeInputs = InputService.getScopeInput();
-                    var len = scopeInputs.length - 1;
-                    scopeInputs[len].inputs.push({
-                        newInput: true,
-                        name: description,
-                        content_to_drop: {
-                            input: input
-                        }
-                    });
+                function addToListInput(content){
+                    var scopeInputs         = InputService.getScopeInput();
+                    var newInputList         = {};
+                    newInputList.description = content.description;
+                    newInputList.input       = content.input;
+                    newInputList.name        = content.name;
+                    newInputList.tempId      = content._id;
+                    newInputList.newInput    = true;
+
+                    scopeInputs.push(newInputList);
                 }
                 function deleteContent(surveyId, contentId){
                     SurveyFactory.deleteContent( surveyId, contentId ).then(function(data){
@@ -82,13 +82,12 @@
         };
     }
     var ConfigModalController = function ($scope, $uibModalInstance, render, pageContent, SurveyFactory) {
-        var isChanged = false;
-
-        $scope.content = angular.copy(pageContent);
-        $scope.render = [];
-        $scope.render = render;
-        $scope.ok = ok;
-        $scope.cancel = cancel;
+        var isChanged   = false;
+        $scope.content  = angular.copy(pageContent);
+        $scope.render   = [];
+        $scope.render   = render;
+        $scope.cancel   = cancel
+        $scope.ok       = ok;
 
         //look at TabService, hide some inputs
         if(render.hide.length){

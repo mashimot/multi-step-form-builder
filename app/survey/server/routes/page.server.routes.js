@@ -12,6 +12,4 @@ module.exports = function(app){
         .get(page.read_a_page)
         .put(page.save_a_page)
         .delete(page.delete_a_page);
-    app.route('/api/survey/:surveyId/page/:pageId/push-content')
-        .put(page.push_content_to_a_page);
 };
