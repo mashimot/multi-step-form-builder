@@ -51,6 +51,8 @@ exports.push_content_to_a_page = function(req, res){
     p.survey_id = req.params.surveyId;
     p.page_id = req.params.pageId;
     p.content = req.body;
+    delete p.content._id;
+    //console.log(p.content._id);
     Page.findById(
         { _id: p.page_id },
         function(err, _page){

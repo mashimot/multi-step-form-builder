@@ -8,9 +8,10 @@
     function InputMenuController($scope, SortableService, InputService, SurveyFactory, Logger){
         var vm              = this;
         vm.Inputs           = [];
-        vm.Inputs           = InputService.getInputs();
-        vm.pushNewContent   = pushNewContent;
+        //vm.Inputs           = InputService.getInputs();
+        //vm.pushNewContent   = pushNewContent;
         vm.removeInput      = removeInput;
+
         vm.sortableContent  = {
             connectWith: ".connected-apps-container",
             placeholder: 'ui-state-highlight',
@@ -22,7 +23,10 @@
                 ui.item.sortable.source[0] !== ui.item.sortable.droptarget[0]) {
                     ui.item.sortable.cancel(); // cancel drag and drop
                     //var object = jQuery.extend({}, ui.item.sortable.model.content_to_drop);
-                    var object = jQuery.extend({}, ui.item.sortable.model);
+                    var model = ui.item.sortable.model;
+                    delete model._id;
+
+                    var object = jQuery.extend({}, model);
                     //console.log(object);
                     SortableService.setObjectToDrop(object);
                 }
@@ -32,16 +36,24 @@
             }
         };
 
-        InputService.setInputScope(vm.Inputs);
+
+        activate();
+
+        function activate(){
+            return InputService.getInputs().then(function(data){
+                vm.Inputs = data;
+                InputService.setInputScope(vm.Inputs);
+            });
+        }
 
         function pushNewContent(content_to_drop){
-            var currentTabIndex = $scope.$parent.vm.activeTabIndex;
-            var pages = $scope.$parent.vm.survey.pages;
+            /*var currentTabIndex = $scope.$parent.vmSurvey.activeTabIndex;
+            var pages = $scope.$parent.vmSurvey.survey.pages;
             if(pages.length > 0 && currentTabIndex >= 0){
                 var pageId = pages[currentTabIndex]._id;
                 SurveyFactory.pushNewContent( null, pageId, content_to_drop).then(function(data){
                     if(data.success){
-                        $scope.$parent.vm.updateSurvey(currentTabIndex);
+                        $scope.$parent.vmSurvey.updateSurvey(currentTabIndex);
                         Logger.success(data.message);
                     }
                 }, function(err){
@@ -49,7 +61,7 @@
                 });
             } else {
                 Logger.warning('Please add a new page.');
-            }
+            }*/
         }
         function removeInput(tempId){
             for (var i=0; i < vm.Inputs.length; i++) {

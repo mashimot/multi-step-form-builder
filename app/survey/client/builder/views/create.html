@@ -20,18 +20,20 @@
     <div class="tab-content">
         <div id="editor" class="tab-pane fade in active">
             <div class="row">
-                <input-menu></input-menu>
-                <survey-builder></survey-builder>
+                <survey>
+                    <survey-input-menu ng-controller="InputMenuController as vm"></survey-input-menu>
+                    <survey-builder  ng-controller="SurveyContentController as vm"></survey-builder>
+                </survey>
             </div>
         </div>
         <div id="json" class="tab-pane fade in">
-            <pre>{{ vm.survey | json }}</pre>
+            <pre>{{ vmSurvey.survey | json }}</pre>
         </div>
         <div id="developer" class="tab-pane fade in">
             <textarea class="form-control" id="htmlResult" cols="30" rows="30"></textarea>
         </div>
         <div id="preview" class="tab-pane fade in">
-            <survey-preview survey-data="vm.survey"></survey-preview>
+            <survey-preview survey-data="vmSurvey.survey"></survey-preview>
         </div>
     </div>
 </div>

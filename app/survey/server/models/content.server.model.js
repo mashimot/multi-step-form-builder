@@ -14,6 +14,12 @@ var ContentSchema = new Schema({
         type: String,
         lowercase: true
     },
+    /*inputs: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Input'
+        }
+    ]*/
     "input": {
         "type": {
             type: String,
@@ -24,8 +30,7 @@ var ContentSchema = new Schema({
             text: { type: String },
             color: {
                 type: String,
-                trim: true,
-                required: false
+                trim: true
             }
         },
         "elements": [{
@@ -41,10 +46,10 @@ var ContentSchema = new Schema({
 
 ContentSchema.pre("save", function (next) {
 //    this.options.runValidators = true;
-    if(this.description == undefined)
-        this.description = 'Add Your Question';
-    if(this.input.type == 'title'){
-        this.input.title.text = 'Title';
+    if(this.description == undefined && this.input.type != 'title')
+        this.description = 'Add your Question';
+    if(this.input.type == 'title' && this.input.title.text == ''){
+            this.input.title.text ='Title';
         this.description = undefined;
         this.isRequired = undefined;
     }

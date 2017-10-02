@@ -70,7 +70,7 @@
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<theme-switcher themes="vm.themes"></theme-switcher>
+<theme-switcher themes="vm.themes" url-css="urlCSS"></theme-switcher>
 <section class="content">
     <section ui-view></section>
 </section>
@@ -87,8 +87,8 @@
 <script src="bower_components/angular-messages/angular-messages.min.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="bower_components/angular-ui-notification/dist/angular-ui-notification.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.16/angular-filter.min.js"></script>
-<script src="http://vitalets.github.io/checklist-model/checklist-model.js"></script>
+<script src="bower_components/angular-filter/dist/angular-filter.min.js"></script>
+<script src="bower_components/checklist-model/checklist-model.js"></script>
 
 <script type="text/javascript" src="app.js"></script>
 
@@ -102,6 +102,8 @@
 <script type="text/javascript" src="survey/client/survey.client.module.js"></script>
 <script type="text/javascript" src="survey/client/builder/controllers/survey-input-menu.client.controller.js"></script>
 <script type="text/javascript" src="survey/client/builder/controllers/survey-main.client.controller.js"></script>
+<script type="text/javascript" src="survey/client/builder/controllers/survey-content.client.controller.js"></script>
+<script type="text/javascript" src="survey/client/builder/directives/survey-add-or-edit-content.js"></script>
 <script type="text/javascript" src="survey/client/builder/directives/modal/tab/survey-choices.client.directive.js"></script>
 <script type="text/javascript" src="survey/client/builder/directives/modal/tab/survey-hide-when.client.directive.js"></script>
 <script type="text/javascript" src="survey/client/builder/directives/modal/tab/survey-title.client.directive.js"></script>
@@ -117,6 +119,7 @@
 <script type="text/javascript" src="survey/client/builder/services/survey.service.js"></script>
 <script type="text/javascript" src="survey/client/config/survey.client.routes.js"></script>
 <script type="text/javascript" src="survey/client/new/controllers/survey-new.client.controller.js"></script>
+
 <!-- templates -->
 <script type="text/ng-template" id="configTemplate.html">
     <form name="editModal" ng-submit="ok(editModal.$valid)" method="post">

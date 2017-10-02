@@ -75,6 +75,30 @@ exports.sort_page = function(req, res) {
     survey.survey_id = req.params.surveyId;
     var new_position = req.body.new_position;
     var old_position = req.body.old_position;
+    /*Survey.findOne(
+        { _id: survey.survey_id },
+        function(err, doc) {
+            if(err) return res.send(err);
+            var $doc = {};
+            $doc["pages." + new_position] = doc.pages[old_position];
+            $doc["pages." + old_position] = doc.pages[new_position];
+
+            Survey.update(
+                { _id: survey.survey_id },
+                {
+                    $set: $doc
+                },
+                function(err){
+                    if(err) return res.send(err);
+                    res.json({
+                        success: true,
+                        message: 'Page sorted successfully!'
+                    });
+                }
+            )
+        }
+    );*/
+    // Segundo Modo:
     Survey.findById(
         { _id: survey.survey_id },
         function(err, _survey){

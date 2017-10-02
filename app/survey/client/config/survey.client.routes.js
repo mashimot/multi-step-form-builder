@@ -22,10 +22,11 @@
             })
             .state('survey.builder', {
                 url: '/:surveyId',
-                //templateUrl: '/modules/survey/client/views/teste.html',
                 templateUrl: 'survey/client/builder/views/create.html',
                 controller: 'SurveyController',
-                controllerAs: 'vm'
-            });
+                controllerAs: 'vmSurvey'
+
+            })
+
     }
 }());
