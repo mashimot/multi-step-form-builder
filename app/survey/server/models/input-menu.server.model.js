@@ -26,6 +26,8 @@ var InputSchema = new Schema({
     }
 }, {
     timestamps: true
+}, {
+    usePushEach: true 
 });
 
 var Input = mongoose.model('Input', InputSchema);

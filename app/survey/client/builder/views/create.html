@@ -20,10 +20,8 @@
     <div class="tab-content">
         <div id="editor" class="tab-pane fade in active">
             <div class="row">
-                <survey>
-                    <survey-input-menu ng-controller="InputMenuController as vm"></survey-input-menu>
-                    <survey-builder  ng-controller="SurveyContentController as vm"></survey-builder>
-                </survey>
+                <survey-input-menu class="col-lg-3 col-md-3" ng-controller="InputMenuController as vm"></survey-input-menu>
+                <survey-builder class="col-lg-7 col-md-7 col-sm-11 col-xs-11" ng-controller="SurveyContentController as vm"></survey-builder>
             </div>
         </div>
         <div id="json" class="tab-pane fade in">

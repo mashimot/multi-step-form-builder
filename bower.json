@@ -11,7 +11,7 @@
     "angular-mocks": "~1.5.0",
     "html5-boilerplate": "^5.3.0",
     "components-font-awesome": "^4.7.0",
-    "bootstrap": "boostrap#^3.3.7",
+    "bootstrap": "4.0",
     "angular-ui-router": "^1.0.6",
     "angular-ui-notification": "^0.3.6",
     "angular-messages": "1.5.11",
@@ -21,5 +21,8 @@
   "devDependencies": {
     "angular-bootstrap": "^2.5.0",
     "angular-ui-sortable": "^0.17.1"
+  },
+  "resolutions": {
+    "bootstrap": "4.0"
   }
 }

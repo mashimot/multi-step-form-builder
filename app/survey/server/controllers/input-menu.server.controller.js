@@ -2,13 +2,15 @@
 
 var mongoose = require('mongoose');
 var Input = mongoose.model('Input');
-exports.showAll = function(req, res){
+
+exports.showAll = async (req, res) => {
     Input.find({}, [], {'group': 'input.type'}).sort('input.type').exec(function(err, input){
-        if(err) return res.send(err);
-        res.send(input);
+        if(err) return res.status(500).send(err);
+        res.status(200).send(input);
     });
 };
-exports.seeding_inputs = function(req, res){
+
+exports.seeding_inputs = async (req, res) => {
     const inputs =  [
         {
             group_name: "Radio",
@@ -179,12 +181,13 @@ exports.seeding_inputs = function(req, res){
     }
 
     // seeded!
-    res.send('Database seeded!');
+    res.status(200).send('Database seeded!');
 }
-exports.list_all_inputs = function(req, res){
+
+exports.list_all_inputs = async (req, res) => {
     Input.find({}, function(err, inputs){
-        if(err) return res.send(err);
-        res.json(inputs);
+        if(err) return res.status(500).send(err);
+        res.status(200).json(inputs);
     });
     //res.redirect('https://www.youtube.com/watch?v=QlbmiLcX2sQ');
 };

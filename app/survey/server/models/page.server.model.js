@@ -11,6 +11,8 @@ var PageSchema = new Schema({
     ]
 }, {
     versionKey: false // You should be aware of the outcome after set to false
+}, {
+    usePushEach: true 
 });
 
 PageSchema.pre('remove', function(next) {

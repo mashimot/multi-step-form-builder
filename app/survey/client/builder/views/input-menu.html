@@ -1,35 +1,33 @@
-<section class="col-lg-2 col-md-2">
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-                <h2 class="panel-title text-center"><i class="fa fa-list" aria-hidden="true"></i> Input List</h2>
-        </div>
-        <div class="panel-body">
-            <div ng-repeat="main in vm.Inputs | groupBy: 'input.type'">
-                <h5 class="text-center"><i class="{{ main[0].icon_class }}"></i> <span ng-bind="main[0].group_name"></span></h5>
-                <div class="form-group text-center">
-                    <div ui-sortable="vm.sortableContent" ng-model="main">
-                        <div class="row" ng-repeat="(i, input) in main">
-                            <div ng-class="{'col-md-12': !input.newInput, 'col-md-9': input.newInput}">
-                                <button class="btn btn-default btn-sm btn-block" type="button"
-                                        add-edit-content
-                                        page-id="{{ vmSurvey.survey.pages[vmSurvey.activeTabIndex]._id }}"
-                                        page-content="input"
-                                        callback-fn="vmSurvey.activate()"
-                                        type-event="add"
-                                        >
-                                    <i class="{{ input.icon_class }}" aria-hidden="true"></i> <span ng-bind="input.name" ng-if="!input.newInput"></span> <span ng-bind="input.description" ng-if="input.newInput"></span>
-                                </button>
-                            </div>
-                            <div ng-class="{'col-md-3': input.newInput}" ng-show="input.newInput">
-                                <button class="btn btn-danger btn-sm btn-block" ng-click="vm.removeInput(input.tempId)">
-                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                </button>
-                            </div>
+<div class="card card-primary">
+    <div class="card-header">
+        <h2 class="card-title text-center"><i class="fa fa-list" aria-hidden="true"></i> Input List</h2>
+    </div>
+    <div class="card-body">
+        <div ng-repeat="main in vm.Inputs | groupBy: 'input.type'">
+            <h5 class="text-center"><i class="{{ main[0].icon_class }}"></i> <span ng-bind="main[0].group_name"></span></h5>
+            <div class="form-group text-center">
+                <div ui-sortable="vm.sortableContent" ng-model="main">
+                    <div class="row" ng-repeat="(i, input) in main">
+                        <div ng-class="{'col-md-12': !input.newInput, 'col-md-9': input.newInput}">
+                            <button class="btn btn-default btn-sm btn-block" type="button"
+                                    add-edit-content
+                                    page-id="{{ vmSurvey.survey.pages[vmSurvey.activeTabIndex]._id }}"
+                                    page-content="input"
+                                    callback-fn="vmSurvey.activate()"
+                                    type-event="add"
+                                    >
+                                <i class="{{ input.icon_class }}" aria-hidden="true"></i> <span ng-bind="input.name" ng-if="!input.newInput"></span> <span ng-bind="input.description" ng-if="input.newInput"></span>
+                            </button>
+                        </div>
+                        <div ng-class="{'col-md-3': input.newInput}" ng-show="input.newInput">
+                            <button class="btn btn-danger btn-sm btn-block" ng-click="vm.removeInput(input.tempId)">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <pre>{{ vm.Inputs | json }}</pre>
     </div>
-</section>
+    <pre>{{ vm.Inputs | json }}</pre>
+</div>

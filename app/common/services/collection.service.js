@@ -1,7 +1,7 @@
 (function() {
     'use strict';
-    angular.module('survey')
-        .service('SurveyCollectionService', function () {
+    angular.module('app.collection', [])
+        .service('CollectionService', function () {
             this.sortBy = function (key, reverse) {
                 var moveSmaller = reverse ? 1 : -1;
                 var moveLarger = reverse ? -1 : 1;

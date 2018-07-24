@@ -1,19 +1,20 @@
 (function() {
     'use strict';
     angular.module('survey')
-        .directive('choicesTab', function(SurveyCollectionService){
+        .directive('choicesTab', function(CollectionService){
             return {
                 templateUrl: '../survey/client/builder/views/modal/choice.html',
                 scope: {
                     content: '=content',
                     formName: '=formName'
                 },
-                controller: function($scope){
+                controller: function($scope, CollectionService){
                     $scope.sortableElements = {
                         handle: '.element-handle',
                         stop: function(){
                             $scope.sortType      = undefined;
                             $scope.sortReverse   = undefined;
+                            $scope.text.string   = elementToString($scope.content.input.elements);
                         }
                     };
                 },
@@ -24,22 +25,11 @@
                     scope.cloneThis     = cloneThis;
                     scope.orderBy       = orderBy;
                     scope.string        = string;
-                    scope.$watch('content.input.elements', function(e){
-                        var string = '';
-                        for(var i = 0; i < e.length; i++){
-                            var str = e[i];
-                            var value = '';
-                            var text = '';
-                            var pipe = '|';
-                            text = str.text;
-                            value = str.value;
-                            if(str.text == undefined) text = '';
-                            if(str.value == undefined) value = '';
-                            if(value == '') pipe = '';
-                            string += (text + pipe + value) + (i == e.length - 1 ? '' : "\n");
-                        }
-                        scope.text.string = string;
-                    }, true);
+                    scope.text.string   = elementToString(scope.content.input.elements);
+                    
+                    scope.elementChanged = function(e){
+                        scope.text.string = elementToString(e);
+                    };
 
                     function addElement() {
                         scope.content.input.elements.push({
@@ -47,50 +37,77 @@
                             value: ''
                         });
                     }
+
                     function string(e, s){
                         var string = s.split('\n');
                         if(string.length > 0) {
                             var newElements = [];
                             for (var i = 0; i < string.length; i++) {
-                                var obj = {};
                                 var str = string[i];
                                 var firstMatch = str;
                                 var secondMatch = '';
-                                if(str.indexOf('|') != -1){
+                                if(str.indexOf('|') !== -1){
                                     var match = str.split('|');
                                     firstMatch = match[0];
                                     //var secondMatch = match[1];
                                     secondMatch = str.substring(firstMatch.length + 1); //return '' if '|' was not found
                                 }
-                                obj.text = (firstMatch == undefined)? '' : firstMatch;
-                                obj.value = (secondMatch == undefined)? '' : secondMatch;
-                                newElements.push(obj);
+                                var element = {
+                                    text:   (typeof firstMatch !== 'undefined')? firstMatch : '',
+                                    value:  (typeof secondMatch !== 'undefined')? secondMatch : ''
+                                };
+                                newElements.push(element);
                             }
                             scope.content.input.elements = newElements;
                         }
                     }
+                    
                     function removeContent($index) {
                         scope.content.input.elements.splice($index, 1);
+                        scope.text.string = elementToString(scope.content.input.elements);
                     }
+
                     function orderBy(type){
-                        if(scope.sortType != type){
+                        if(scope.sortType !== type){
                             scope.sortReverse = true;
                         }
                         scope.sortReverse = !scope.sortReverse;
                         scope.sortType    = type;
-                        var sort = SurveyCollectionService.sortBy(type, scope.sortReverse);
+                        var sort = CollectionService.sortBy(type, scope.sortReverse);
                         scope.content.input.elements.sort(sort);
+                        scope.text.string = elementToString(scope.content.input.elements);
                     }
+
                     function cloneThis(name, elements){
                         var elementsLength = elements.length;
                         if(elementsLength > 0){
-                            var cloneThisObjectName = (name == 'value')? 'text' : 'value';
+                            var cloneThisObjectName = (name === 'value')? 'text' : 'value';
                             for(var i = 0; i < elementsLength; i++){
                                 elements[i][name] = elements[i][cloneThisObjectName];
                             }
+                            scope.text.string = elementToString(scope.content.input.elements);
                         }
                     }
                 }
             }
+
+            function elementToString(e){
+                var string = '';
+                if(typeof e !== 'undefined'){
+                    if(e.length > 0){
+                        for(var i = 0; i < e.length; i++){
+                            var str = e[i];
+                            var pipe = (str.value === '')? '' : '|';
+                            var element = {
+                                text: typeof str.text !== 'undefined'? str.text : '',
+                                value: typeof str.value !== 'undefined'? str.value : '',
+                            };
+
+                            string += (element.text + pipe + element.value) + (i === e.length - 1 ? '' : "\n");
+                        }
+                    }
+                }
+                return string;                                  
+            }             
         });
 }());

@@ -6,7 +6,7 @@ var Content  = mongoose.model('Content');
 var collection = require('../common/survey.collection');
 
 //Contents
-exports.delete_a_content = function(req, res) {
+exports.delete_a_content = async (req, res) => {
     var p = {};
     p.page_id = req.params.surveyId;
     p.content_id = req.params.contentId;
@@ -15,10 +15,10 @@ exports.delete_a_content = function(req, res) {
         { '_id' : p.content_id },
         function(err, input){
             if(err)
-                res.send(err)
+                res.status(500).send(err)
             input.remove(function(err, model) {
-                if(err) res.send(err);
-                res.json({
+                if(err) res.status(500).send(err);
+                res.status(200).json({
                     success: true,
                     message: 'Survey successfully deleted'
                 });
@@ -37,8 +37,8 @@ exports.update_a_content = function(req, res){
         { '$set': i.content },
         function(err, model){
             if(err)
-                res.send(err);
-            res.json({
+                res.status(500).send(err);
+            res.status(200).json({
                 success: true,
                 message: 'Survey successfully updated'
             });
@@ -56,15 +56,15 @@ exports.push_content_to_a_page = function(req, res){
     Page.findById(
         { _id: p.page_id },
         function(err, _page){
-            if(err) res.send(err);
+            if(err) res.status(500).send(err);
             var newContent = new Content();
             newContent = collection.mixObject(p.content, newContent);
             _page.contents.push(newContent._id);
             _page.save(function(err){
-                if(err) res.send(err);
+                if(err) res.status(500).send(err);
                 newContent.save(function(err){
-                    if(err) res.send(err);
-                    res.json({
+                    if(err) res.status(500).send(err);
+                    res.status(200).json({
                         success: true,
                         message: 'Content created successfully!'
                     });

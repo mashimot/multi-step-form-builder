@@ -12,7 +12,8 @@ var express = require('express'),
 app.use(express.static(path.join(__dirname, 'app')));
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/Tododb');
+//mongoose.connect('mongodb://localhost/Tododb', { useMongoClient: true });
+mongoose.connection.openUri('mongodb://localhost/Tododb');
 
 //app.use(express.static(__dirname, '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));

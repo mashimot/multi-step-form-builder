@@ -15,6 +15,7 @@ var SurveySchema = new Schema({
         }
     ]
 }, {
+    usePushEach: true 
 });
 
 var Survey = mongoose.model('Survey', SurveySchema);
