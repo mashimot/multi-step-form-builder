@@ -3,14 +3,18 @@
     angular.module('survey')
         .directive('choicesTab', function(CollectionService){
             return {
-                templateUrl: '../survey/client/form-builder/modal/config/choice.html',
+                templateUrl: '../survey/client/form-builder/modal/config/config.choices.html',
                 scope: {
                     content: '=content',
                     formName: '=formName'
                 },
-                controller: function($scope, CollectionService){
+                controller: function($scope){
+                    if(typeof $scope.content.html.elements === 'undefined'){
+                        $scope.content.html.elements = [];
+                    }    
+                                    
                     $scope.sortableElements = {
-                        handle: '.element-handle',
+                        //handle: '.element-handle',
                         stop: function(){
                             $scope.sortType      = undefined;
                             $scope.sortReverse   = undefined;
@@ -53,8 +57,8 @@
                                     secondMatch = str.substring(firstMatch.length + 1); //return '' if '|' was not found
                                 }
                                 var element = {
-                                    text:   (typeof firstMatch !== 'undefined')? firstMatch : '',
-                                    value:  (typeof secondMatch !== 'undefined')? secondMatch : ''
+                                    text: (typeof firstMatch !== 'undefined')? firstMatch : '',
+                                    value: (typeof secondMatch !== 'undefined')? secondMatch : ''
                                 };
                                 newElements.push(element);
                             }
@@ -108,6 +112,6 @@
                     }
                 }
                 return string;                                  
-            }             
+            }            
         });
 }());

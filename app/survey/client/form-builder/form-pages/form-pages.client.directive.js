@@ -1,8 +1,8 @@
 (function() {
     'use strict';
     angular.module('survey')
-        .directive('surveyBuilder', surveyBuilder);
-    function surveyBuilder(){
+        .directive('formPages', formPages);
+    function formPages(){
         return {
             restrict: 'E',
             templateUrl: '../survey/client/form-builder/form-pages/form-pages.html',

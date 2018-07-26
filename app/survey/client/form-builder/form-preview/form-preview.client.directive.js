@@ -1,7 +1,7 @@
 (function() {
     'use strict';
     angular.module('survey')
-        .directive('surveyPreview', function(){
+        .directive('formPreview', function(){
             function Model(){
                 this.description =  '';
                 this.answer = '';
