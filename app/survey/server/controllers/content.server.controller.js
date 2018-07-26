@@ -31,13 +31,11 @@ exports.update_a_content = function(req, res){
     var i = {};
     i._id = req.params.contentId;
     i.content = req.body;
-    //console.log(i);
     Content.findByIdAndUpdate(
         { _id: i._id },
         { '$set': i.content },
         function(err, model){
-            if(err)
-                res.status(500).send(err);
+            if(err) res.status(500).send(err);
             res.status(200).json({
                 success: true,
                 message: 'Survey successfully updated'

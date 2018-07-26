@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var Input = mongoose.model('Input');
 
 exports.showAll = async (req, res) => {
-    Input.find({}, [], {'group': 'input.type'}).sort('input.type').exec(function(err, input){
+    html.find({}, [], {'group': 'html.tag'}).sort('html.tag').exec(function(err, input){
         if(err) return res.status(500).send(err);
         res.status(200).send(input);
     });
@@ -185,7 +185,7 @@ exports.seeding_inputs = async (req, res) => {
 }
 
 exports.list_all_inputs = async (req, res) => {
-    Input.find({}, function(err, inputs){
+    html.find({}, function(err, inputs){
         if(err) return res.status(500).send(err);
         res.status(200).json(inputs);
     });

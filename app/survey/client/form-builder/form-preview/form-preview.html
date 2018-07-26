@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-md-4">
+
+    </div>
+    <div class="col-md-4">
+        <form ng-submit="submit()" method="POST">
+            <div ng-model="survey.pages" ng-repeat="(pageIndex, page) in survey.pages">
+                <fieldset ng-show="step == pageIndex">
+                    <legend>Page {{ pageIndex + 1 }}</legend>
+                    <div ng-model="page.contents" ng-repeat="(contentIndex, content) in page.contents" ng-class="{ 'well well-sm': content.html.tag !== 'title' }">
+                        <section ng-if="content.html.tag === 'title'" class="form-group">
+                            <h1 class="alert alert-danger" ng-bind="content.html.title.text"></h1>
+                        </section>
+                        <section ng-if="content.html.tag !== 'title'" class="form-group">
+                            <h5 ng-bind="content.number + ' - ' + content.description" class="text-center"></h5>
+                        </section>
+                        <section ng-if="content.html.tag === 'checkbox'" class="form-group">
+                            <div ng-repeat="element in content.html.elements track by $index">
+                                <label>
+                                    <input type="checkbox" checklist-model="answers[content._id].answer" checklist-value="element.value"> {{ element.text }}
+                                </label>
+                            </div>
+                        </section>
+                        <section ng-if="content.html.tag === 'radio'" class="form-group">
+                            <div ng-repeat="(elementId, element) in content.html.elements track by $index">
+                                <label><input type="radio" ng-model="answers[content._id].answer" ng-change="radio(content._id, content)" ng-value="element.value"/> <span ng-bind="element.text"></span></label>
+                                <!--label><input type="radio" ng-model="answers[content._id].answer"  ng-change="radio(content._id, content)" ng-value="element.value"/> <span ng-bind="element.text"></span></label-->
+                            </div>
+                        </section>
+                        <section ng-if="content.html.tag === 'comments'" class="form-group">
+                            <textarea ng-model="answers[content._id].anwser" class="form-control" cols="30" rows="10"></textarea>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <button ng-if="pageIndex > 0" class="btn btn-danger btn-block" ng-click="prevStep()">Prev step</button>
+                        </div>
+                        <div class="col-md-3">
+                            <button ng-if="step < survey.pages.length - 1"  class="btn btn-primary btn-block" ng-click="nextStep()">Next step</button>
+                            <button ng-if="step === survey.pages.length - 1" type="submit" class="btn btn-primary btn-block">Submit</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <pre ng-bind="answers | json"></pre>
+        <pre ng-bind="selected | json"></pre>
+    </div>
+</div>

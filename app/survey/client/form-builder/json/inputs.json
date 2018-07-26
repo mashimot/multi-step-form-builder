@@ -1,0 +1,175 @@
+[
+   {
+      "html":{
+         "label":"Type your Text",
+         "category":"form",
+         "tag":"checkbox",
+         "elements":[
+            {
+               "value":"Checkbox 1",
+               "text":"Checkbox 1"
+            },
+            {
+               "value":"Checkbox 2",
+               "text":"Checkbox 2"
+            },
+            {
+               "value":"Checkbox 3",
+               "text":"Checkbox 3"
+            }
+         ]
+      },
+      "table":{
+
+      }
+   },
+   {
+      "html":{
+         "label":"Type your Text",
+         "category":"form",
+         "tag":"radio",
+         "elements":[
+            {
+               "value":"Radio 1",
+               "text":"Radio 1"
+            },
+            {
+               "value":"Radio 2",
+               "text":"Radio 2"
+            },
+            {
+               "value":"Radio 3",
+               "text":"Radio 3"
+            }
+         ]
+      },
+      "table":{
+
+      }
+   },
+   {
+      "html":{
+         "label":"Type your Text",
+         "category":"form",
+         "tag":"select",
+         "elements":[
+            {
+               "value":"Select 1",
+               "text":"Select 1"
+            },
+            {
+               "value":"Select 2",
+               "text":"Select 2"
+            },
+            {
+               "value":"Select 3",
+               "text":"Select 3"
+            }
+         ]
+      },
+      "table":{
+
+      }
+   },
+   {
+      "html":{
+         "label":"Type your Text",
+         "category":"form",
+         "tag":"gradient",
+         "elements": [
+           {
+             "text": "Discordo plenamente",
+             "value": "1"
+           },
+           {
+             "text": "Discordo parcialmente",
+             "value": "2"
+           },
+           {
+             "text": "Não concordo nem discordo",
+             "value": "3"
+           },
+           {
+             "text": "Concordo parcialmente",
+             "value": "4"
+           },
+           {
+             "text": "Concordo plenamente",
+             "value": "5"
+           },
+           {
+             "text": "NA (Não Aplicável)",
+             "value": "0"
+           }
+         ],
+         "hasComment": false
+      },
+      "table":{
+
+      }
+   },
+   {
+      "html":{
+         "label":"Type your Text",
+         "category":"form",
+      "tag": "net-promoter-score",
+      "elements": [
+        {
+          "text": "0",
+          "value": "0"
+        },
+        {
+          "text": "1",
+          "value": "1"
+        },
+        {
+          "text": "2",
+          "value": "2"
+        },
+        {
+          "text": "3",
+          "value": "3"
+        },
+        {
+          "text": "4",
+          "value": "4"
+        },
+        {
+          "text": "5",
+          "value": "5"
+        },
+        {
+          "text": "6",
+          "value": "6"
+        },
+        {
+          "text": "7",
+          "value": "7"
+        },
+        {
+          "text": "8",
+          "value": "8"
+        },
+        {
+          "text": "9",
+          "value": "9"
+        },
+        {
+          "text": "10",
+          "value": "10"
+        }
+      ],
+         "hasComment": false
+      },
+      "table":{
+
+      }
+   },{
+      "html": {
+       "label": "Type your Text",
+       "category": "form",
+       "tag": "textarea"
+    },
+    "table": {}
+ }   
+]

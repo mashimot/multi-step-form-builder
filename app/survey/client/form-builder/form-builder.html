@@ -1,0 +1,36 @@
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-target="#editor" data-toggle="tab"><i class="fa fa-pencil-square-o pull-left"></i> Editor</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="" data-target="#json" data-toggle="tab" ><i class="fa fa-pencil-square-o pull-left"></i> Json</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="" ng-click="vm.developer()"  data-target="#developer" data-toggle="tab">
+                <i class="fa fa-code pull-left"></i> Desenvolvedor
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="" data-target="#preview" data-toggle="tab">
+                Preview
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div id="editor" class="tab-pane fade show active">
+            <div class="row">
+                <survey-menu class="col-lg-3 col-md-3"></survey-menu>
+                <survey-builder class="col-lg-7 col-md-7 col-sm-11 col-xs-11"></survey-builder>
+            </div>
+        </div>
+        <div id="json" class="tab-pane fade in">
+            <pre>{{ vmPage.pages | json }}</pre>
+        </div>
+        <div id="developer" class="tab-pane fade in">
+            <textarea class="form-control" id="htmlResult" cols="30" rows="30"></textarea>
+        </div>
+        <div id="preview" class="tab-pane fade in">
+            <survey-preview survey-data="vmPage.pages"></survey-preview>
+        </div>
+    </div>
+</div>

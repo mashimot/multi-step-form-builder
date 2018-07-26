@@ -1,0 +1,14 @@
+<div class="card card-primary">
+    <div class="card-body">
+        <div ng-repeat="(toolCategoryIndex, toolCategory) in vmMenu.Inputs | groupBy: 'html.category'">
+            <strong class="text-center text-uppercase px-2" ng-bind="toolCategory[0].html.category"></strong>
+            <div ng-model="toolCategory" ui-sortable="vmMenu.sortableContent">
+                <div ng-repeat="(toolIndex, tool) in toolCategory" class="">
+                    <div class="badge badge-dark tool-handle col-md-12" style="cursor: move;">
+                        <span ng-bind="tool.html.tag" ></span>
+                    </div>
+                </div>
+            </div>
+        </div>     
+    </div>
+</div>

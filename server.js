@@ -1,7 +1,7 @@
 var express = require('express'),
     app = express(),
     path = require('path'),
-    port = process.env.PORT || 3000,
+    port = process.env.PORT || 3001,
     mongoose = require('mongoose'),
     Survey = require('./app/survey/server/models/survey.server.model'),
     Page = require('./app/survey/server/models/page.server.model'),

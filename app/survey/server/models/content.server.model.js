@@ -4,40 +4,39 @@ var Schema = mongoose.Schema;
 var ContentSchema = new Schema({
     name: String,
     number: String,
-    description: {
-        type: String
-    },
-    isRequired: Boolean,
-    isHide: Boolean,
-    hasOther: Boolean,
-    isHideWhen: {
-        type: String,
-        lowercase: true
-    },
-    /*inputs: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Input'
-        }
-    ]*/
-    "input": {
-        "type": {
+    html: {
+        category: String,
+        description: {
+            type: String
+        }, 
+        label: String,       
+        tag: {
             type: String,
-            enum: ["radio", "title", "checkbox", "comments", "net-promoter-score", "gradient", "identification", "conheco", "select"],
+            enum: ["radio", "select", "checkbox", "title", "textarea", "net-promoter-score", "gradient"],
             required: true
         },
+        elements: [{
+            _id: false,
+            text: String,
+            value: String
+        }],        
         title: {
             text: { type: String },
             color: {
                 type: String,
                 trim: true
-            }
+            }            
         },
-        "elements": [{
-            _id: false,
-            "text": String,
-            "value": String
-        }]
+        hasOther: Boolean,
+        isHide: Boolean,
+        isHideWhen: {
+            type: String,
+            lowercase: true
+        },        
+    },
+    table: {
+        nullable: Boolean,
+        columnName: String
     }
 },{
     timestamps: true,
@@ -46,12 +45,11 @@ var ContentSchema = new Schema({
 
 ContentSchema.pre("save", function (next) {
 //    this.options.runValidators = true;
-    if(this.description == undefined && this.input.type != 'title')
+    if(typeof this.html.description == 'undefined' && this.html.tag != 'title')
         this.description = 'Add your Question';
-    if(this.input.type == 'title' && this.input.title.text == ''){
-            this.input.title.text ='Title';
-        this.description = undefined;
-        this.isRequired = undefined;
+    if(this.html.tag == 'title' && this.html.title.text == ''){
+            this.html.title.text ='Title';
+        this.html.description = undefined;
     }
     next();
 });

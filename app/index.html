@@ -9,10 +9,15 @@
     <title>Multi Step Form Builder</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="bower_components/angular-ui-notification/dist/angular-ui-notification.min.css"/>
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="bower_components/bootswatch/dist/materia/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/web-fonts-with-css/css/fontawesome-all.min.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/angular-ui-notification/dist/angular-ui-notification.min.css"/>
     <style>
+        .bg-gradient {
+            background-image: linear-gradient(120deg, #f5f5f5 0%, #ebedee 100%);
+        }
+
         .disable-all-contents{
             pointer-events:none;
         }
@@ -69,15 +74,25 @@
 <!--[if lt IE 7]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" ui-sref="survey.new">Survey</a>
+    <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" ui-sref="survey.new">New Survey <span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+    </div>
+</nav>
 
-<theme-switcher themes="vm.themes" url-css="urlCSS"></theme-switcher>
-<section class="content">
+<section class="content pt-2 bg-gradient">
     <section ui-view></section>
 </section>
 
 <!-- In production use:
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
 -->
+
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
 <script src="bower_components/angular/angular.js"></script>
@@ -101,39 +116,51 @@
 <!--survey-->
 <script type="text/javascript" src="survey/client/config/survey.client.routes.js"></script>
 <script type="text/javascript" src="survey/client/survey.client.module.js"></script>
-<script type="text/javascript" src="survey/client/builder/controllers/survey-input-menu.client.controller.js"></script>
-<script type="text/javascript" src="survey/client/builder/controllers/survey-main.client.controller.js"></script>
-<script type="text/javascript" src="survey/client/builder/controllers/survey-content.client.controller.js"></script>
-<script type="text/javascript" src="survey/client/builder/directives/survey-add-or-edit-content.js"></script>
-<script type="text/javascript" src="survey/client/builder/directives/modal/tab/survey-choices.client.directive.js"></script>
-<script type="text/javascript" src="survey/client/builder/directives/modal/tab/survey-hide-when.client.directive.js"></script>
-<script type="text/javascript" src="survey/client/builder/directives/modal/tab/survey-title.client.directive.js"></script>
-<script type="text/javascript" src="survey/client/builder/directives/modal/tab/survey.general-config.client.directive.js"></script>
-<script type="text/javascript" src="survey/client/builder/directives/survey-builder.client.directive.js"></script>
-<script type="text/javascript" src="survey/client/builder/directives/survey-content.client.directive.js"></script>
-<script type="text/javascript" src="survey/client/builder/directives/survey-input-menu.client.directive.js"></script>
-<script type="text/javascript" src="survey/client/builder/directives/survey-preview.client.directive.js"></script>
-<script type="text/javascript" src="survey/client/builder/services/survey-content-tab.service.js"></script>
-<script type="text/javascript" src="survey/client/builder/services/survey-input-menu.service.js"></script>
-<script type="text/javascript" src="survey/client/builder/services/survey-sortable.service.js"></script>
-<script type="text/javascript" src="survey/client/builder/services/survey.service.js"></script>
+
+<script type="text/javascript" src="survey/client/form-builder/directives/survey-add-or-edit-content.js"></script>
+<script type="text/javascript" src="survey/client/form-builder/modal/config/choices.client.directive.js"></script>
+<script type="text/javascript" src="survey/client/form-builder/modal/config/is-hide-when.client.directive.js"></script>
+<script type="text/javascript" src="survey/client/form-builder/modal/config/title.client.directive.js"></script>
+<script type="text/javascript" src="survey/client/form-builder/modal/config/general-config.client.directive.js"></script>
+
+<script type="text/javascript" src="survey/client/form-builder/form-new/form-new.client.controller.js"></script>
+
+<script type="text/javascript" src="survey/client/form-builder/form-menu/form-menu.client.controller.js"></script>
+<script type="text/javascript" src="survey/client/form-builder/form-menu/form-menu.client.directive.js"></script>
+<script type="text/javascript" src="survey/client/form-builder/form-menu/form-menu.client.service.js"></script>
+
+<script type="text/javascript" src="survey/client/form-builder/form-pages/form-pages.client.controller.js"></script>
+<script type="text/javascript" src="survey/client/form-builder/form-pages/form-pages.client.directive.js"></script>
+<script type="text/javascript" src="survey/client/form-builder/form-pages/form-pages.client.service.js"></script>
+
+<script type="text/javascript" src="survey/client/form-builder/form-data/form-data.client.controller.js"></script>
+<script type="text/javascript" src="survey/client/form-builder/form-data/form-data.client.directive.js"></script>
+<script type="text/javascript" src="survey/client/form-builder/form-data/form-data.client.service.js"></script>
+
+<script type="text/javascript" src="survey/client/form-builder/form-preview/form-preview.client.directive.js"></script>
+
+<script type="text/javascript" src="survey/client/form-builder/services/render-html.service.js"></script>
+<script type="text/javascript" src="survey/client/form-builder/services/survey-content-tab.service.js"></script>
+<script type="text/javascript" src="survey/client/form-builder/services/survey-sortable.service.js"></script>
+<script type="text/javascript" src="survey/client/form-builder/services/survey.service.js"></script>
 <script type="text/javascript" src="survey/client/config/survey.client.routes.js"></script>
-<script type="text/javascript" src="survey/client/new/controllers/survey-new.client.controller.js"></script>
 
 <!-- templates -->
 <script type="text/ng-template" id="configTemplate.html">
     <form name="editModal" ng-submit="ok(editModal.$valid)" method="post">
         <div class="modal-header">
-            <h4 ng-if="content.input.type !== 'title'"><span ng-bind="content.number"></span> - <span ng-bind="content.description"></span></h4>
+            <h4 ng-if="content.input.type !== 'title'"><span ng-bind="content.number"></span> - <span ng-bind="content.html.label"></span></h4>
             <h4 ng-if="content.input.type === 'title'" ng-bind="content.input.title.text"></h4>
         </div>
         <div class="modal-body">
-            <div class="panel">
-                <uib-tabset active="activeConfig">
-                    <uib-tab ng-repeat="(i, tab) in render.tabs" heading="{{ tab.title }}" index="i">
-                        <span bind-html-compile="tab.template"></span>
-                    </uib-tab>
-                </uib-tabset>
+            <div class="card">
+                <div class="card-body">
+                    <uib-tabset active="activeConfig">
+                        <uib-tab ng-repeat="(i, tab) in render.tabs" heading="{{ tab.title }}" index="i">
+                            <span bind-html-compile="tab.template" class="px-3 py-3"></span>
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
             </div>
         </div>
         <div class="modal-footer">
@@ -143,103 +170,6 @@
             <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
         </div>
     </form>
-</script>
-<script type="text/ng-template" id="input-identification-template.html">
-    <div class="form-group">
-        <div class="radio">
-            <label><input type="radio" name="notaperguntaIdentificacao" class="identificacao" value="Sim"/> Sim</label>
-        </div>
-        <div class="radio">
-            <label><input type="radio" name="notaperguntaIdentificacao" class="identificacao" value="Não"/> Não</label>
-        </div>
-    </div>
-    <div id="contato" class="margin-top">
-        <div class="alert alert-default linha">
-            <div class="form-group has-success has-feedback">
-                <label for="nome">Nome Completo:</label>
-                <div class="input-group">
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-user"></span>
-                        </span>
-                    <input class="form-control" name="nomeDireto" placeholder="Digite o Nome" required="" type="text" value="">
-                </div>
-            </div>
-            <div class="form-group has-success has-feedback">
-                <label for="telefone">Telefone</label>
-                <div class="input-group">
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-earphone"></span>
-                        </span>
-                    <input class="form-control" name="telefoneDireto" placeholder="Digite o Telefone" value="" type="text">
-                </div>
-            </div>
-            <div class="form-group has-feedback has-success">
-                <label for="email">Email</label>
-                <div class="input-group">
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-envelope"></span>
-                        </span>
-                    <input class="form-control" name="emailDireto" placeholder="Digite o Email" value="" type="text">
-                </div>
-            </div>
-        </div><!--/alert-->
-    </div>
-</script>
-<script type="text/ng-template" id="input-gradient-template.html">
-    <div class="radio-inline" ng-repeat="i in content.input.elements">
-        <label>
-            <input type="radio"/> <span ng-bind="i.text"></span>
-        </label>
-    </div>
-    <div class="textarea-justificativa">
-        <span class="justificativa">O que foi decisivo para dar esta nota? Justificar notas 1 e 2</span>
-        <textarea class="form-control" ></textarea>
-    </div>
-</script>
-<script type="text/ng-template" id="input-net-promoter-score-template.html">
-    <div class="text-center">
-        <div class="btn-group" data-toggle="buttons"  ng-repeat="(i, e) in content.input.elements">
-            <label class="btn btn-lg" ng-class="e.text > 8 ? 'btn-success' : ( e.text < 7? 'btn-danger' : 'btn-warning' ) ">
-                <input type="radio"/> <span ng-bind="e.text"></span>
-            </label>
-        </div>
-        <!-- Image Courtesy of http://hummingbird.com.au/nps/ -->
-        <img src="http://hummingbird.com.au/wp/wp-content/uploads/2015/05/nps.png" alt="nps" class="img-responsive center-block"/>
-    </div>
-</script>
-<script type="text/ng-template" id="input-select-template.html">
-    SELECT BOX
-    <div ng-repeat="i in content.input.elements">
-        <b class="text-danger">text: </b> <kbd ng-bind="i.text"></kbd>
-        <b class="text-danger">value: </b> <kbd ng-bind="i.value"></kbd>
-    </div>
-</script>
-<script type="text/ng-template" id="input-radio-template.html">
-    <br/>
-    <div ng-repeat="i in content.input.elements">
-        <label>
-            <input type="radio"/> <span ng-bind="i.text"></span>
-        </label>
-    </div>
-    <label ng-if="content.hasOther">
-        <input type="radio"/> Other
-    </label>
-</script>
-<script type="text/ng-template" id="input-checkbox-template.html">
-    <div ng-repeat="i in content.input.elements">
-        <label>
-            <input type="checkbox"/> <span ng-bind="i.text"></span>
-        </label>
-    </div>
-    <label ng-if="content.hasOther">
-        <input type="checkbox"/> Other
-    </label>
-</script>
-<script type="text/ng-template" id="input-comments-template.html">
-    <textarea class="form-control" rows="4"></textarea>
-</script>
-<script type="text/ng-template" id="input-conheco-template.html">
-    CONHECO
 </script>
 </body>
 </html>

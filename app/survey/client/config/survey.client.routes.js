@@ -16,17 +16,14 @@
             })
             .state('survey.new', {
                 url: '',
-                templateUrl: 'survey/client/new/views/new.html',
-                controller: 'CreateController',
+                templateUrl: 'survey/client/form-builder/form-new/form-new.html',
+                controller: 'FormNewController',
                 controllerAs: 'vm'
             })
             .state('survey.builder', {
                 url: '/:surveyId',
-                templateUrl: 'survey/client/builder/views/create.html',
-                controller: 'SurveyController',
-                controllerAs: 'vmSurvey'
+                templateUrl: 'survey/client/form-builder/form-builder.html'
 
             })
-
     }
 }());
